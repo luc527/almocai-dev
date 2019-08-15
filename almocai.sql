@@ -1,14 +1,20 @@
 create database almocai;
 use almocai;
 
-create table Alimento (
-	codigo int primary key auto_increment,
-    descricao varchar(100)
-    diaAlmoco_codigo int,
-    foreign key (diaAlmoco_codigo) 
+create table SemanaCardapio (
+	codigo int primary key auto_increment
 );
 
 create table DiaAlmoco (
 	codigo int primary key auto_increment,
-    
-)
+    `data` date,
+    semanaCardapio_codigo int,
+    foreign key (semanaCardapio_codigo) references SemanaCardapio(codigo)
+);
+
+create table Alimento (
+	codigo int primary key auto_increment,
+    descricao varchar(100),
+    diaAlmoco_codigo int,
+    foreign key (diaAlmoco_codigo) references DiaAlmoco(codigo)
+);

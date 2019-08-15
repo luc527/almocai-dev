@@ -29,6 +29,8 @@ class DaoAlimento
 		$p_sql->bindParam(":descricao", $diaAlmoco_codigo);
 
 		$descricao = $alimento->getDescricao();
+
+		return $p_sql->execute();
 	}
 }
 

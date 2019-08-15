@@ -4,7 +4,7 @@
 
 require_once "autoload.php";
 
-class DaoAlimento
+class AlimentoDao
 {
 	public static $instance;
 
@@ -12,7 +12,7 @@ class DaoAlimento
 	{
 		if (!isset(self::$instance))
 		{
-			self::$instance = new DaoAlimento;
+			self::$instance = new AlimentoDao;
 		}
 		return $instance;
 	}

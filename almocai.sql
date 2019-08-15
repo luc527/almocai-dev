@@ -18,3 +18,9 @@ create table Alimento (
     diaAlmoco_codigo int,
     foreign key (diaAlmoco_codigo) references DiaAlmoco(codigo)
 );
+
+create table Aluno(
+    matricula int primary key,
+    senha varchar(40),
+    nome varchar(100)
+);

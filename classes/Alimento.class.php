@@ -20,8 +20,6 @@ class Alimento extends AbsCodigo
 	{
 		$this->descricao = $descricao;
 	}
-
-
 }
 
 ?>

@@ -7,25 +7,23 @@ class DiaAlmoco extends AbsCodigo
 	private $alimentos = array();
 	private $data;
 
-	public function __construct ($array_alimentos, $data)
+	/*
+	public function __construct ($data)
 	{
-		$this->setAlimentos($array_alimentos);
 		$this->setData($data);
 	}
+	*/
 
 	public function getAlimentos ()
 	{
 		return $this->alimentos;
 	}
 
-	public function setAlimentos ($array_alimentos)
+	public function setAlimento ($alimento)
 	{
-		for ($i=0; $i < count($array_alimentos); $i++)
-		{ 
-			if ($array_alimentos[$i] instanceof Alimento)
-			{
-				array_push ($this->alimentos, $array_alimentos[$i]);
-			}
+		if ($array_alimentos[$i] instanceof Alimento)
+		{
+			array_push ($this->alimentos, $array_alimentos[$i]);
 		}
 	}
 

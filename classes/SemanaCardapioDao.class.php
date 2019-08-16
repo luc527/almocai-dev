@@ -15,6 +15,10 @@ class SemanaCardapioDao
 		return $instance;
 	}
 
+
+	/////////////////////////
+	// FUNÇÕES DE INSERÇÃO //
+
 	public function Inserir (SemanaCardapio $semanaCardapio)
 	{
 		$sql = "INSERT INTO SemanaCardapio (codigo) VALUES (null)";
@@ -36,21 +40,26 @@ class SemanaCardapioDao
 		}
 	}
 
-	public function SelectPorCodigo ($codigo)
-	{
-		$sql = "SELECT * FROM SemanaCardapio WHERE codigo = ".$codigo." ORDER BY codigo";
 
-		$query = Conexao::conexao()->query($sql);
+	////////////////////////
+	// FUNÇÕES DE SELEÇÃO //
 
-		return $this->PopulaSemanaCardapio($query->fetch(PDO::FETCH_ASSOC));
-	}
-
-	public function PopulaSemanaCardapio ($row)
+	public function Popula ($row)
 	{
 		$semana = new SemanaCardapio;
 		$semana->setCodigo($row['codigo']);
 
 		return $semana;
+	}
+
+	public function SelectPorCodigo ($codigo)
+	{
+		$sql = "SELECT * FROM SemanaCardapio WHERE codigo = ".$codigo." ORDER BY codigo";
+
+		$query = Conexao::conexao()->query($sql);
+		$row = $query->fetch(PDO::FETCH_ASSOC);
+
+		return $this->Popula($row);
 	}
 
 	public function SelectTodos ()
@@ -62,7 +71,29 @@ class SemanaCardapioDao
 		$semanas = array();
 		while ($row = $query->fetch(PDO::FETCH_ASSOC))
 		{
-			array_push($semanas, $this->PopulaSemanaCardapio($row));
+			array_push($semanas, $this->Popula($row));
+		}
+
+		return $semanas;
+	}
+
+	public function SelectTodosComDias ()
+	{
+		$semanas = $this->SelectTodos();
+
+		$diaDao = new DiaAlmocoDao;
+		for ($i=0; $i < count($semanas); $i++)
+		{ 
+			$dias = $diaDao->SelectPorSemana($semanas[$i]->getCodigo());
+
+			if (isset($dias))
+			{
+				for ($j=0; $j < count($dias); $j++)
+				{ 
+					$semanas[$i]->setDia($dias[$i]);
+				}
+					
+			}
 		}
 
 		return $semanas;
@@ -78,6 +109,7 @@ class SemanaCardapioDao
 		
 		return $row['codigo'];
 	}
+
 }
 
 ?>

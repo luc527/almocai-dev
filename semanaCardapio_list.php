@@ -13,7 +13,7 @@ if(isset($acao))
 	if ($acao == 'Inserir')
 	{
 		$semanaDao = new SemanaCardapioDao;
-		$codigo = $semanaDao->SelectUltimoCod();
+		$codigo = $semanaDao->SelectUltimoCod() + 1;
 
 		$semana = new SemanaCardapio;
 		$semana->setCodigo($codigo);
@@ -38,13 +38,15 @@ if(isset($acao))
 	<div style="width: 70%; margin: auto;">
 		<?php
 		$semanaDao = new SemanaCardapioDao;
-		$semanas = $semanaDao->SelectTodos();
+		$semanas = $semanaDao->SelectTodosComDias();
 		?>
 
 		<table border="1">
 			<thead>
 				<tr>
 					<th>Código</th>
+					<th>Dias</th>
+					<th>Cadastrar dia</th>
 				</tr>
 			</thead>
 
@@ -56,6 +58,15 @@ if(isset($acao))
 				echo "<tr>";
 				
 				echo "<td>".$semanas[$i]->getCodigo()."</td>";
+				$dias = $semanas[$i]->getDias();
+				echo "<td>";
+				for ($j=0; $j < count($dias); $j++)
+				{ 
+					echo $dias[$i]->getData()."<br/>";
+				}
+				echo "</td>";
+
+				echo "<td><center><a href='diaAlmoco_cad+list.php?semana_codigo=".$semanas[$i]->getCodigo()."'>+</a></center></td>";
 
 				echo "</tr>";
 			}

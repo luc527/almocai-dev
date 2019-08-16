@@ -6,15 +6,12 @@ class SemanaCardapio extends AbsCodigo
 {
 	private $dias = array();
 
-	public function getDias ()
-	{
+	public function getDias () {
 		return $this->dias;
 	}
 
-	public function setDia ($dia)
-	{
-		if ($dia instanceof DiaAlmoco)
-		{
+	public function setDia ($dia) {
+		if ($dia instanceof DiaAlmoco) {
 			array_push ($this->dias, $dia);
 		}
 	}

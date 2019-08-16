@@ -2,22 +2,18 @@
 
 require_once "autoload.php";
 
-class Alimento extends AbsCodigo
-{
+class Alimento extends AbsCodigo {
 	private $descricao;
 
-	public function __construct ($descricao)
-	{
+	public function __construct ($descricao) {
 		$this->descricao = $descricao;
 	}
 
-	public function getDescricao ()
-	{
+	public function getDescricao ()	{
 		return $this->descricao;
 	}
 
-	public function setDescricao ($descricao)
-	{
+	public function setDescricao ($descricao) {
 		$this->descricao = $descricao;
 	}
 }

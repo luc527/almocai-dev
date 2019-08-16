@@ -8,10 +8,8 @@ require_once "autoload.php";
 if (isset($_POST['acao'])) $acao = $_POST['acao'];
 else if (isset($_GET['acao'])) $acao = $_GET['acao'];
 
-if(isset($acao))
-{
-	if ($acao == 'Inserir')
-	{
+if(isset($acao)) {
+	if ($acao == 'Inserir') {
 		$semanaDao = new SemanaCardapioDao;
 		$codigo = $semanaDao->SelectUltimoCod() + 1;
 
@@ -53,15 +51,13 @@ if(isset($acao))
 			<tbody>
 
 			<?php
-			for ($i=0; $i < count($semanas); $i++)
-			{ 
+			for ($i=0; $i < count($semanas); $i++) { 
 				echo "<tr>";
 				
 				echo "<td>".$semanas[$i]->getCodigo()."</td>";
 				$dias = $semanas[$i]->getDias();
 				echo "<td>";
-				for ($j=0; $j < count($dias); $j++)
-				{ 
+				for ($j=0; $j < count($dias); $j++) { 
 					echo $dias[$i]->getData()."<br/>";
 				}
 				echo "</td>";

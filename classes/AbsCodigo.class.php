@@ -2,8 +2,7 @@
 
 require_once "autoload.php";
 
-abstract class AbsCodigo
-{
+abstract class AbsCodigo {
 	private $codigo;
 
 	/*
@@ -13,13 +12,11 @@ abstract class AbsCodigo
 	}
 	*/
 
-	public function getCodigo ()
-	{
+	public function getCodigo () {
 		return $this->codigo;
 	}
 
-	public function setCodigo ($codigo)
-	{
+	public function setCodigo ($codigo) {
 		$this->codigo = $codigo;
 	}
 }

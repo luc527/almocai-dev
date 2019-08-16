@@ -4,21 +4,17 @@
 
 require_once "autoload.php";
 
-class AlimentoDao
-{
+class AlimentoDao {
 	public static $instance;
 
-	public static function getInstance ()
-	{
-		if (!isset(self::$instance))
-		{
+	public static function getInstance () {
+		if (!isset(self::$instance)) {
 			self::$instance = new AlimentoDao;
 		}
 		return $instance;
 	}
 
-	public function Inserir (Alimento $alimento, $diaAlmoco_codigo)
-	{
+	public function Inserir (Alimento $alimento, $diaAlmoco_codigo)	{
 		$sql = "INSERT INTO Alimento (descricao, diaAlmoco_codigo) VALUES (:descricao, :diaAlmoco_codigo)";
 		
 		$pdo = Conexao::conexao();

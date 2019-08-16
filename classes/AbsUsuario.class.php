@@ -2,27 +2,22 @@
 
 require_once "autoload.php";
 
-class AbsUsuario extends AbsCodigo
-{
+class AbsUsuario extends AbsCodigo {
     private $nome;
     private $senha;
 
-    public function setSenha ($senha)
-    {
+    public function setSenha ($senha) {
         $this->senha = $senha;
     }
-    public function getSenha ()
-    {
+    public function getSenha () {
         return $this->senha;
     }
 
-    public function setNome ($nome)
-    {
+    public function setNome ($nome) {
         $this->nome = $nome;
     }
 
-    public function getNome ()
-    {
+    public function getNome () {
         return $this->nome;  
     }
 }

@@ -2,14 +2,11 @@
 
 require_once "autoload.php";
 
-class SemanaCardapioDao
-{
+class SemanaCardapioDao {
 	private $instance;
 
-	public static function getInstance ()
-	{
-		if (!isset(self::$instance))
-		{
+	public static function getInstance () {
+		if (!isset(self::$instance)) {
 			self::$instance = new SemanaCardapioDao;
 		}
 		return $instance;
@@ -19,8 +16,7 @@ class SemanaCardapioDao
 	/////////////////////////
 	// FUNÇÕES DE INSERÇÃO //
 
-	public function Inserir (SemanaCardapio $semanaCardapio)
-	{
+	public function Inserir (SemanaCardapio $semanaCardapio) {
 		$sql = "INSERT INTO SemanaCardapio (codigo) VALUES (null)";
 
 		$pdo = Conexao::conexao();
@@ -30,11 +26,9 @@ class SemanaCardapioDao
 		return $p_sql->execute();
 	}
 
-	public function InserirDias (SemanaCardapio $semanaCardapio)
-	{
+	public function InserirDias (SemanaCardapio $semanaCardapio) {
 		$dias = $semanaCardapio->getDias();
-		for ($i=0; $i < count($dias); $i++)
-		{ 
+		for ($i=0; $i < count($dias); $i++)	{ 
 			$diaAlmocoDao = new DiaAlmocoDao;
 			$diaAlmocoDao->Inserir($dias[$i], $semanaCardapio->getCodigo());
 		}
@@ -44,16 +38,14 @@ class SemanaCardapioDao
 	////////////////////////
 	// FUNÇÕES DE SELEÇÃO //
 
-	public function Popula ($row)
-	{
+	public function Popula ($row) {
 		$semana = new SemanaCardapio;
 		$semana->setCodigo($row['codigo']);
 
 		return $semana;
 	}
 
-	public function SelectPorCodigo ($codigo)
-	{
+	public function SelectPorCodigo ($codigo) {
 		$sql = "SELECT * FROM SemanaCardapio WHERE codigo = ".$codigo." ORDER BY codigo";
 
 		$query = Conexao::conexao()->query($sql);
@@ -62,45 +54,37 @@ class SemanaCardapioDao
 		return $this->Popula($row);
 	}
 
-	public function SelectTodos ()
-	{
+	public function SelectTodos () {
 		$sql = "SELECT * FROM SemanaCardapio ORDER BY codigo";
 
 		$query = Conexao::conexao()->query($sql);
 
 		$semanas = array();
-		while ($row = $query->fetch(PDO::FETCH_ASSOC))
-		{
+		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 			array_push($semanas, $this->Popula($row));
 		}
 
 		return $semanas;
 	}
 
-	public function SelectTodosComDias ()
-	{
+	public function SelectTodosComDias () {
 		$semanas = $this->SelectTodos();
 
 		$diaDao = new DiaAlmocoDao;
-		for ($i=0; $i < count($semanas); $i++)
-		{ 
+		for ($i=0; $i < count($semanas); $i++) { 
 			$dias = $diaDao->SelectPorSemana($semanas[$i]->getCodigo());
 
-			if (isset($dias))
-			{
-				for ($j=0; $j < count($dias); $j++)
-				{ 
+			if (isset($dias)) {
+				for ($j=0; $j < count($dias); $j++)	{ 
 					$semanas[$i]->setDia($dias[$i]);
-				}
-					
+				}					
 			}
 		}
 
 		return $semanas;
 	}
 
-	public function SelectUltimoCod ()
-	{
+	public function SelectUltimoCod () {
 		$sql = "SELECT codigo FROM SemanaCardapio ORDER BY codigo DESC LIMIT 1";
 
 		$query = Conexao::conexao()->query($sql);

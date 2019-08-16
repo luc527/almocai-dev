@@ -1,13 +1,10 @@
 <?php
 
-class DiaAlmocoDao
-{
+class DiaAlmocoDao {
 	private $instance;
 
-	public static function getInstance ()
-	{
-		if (!isset(self::$instance))
-		{
+	public static function getInstance () {
+		if (!isset(self::$instance)) {
 			self::$instance = new DiaAlmocoDao;
 		}
 		return $instance;
@@ -17,8 +14,7 @@ class DiaAlmocoDao
 	/////////////////////////
 	// FUNÇÕES DE INSERÇÃO //
 
-	public function Inserir (DiaAlmoco $diaAlmoco, $semanaCardapio_codigo)
-	{
+	public function Inserir (DiaAlmoco $diaAlmoco, $semanaCardapio_codigo) {
 		$sql = "INSERT INTO DiaAlmoco (data, semanaCardapio_codigo) VALUES (:data, :semanaCardapio_codigo)";
 		
 		$pdo = Conexao::conexao();
@@ -33,11 +29,9 @@ class DiaAlmocoDao
 		return $p_sql->execute();
 	}
 
-	public function InserirAlimentos (DiaAlmoco $diaAlmoco)
-	{
+	public function InserirAlimentos (DiaAlmoco $diaAlmoco) {
 		$alimentos = $diaAlmoco->getAlimentos();
-		for ($i=0; $i < count($alimentos); $i++)
-		{ 
+		for ($i=0; $i < count($alimentos); $i++) { 
 			$alimentoDao = new AlimentoDao;
 			$alimentoDao->Inserir($alimentos[$i], $diaAlmoco->getCodigo());
 		}
@@ -47,8 +41,7 @@ class DiaAlmocoDao
 	////////////////////////
 	// FUNÇÕES DE SELEÇÃO //
 
-	public function Popula ($row)
-	{
+	public function Popula ($row) {
 		// Função que recebe uma linha de um SELECT FROM DiaAlmoco e popula um objeto DiaAlmoco com as informações recebidas
 
 		$dia = new DiaAlmoco;
@@ -58,22 +51,19 @@ class DiaAlmocoDao
 		return $dia;
 	}
 
-	public function SelectTodos ()
-	{
+	public function SelectTodos () {
 		$sql = "SELECT * FROM DiaAlmoco ORDER BY codigo";
 		$query = Conexao::conexao()->query($sql);
 
 		$dias = array();
-		while ($row = $query->fetch(PDO::FETCH_ASSOC))
-		{
+		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 			array_push ($dias, $this->Popula($row));
 		}
 
 		return $dias;
 	}
 
-	public function SelectPorSemana ($semana_codigo)
-	{
+	public function SelectPorSemana ($semana_codigo) {
 		$sql = "SELECT * FROM DiaAlmoco WHERE semanaCardapio_codigo = ".$semana_codigo." ORDER BY `data`";
 		$query = Conexao::conexao()->query($sql);
 
@@ -86,8 +76,7 @@ class DiaAlmocoDao
 		return $dias;
 	}
 
-	public function SelectUltimoCod ()
-	{
+	public function SelectUltimoCod () {
 		$sql = "SELECT codigo FROM DiaAlmoco ORDER BY codigo DESC LIMIT 1";
 
 		$query = Conexao::conexao()->query($sql);

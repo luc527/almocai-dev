@@ -8,20 +8,23 @@ require_once "autoload.php";
 if (isset($_POST['acao'])) $acao = $_POST['acao'];
 else if (isset($_GET['acao'])) $acao = $_GET['acao'];
 
-if(isset($acao))
-{
-	if ($acao == 'Inserir')
-	{
-		$semana = new SemanaCardapio;
-		$semana->setCodigo($_POST['semana_codigo']);
-
+if(isset($acao)) {
+	if ($acao == 'Inserir')	{
 		$diaDao = new DiaAlmocoDao;
 		$codigo = $diaDao->SelectUltimoCod() + 1;
 
+		$diaSemana = new DiaSemana;
+		$diaSemana->setCodigo($_POST['diaSemana_codigo']);
+
+		// POPULAÇÃO OBJETO 'DiaAlmoco'
 		$dia = new DiaAlmoco;
 		$dia->setData($_POST['data']);
 		$dia->setCodigo($codigo);
+		$dia->setDiaSemana($diaSemana);
 
+		// POPULAÇÃO OBJETO 'SemanaCardapio' COM O DIA
+		$semana = new SemanaCardapio;
+		$semana->setCodigo($_POST['semana_codigo']);
 		$semana->setDia($dia);
 
 		$semanaDao = new SemanaCardapioDao;
@@ -37,8 +40,9 @@ if(isset($acao))
 </head>
 <body>
 	<form action="" method="post">
-		<input type="date" name="data" id="data">
 		<input type="hidden" name="semana_codigo" id="semana_codigo" value="<?php echo $_GET['semana_codigo']; ?>">
+		<input type="date" name="data" id="data"> <br/>
+		<?php echo DiaSemanaDao::GerarSelectHTML(); ?>
 		<button name="acao" value="Inserir">Criar dia</button>
 	</form>
 
@@ -65,8 +69,7 @@ if(isset($acao))
 			<tbody>
 
 			<?php
-			for ($i=0; $i < count($dias); $i++)
-			{ 
+			for ($i=0; $i < count($dias); $i++) { 
 				echo "<tr>";
 				
 				echo "<td>".$dias[$i]->getCodigo()."</td>";

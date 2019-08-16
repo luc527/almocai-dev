@@ -15,15 +15,18 @@ class DiaAlmocoDao {
 	// FUNÇÕES DE INSERÇÃO //
 
 	public function Inserir (DiaAlmoco $diaAlmoco, $semanaCardapio_codigo) {
-		$sql = "INSERT INTO DiaAlmoco (data, semanaCardapio_codigo) VALUES (:data, :semanaCardapio_codigo)";
+		$sql = "INSERT INTO DiaAlmoco (`data`, diaSemana_codigo, semanaCardapio_codigo) VALUES (:data, :diaSemana_codigo, :semanaCardapio_codigo)";
+		var_dump($sql);
 		
 		$pdo = Conexao::conexao();
 
 		$p_sql = $pdo->prepare($sql);
 
 		$p_sql->bindParam(":data", $data);
+		$p_sql->bindParam(":diaSemana_codigo", $diaSemana_codigo);
 		$p_sql->bindParam(":semanaCardapio_codigo", $semanaCardapio_codigo);
 
+		$diaSemana_codigo = $diaAlmoco->getDiaSemana()->getCodigo();
 		$data = $diaAlmoco->getData();
 
 		return $p_sql->execute();
@@ -44,9 +47,19 @@ class DiaAlmocoDao {
 	public function Popula ($row) {
 		// Função que recebe uma linha de um SELECT FROM DiaAlmoco e popula um objeto DiaAlmoco com as informações recebidas
 
+		$diaSemDao = new DiaSemanaDao;
+
+		if (isset($row['diaSemana_codigo'])) {
+			$diaSemana = $diaSemDao->SelectPorCodigo($row['diaSemana_codigo']);
+		}
+		else {
+			$diaSemana = new DiaSemana;
+		}
+		
 		$dia = new DiaAlmoco;
 		$dia->setCodigo($row['codigo']);
 		$dia->setData($row['data']);
+		$dia->setDiaSemana($diaSemana);
 
 		return $dia;
 	}

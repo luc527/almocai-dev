@@ -15,7 +15,7 @@ class DiaSemana extends AbsCodigo {
 	}
 
 	public function setDescricao ($desc) {
-		$this->descricao($desc);
+		$this->descricao = $desc;
 	}
 }
 

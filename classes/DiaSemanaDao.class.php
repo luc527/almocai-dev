@@ -37,6 +37,13 @@ class DiaSemanaDao {
 		return $diasSemana;
 	}
 
+	public function SelectPorCodigo ($codigo) {
+		$sql = "SELECT * FROM DiaSemana WHERE codigo = ".$codigo." ORDER BY codigo";
+		$query = Conexao::conexao()->query($sql);
+		$row = $query->fetch(PDO::FETCH_ASSOC);
+		return $this->Popula($row);
+	}
+
 	public static function GerarSelectHTML () {
 		return Funcoes::GerarSelectHTML("DiaSemana", "diaSemana_codigo", 0, "codigo", "descricao");
 	}

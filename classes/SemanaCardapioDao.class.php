@@ -76,7 +76,7 @@ class SemanaCardapioDao {
 
 			if (isset($dias)) {
 				for ($j=0; $j < count($dias); $j++)	{ 
-					$semanas[$i]->setDia($dias[$i]);
+					$semanas[$i]->setDia($dias[$j]);
 				}					
 			}
 		}
@@ -92,6 +92,11 @@ class SemanaCardapioDao {
 		$row = $query->fetch(PDO::FETCH_ASSOC);
 		
 		return $row['codigo'];
+	}
+
+
+	public static function GerarSelectHTML () {
+		return Funcoes::GerarSelectHTML("SemanaCardapio", "semanaCardapio_codigo", 0, "codigo", "codigo");
 	}
 
 }

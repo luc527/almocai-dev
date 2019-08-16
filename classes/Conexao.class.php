@@ -19,7 +19,7 @@ class Conexao
 
 		try
 		{
-			self::$instance = new PDO("$db_driver:host=$db_host; dbname=$db_nome", $db_usuariom, $db_senha);
+			self::$instance = new PDO("$db_driver:host=$db_host; dbname=$db_nome", $db_usuario, $db_senha);
 			self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			self::$instance->exec("SET NAMES utf8");
 		} catch (PDOException $e)

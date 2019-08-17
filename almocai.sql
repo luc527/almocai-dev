@@ -35,6 +35,23 @@ begin
 end :)
 delimiter ;
 
+/* (não funcionou)
+delimiter :)
+create trigger atualiza_dias_semana
+after update on SemanaCardapio for each row
+begin
+	update DiaAlmoco set `data` = new.data_inicio where `data` = old.data_inicio;
+    update DiaAlmoco set `data` = date_add(new.data_inicio, interval 1 day) where `data` = date_add(old.data_inicio, interval 1 day);
+    update DiaAlmoco set `data` = date_add(new.data_inicio, interval 2 day) where `data` = date_add(old.data_inicio, interval 2 day);
+    update DiaAlmoco set `data` = date_add(new.data_inicio, interval 3 day) where `data` = date_add(old.data_inicio, interval 3 day);
+    update DiaAlmoco set `data` = date_add(new.data_inicio, interval 4 day) where `data` = date_add(old.data_inicio, interval 4 day);
+end :)
+delimiter ;
+*/
+
+update DiaAlmoco set `data` = date_add('2019-08-19', interval 1 day) where `data` = date_add('2019-08-12', interval 1 day);
+
+
 create table if not exists Alimento (
 	codigo int primary key auto_increment,
     descricao varchar(100),

@@ -12,12 +12,14 @@ require_once "autoload.php";
 	<meta charset="utf-8">
 </head>
 <body>
+	<!-- Comentado pois o usuário nunca irá inserir dias, pois 5 dias são criados automaticamente para cada semana.
 	<form action="diaAlmoco_acao.php" method="post">
 		<input type="date" name="data" id="data"> <br/>
-		<?php echo DiaSemanaDao::GerarSelectHTML(); ?> <br/>
-		<label for="semanaCardapio_codigo">Semana</label> <?php echo SemanaCardapioDao::GerarSelectHTML(); ?> <br/>
+		<?php //echo DiaSemanaDao::GerarSelectHTML(); ?> <br/>
+		<label for="semanaCardapio_codigo">Semana</label> <?php //echo SemanaCardapioDao::GerarSelectHTML(); ?> <br/>
 		<button name="acao" value="Inserir">Criar dia</button>
 	</form>
+	-->
 
 	<hr/>
 

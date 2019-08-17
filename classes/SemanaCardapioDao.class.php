@@ -26,6 +26,8 @@ class SemanaCardapioDao {
 		return $p_sql->execute();
 	}
 
+	/* O usuário nunca irá inserir dias no banco de dados. O banco de dados tem um gatilho 'cria_dias_semana' que, após uma semana ser criada (INSERT INTO SemanaCardapio), são criados automaticamente 5 dias (Segunda, Terça, ...) para a semana. Ver no almocai.sql para entender como funciona
+
 	public function InserirDias (SemanaCardapio $semanaCardapio) {
 		$dias = $semanaCardapio->getDias();
 		for ($i=0; $i < count($dias); $i++)	{ 
@@ -33,6 +35,7 @@ class SemanaCardapioDao {
 			$diaAlmocoDao->Inserir($dias[$i], $semanaCardapio->getCodigo());
 		}
 	}
+	*/
 
 
 	////////////////////////

@@ -14,6 +14,7 @@ class DiaAlmocoDao {
 	/////////////////////////
 	// FUNÇÕES DE INSERÇÃO //
 
+	/* Usuário nunca irá inserir dias, pois o banco de dados cria 5 dias (Seg, Ter ...) automaticamente para cada semana.
 	public function Inserir (DiaAlmoco $diaAlmoco, $semanaCardapio_codigo) {
 		$sql = "INSERT INTO DiaAlmoco (`data`, diaSemana_codigo, semanaCardapio_codigo) VALUES (:data, :diaSemana_codigo, :semanaCardapio_codigo)";
 		var_dump($sql);
@@ -31,6 +32,7 @@ class DiaAlmocoDao {
 
 		return $p_sql->execute();
 	}
+	*/
 
 	public function InserirAlimentos (DiaAlmoco $diaAlmoco) {
 		$alimentos = $diaAlmoco->getAlimentos();

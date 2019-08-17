@@ -5,7 +5,9 @@ require_once "autoload.php";
 if (isset($_POST['acao'])) $acao = $_POST['acao'];
 else if (isset($_GET['acao'])) $acao = $_GET['acao'];
 
+
 if(isset($acao)) {
+	/* Usuário nunca irá inserir dias, pois o banco cria 5 dias para a semana automaticamente. Ver trigger 'cria_dias_semanas' em almocai.sql
 	if ($acao == 'Inserir')	{
 		$diaDao = new DiaAlmocoDao;
 		$codigo = $diaDao->SelectUltimoCod() + 1;
@@ -27,6 +29,7 @@ if(isset($acao)) {
 		$semanaDao = new SemanaCardapioDao;
 		$semanaDao->InserirDias($semana);
 	}
+	*/
 }
 
 header("location:diaAlmoco_list.php");

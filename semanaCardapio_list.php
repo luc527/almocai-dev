@@ -107,22 +107,11 @@ if (isset($acao)) {
 
 							$alimentos = $dias[$j]->getAlimentos();
 							
-							echo "<table border='1' style='background-color: lightgrey'>";
-								echo "<thead>";
-									echo "<tr>";
-										echo "<th>Código</th>";
-										echo "<th>Descrição</th>";
-									echo "</tr>";
-								echo "</thead>";
-								echo "<tbody>";
+							echo "<ul>";
 								for ($k=0; $k < count($alimentos); $k++) { 
-									echo "<tr>";
-										echo "<td>".$alimentos[$k]->getCodigo()."</td>";
-										echo "<td>".$alimentos[$k]->getDescricao()."</td>";
-									echo "</tr>";
+									echo "<li><b>".$alimentos[$k]->getDescricao()."</b> [".$alimentos[$k]->getCodigo()."]</li>";
 								}
-								echo "</tbody>";
-							echo "</table>";
+							echo "</ul>";
 
 							echo "</td>";
 

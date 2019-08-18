@@ -100,6 +100,21 @@ class DiaAlmocoDao {
 		
 		return $row['codigo'];
 	}
+
+	public function SelectAlimentos ($dias) {
+		//print_r ($dias[0]);
+		$alimentoDao = new AlimentoDao;
+
+		for ($i=0; $i < count($dias); $i++) {
+			$alimentos = $alimentoDao->SelectPorDia($dias[$i]->getCodigo());
+
+			for ($j=0; $j < count($alimentos); $j++) { 
+				$dias[$i]->setAlimento($alimentos[$j]);
+			}
+		}
+
+		return $dias;
+	}
 }
 
 ?>

@@ -17,11 +17,13 @@ class SemanaCardapioDao {
 	// FUNÇÕES DE INSERÇÃO //
 
 	public function Inserir (SemanaCardapio $semanaCardapio) {
-		$sql = "INSERT INTO SemanaCardapio (codigo) VALUES (null)";
+		$sql = "INSERT INTO SemanaCardapio (data_inicio) VALUES (:data_inicio)";
 
 		$pdo = Conexao::conexao();
 
 		$p_sql = $pdo->prepare($sql);
+
+		$p_sql->bindParam(":data_inicio", $semanaCardapio->getData_inicio());
 
 		return $p_sql->execute();
 	}
@@ -44,17 +46,29 @@ class SemanaCardapioDao {
 	public function Popula ($row) {
 		$semana = new SemanaCardapio;
 		$semana->setCodigo($row['codigo']);
+		$semana->setData_inicio($row['data_inicio']);
 
 		return $semana;
 	}
 
-	public function SelectPorCodigo ($codigo) {
-		$sql = "SELECT * FROM SemanaCardapio WHERE codigo = ".$codigo." ORDER BY codigo";
+	public function SelectPorCriterio ($pesquisa, $criterio) {
+		if ($criterio == 'data_inicio') {
+			$pesquisa = Funcoes::DataUserParaBD($pesquisa);
+		}
 
+		$sql = "SELECT * FROM SemanaCardapio WHERE ".$criterio." = '".$pesquisa."'";
 		$query = Conexao::conexao()->query($sql);
-		$row = $query->fetch(PDO::FETCH_ASSOC);
 
-		return $this->Popula($row);
+		$semanas = array();
+		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+			array_push ($semanas, $this->Popula($row));
+		}
+
+		return $semanas;
+	}
+
+	public function SelectPorCodigo ($codigo) {
+		return SelectPorCriterio ($codigo, 'codigo');
 	}
 
 	public function SelectTodos () {
@@ -70,10 +84,14 @@ class SemanaCardapioDao {
 		return $semanas;
 	}
 
-	public function SelectTodosComDias () {
-		$semanas = $this->SelectTodos();
+	public function SelectDias ($semanas) {
+		// Função que incrementa qualquer outro select de semanas
+		// O parâmetro precisa ser um array
+		// Recebe array de semanas que só têm código e data_inicio
+		// E retorna array de semanas com esses + os dias
 
 		$diaDao = new DiaAlmocoDao;
+		
 		for ($i=0; $i < count($semanas); $i++) { 
 			$dias = $diaDao->SelectPorSemana($semanas[$i]->getCodigo());
 

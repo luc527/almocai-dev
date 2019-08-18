@@ -19,8 +19,8 @@ class DiaAlmoco extends AbsCodigo {
 	}
 
 	public function setAlimento ($alimento)	{
-		if ($array_alimentos[$i] instanceof Alimento) {
-			array_push ($this->alimentos, $array_alimentos[$i]);
+		if ($alimento instanceof Alimento) {
+			array_push ($this->alimentos, $alimento);
 		}
 	}
 

@@ -12,6 +12,7 @@ if(isset($acao)) {
 
 		$semana = new SemanaCardapio;
 		$semana->setCodigo($codigo);
+		$semana->setData_inicio($_POST['data_inicio']);
 
 		$semanaDao->Inserir($semana);
 	}

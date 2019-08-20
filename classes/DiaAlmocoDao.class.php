@@ -115,6 +115,25 @@ class DiaAlmocoDao {
 
 		return $dias;
 	}
+
+	
+	////////////////////////
+	// FUNÇÕES DE DELETAR //	
+
+	public function Deletar (DiaAlmoco $dia) {
+		$alimentos = $dia->getAlimentos();
+		$alimentoDao = new AlimentoDao;
+		for ($i=0; $i < count($alimentos); $i++) { 
+			$alimentoDao->Deletar($alimentos[$i]);
+		}
+
+		$sql = "DELETE FROM DiaAlmoco WHERE codigo = :codigo";
+		$p_sql = Conexao::conexao()->prepare($sql);
+		$p_sql->bindParam(":codigo", $codigo);
+		$codigo = $dia->getCodigo();
+
+		return $p_sql->execute();
+	}
 }
 
 ?>

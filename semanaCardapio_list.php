@@ -56,13 +56,14 @@ if (isset($acao)) {
 
 	<hr/>
 
-	<div style="width: 70%; margin: auto;">
+	<div style="width: 90%; margin: auto;">
 		<table border="1" style="background-color: lightgrey">
 			<thead>
 				<tr>
 					<th>Código</th>
 					<th>Data do início</th>
 					<th>Dias</th>
+					<th>Remover</th>
 				</tr>
 			</thead>
 
@@ -109,7 +110,10 @@ if (isset($acao)) {
 							
 							echo "<ul>";
 								for ($k=0; $k < count($alimentos); $k++) { 
-									echo "<li><b>".$alimentos[$k]->getDescricao()."</b> [".$alimentos[$k]->getCodigo()."]</li>";
+									echo "<li>";
+									echo "<b>".$alimentos[$k]->getDescricao()."</b> [#".$alimentos[$k]->getCodigo()."]";
+									echo " - <a href='alimento_acao.php?acao=Deletar&codigo=".$alimentos[$k]->getCodigo()."'>Deletar</a>";
+									echo "</li>";
 								}
 							echo "</ul>";
 
@@ -132,6 +136,10 @@ if (isset($acao)) {
 
 						echo "</tbody>";
 					echo "</table>";
+				echo "</td>";
+
+				echo "<td>";
+					echo "<a href='semanaCardapio_acao.php?acao=Deletar&codigo=".$semanas[$i]->getCodigo()."'>X</a>";
 				echo "</td>";
 
 				echo "</tr>";

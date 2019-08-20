@@ -14,6 +14,10 @@ class AlimentoDao {
 		return $instance;
 	}
 
+	
+	////////////////////////
+	// FUNÇÕES DE INSERIR //
+
 	public function Inserir (Alimento $alimento, $diaAlmoco_codigo)	{
 		$sql = "INSERT INTO Alimento (descricao, diaAlmoco_codigo) VALUES (:descricao, :diaAlmoco_codigo)";
 		
@@ -29,8 +33,8 @@ class AlimentoDao {
 		return $p_sql->execute();
 	}
 
-
-
+	///////////////////////
+	// FUNÇÕES DE SELECT //
 
 	public function Popula ($row) {
 		$alimento = new Alimento;
@@ -52,6 +56,19 @@ class AlimentoDao {
 		}
 
 		return $alimentos;
+	}
+
+
+	////////////////////////
+	// FUNÇÕES DE DELETAR //
+
+	public function Deletar (Alimento $alimento) {
+		$sql = "DELETE FROM Alimento WHERE codigo = :codigo";
+		$p_sql = Conexao::conexao()->prepare($sql);
+		$p_sql->bindParam(":codigo", $codigo);
+		$codigo = $alimento->getCodigo();
+
+		return $p_sql->execute();
 	}
 }
 

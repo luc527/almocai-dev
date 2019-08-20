@@ -15,6 +15,27 @@ if(isset($acao)) {
 		$semana->setData_inicio($_POST['data_inicio']);
 
 		$semanaDao->Inserir($semana);
+	} else if ($acao == 'Deletar') {
+		$codigo = $_GET['codigo'];
+
+		$semana = new SemanaCardapio;
+		$semana->setCodigo($codigo);
+		$diaDao = new DiaAlmocoDao;
+		$dias = $diaDao->SelectPorSemana($semana->getCodigo());
+		$alimentoDao = new AlimentoDao;
+		for ($i=0; $i < count($dias); $i++) { 
+			$alimentos = $alimentoDao->SelectPorDia($dias[$i]->getCodigo());
+			for ($j=0; $j < count($alimentos); $j++) { 
+				$dias[$i]->setAlimento($alimentos[$j]);
+			}
+		}
+		for ($i=0; $i < count($dias); $i++) { 
+			$semana->setDia($dias[$i]);
+		}
+
+		$semanaDao = new SemanaCardapioDao;
+
+		$semanaDao->Deletar($semana);
 	}
 }
 

@@ -17,7 +17,20 @@ if (isset($acao)) {
 
 		header("location:semanaCardapio_list.php");
 
+	} else if ($acao == 'Deletar') {
+
+		$codigo = $_GET['codigo'];
+
+		$alimento = new Alimento;
+		$alimento->setCodigo($codigo);
+
+		$alimentoDao = new AlimentoDao;
+		$alimentoDao->Deletar($alimento);
+
+		header("location:semanaCardapio_list.php");
+
 	}
+
 
 }
 

@@ -120,6 +120,25 @@ class SemanaCardapioDao {
 		return Funcoes::GerarSelectHTML("SemanaCardapio", "semanaCardapio_codigo", 0, "codigo", "codigo");
 	}
 
+
+	////////////////////////
+	// FUNÇÕES DE DELETAR //
+
+	public function Deletar (SemanaCardapio $semana) {
+		$dias = $semana->getDias();
+		$diaDao = new DiaAlmocoDao;
+		for ($i=0; $i < count($dias); $i++) { 
+			$diaDao->Deletar($dias[$i]);
+		}
+
+		$sql = "DELETE FROM SemanaCardapio WHERE codigo = :codigo";
+		$p_sql = Conexao::conexao()->prepare($sql);
+		$p_sql->bindParam(":codigo", $codigo);
+		$codigo = $semana->getCodigo();
+		
+		return $p_sql->execute();
+	}
+
 }
 
 ?>

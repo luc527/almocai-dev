@@ -10,7 +10,7 @@ create table if not exists DiaSemana (
 	codigo int primary key auto_increment,
     descricao varchar(45)
 );
-insert into DiaSemana (descricao) values ('Segunda'), ('Terça'), ('Quarta'), ('Quinta'), ('Sexta');
+-- insert into DiaSemana (descricao) values ('Segunda'), ('Terça'), ('Quarta'), ('Quinta'), ('Sexta');
 
 create table if not exists DiaAlmoco (
 	codigo int primary key auto_increment,

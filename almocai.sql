@@ -51,7 +51,7 @@ create table if not exists Aluno (
 create table if not exists Presenca (
 	aluno_matricula int,
     diaAlmoco_codigo int,
-    presenca binary,
+    presenca tinyint,
     primary key (aluno_matricula, diaAlmoco_codigo),
     foreign key (aluno_matricula) references Aluno(matricula),
     foreign key (diaAlmoco_codigo) references DiaAlmoco(codigo)

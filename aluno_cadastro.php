@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,12 +9,14 @@
 <body>
     <form action="aluno_acao.php" method="post">
         <fieldset>
-            <label for="matricula">Matricula</label>
-            <input type="text" name="matricula" id="matricula"><br>
-            <label for="senha">Senha</label>
-            <input type="password" name="senha" id="senha"><br>
-            <label for="nome">Nome(completo)</label>
-            <input type="text" name="nome" id="nome"><br>
+            <label for="matricula">Matrícula: </label> <br/>
+            <input type="text" name="matricula" id="matricula"> <br/><br/>
+
+            <label for="senha">Senha: </label> <br/>
+            <input type="password" name="senha" id="senha"> <br/><br/>
+
+            <label for="nome">Nome completo </label> <br/>
+            <input type="text" name="nome" id="nome"> <br/><br/>
             <center>
                 <button type="submit" name="acao" value="inserir">Cadastrar</button>
             </center>

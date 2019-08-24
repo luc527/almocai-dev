@@ -22,7 +22,7 @@ class DiaAlmocoDao {
 			try {
 				$sql = "INSERT INTO Presenca (aluno_matricula, dia_id) VALUES (:aluno, :dia)";
 				
-				$stmt = Conexao::getInstance->prepare($sql);
+				$stmt = Conexao::conexao()->prepare($sql);
 				
 				$stmt->bindParam(":aluno", $aluno_mat);
 				$stmt->bindParam(":dia", $dia_cod);

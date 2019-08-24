@@ -1,7 +1,11 @@
 <?php
-    $acao = isset($_POST['acao'])?$_POST['acao']:$_GET['acao'];
     require_once "autoload.php";
-    if($acao == "inserir"){
+
+    if (isset($_POST['acao'])) $acao = $_POST['acao'];
+    else if (isset($_GET['acao'])) $acao = $_GET['acao'];
+    else $acao = '';
+
+    if ($acao == "inserir") {
         // adquirindo campos
         $matricula = isset($_POST['matricula'])?$_POST['matricula']:"";
         $senha = isset($_POST['senha'])?sha1($_POST['senha']):"";
@@ -17,5 +21,22 @@
         $alunoDao = new AlunoDao;
         $alunoDao->Inserir($aluno);
         #header("aluno_cadastro.php");
+    } else if ($acao == 'Login') {
+        $aluno = new Aluno;
+        $aluno->setCodigo( $_POST['matricula'] );
+        $aluno->setSenha( sha1($_POST['senha']) );
+
+        $login = AlunoDao::Login($aluno);
+
+        var_dump($login);
+
+        if ($login[0] != 'fazer_login') {
+            header("location:login.php?erro=".$login[0]);
+        } else {
+            session_start();
+            $_SESSION['aluno_matricula'] = $login[1];
+            $_SESSION['aluno_nome'] = $login[2];
+            header("location:index.php");
+        }
     }
 ?>

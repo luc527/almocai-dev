@@ -2,7 +2,7 @@
 
 <?php
 
-include 'valida_secao.php';
+include 'valida_secao_aluno.php';
 
 ?>
 

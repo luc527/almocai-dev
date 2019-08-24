@@ -7,24 +7,21 @@ else if (isset($_GET['acao'])) $acao = $_GET['acao'];
 
 if(isset($acao)) {
 	if ($acao == 'Inserir') {
-		$semanaDao = new SemanaCardapioDao;
-		$codigo = $semanaDao->SelectUltimoCod() + 1;
+		$codigo = SemanaCardapioDao::SelectUltimoCod() + 1;
 
 		$semana = new SemanaCardapio;
 		$semana->setCodigo($codigo);
 		$semana->setData_inicio($_POST['data_inicio']);
 
-		$semanaDao->Inserir($semana);
+		SemanaCardapioDao::Inserir($semana);
 	} else if ($acao == 'Deletar') {
 		$codigo = $_GET['codigo'];
 
 		$semana = new SemanaCardapio;
 		$semana->setCodigo($codigo);
-		$diaDao = new DiaAlmocoDao;
-		$dias = $diaDao->SelectPorSemana($semana->getCodigo());
-		$alimentoDao = new AlimentoDao;
+		$dias = DiaAlmocoDao::SelectPorSemana($semana->getCodigo());
 		for ($i=0; $i < count($dias); $i++) { 
-			$alimentos = $alimentoDao->SelectPorDia($dias[$i]->getCodigo());
+			$alimentos = AlimentoDao::SelectPorDia($dias[$i]->getCodigo());
 			for ($j=0; $j < count($alimentos); $j++) { 
 				$dias[$i]->setAlimento($alimentos[$j]);
 			}
@@ -33,11 +30,9 @@ if(isset($acao)) {
 			$semana->setDia($dias[$i]);
 		}
 
-		$semanaDao = new SemanaCardapioDao;
-
-		$semanaDao->Deletar($semana);
+		SemanaCardapioDao::Deletar($semana);
 	}
 }
 
-header("location:semanaCardapio_list.php");
+header("location:semanaCardapio_cad+list.php");
 ?>

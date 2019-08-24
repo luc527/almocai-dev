@@ -10,8 +10,7 @@ class DiaAlmocoDao {
 	public static function InserirAlimentos (DiaAlmoco $diaAlmoco) {
 		$alimentos = $diaAlmoco->getAlimentos();
 		for ($i=0; $i < count($alimentos); $i++) { 
-			$alimentoDao = new AlimentoDao;
-			$alimentoDao->Inserir($alimentos[$i], $diaAlmoco->getCodigo());
+			AlimentoDao::Inserir($alimentos[$i], $diaAlmoco->getCodigo());
 		}
 	}
 
@@ -44,10 +43,8 @@ class DiaAlmocoDao {
 	public static function Popula ($row) {
 		// Função que recebe uma linha de um SELECT FROM DiaAlmoco e popula um objeto DiaAlmoco com as informações recebidas
 
-		$diaSemDao = new DiaSemanaDao;
-
 		if (isset($row['diaSemana_codigo'])) {
-			$diaSemana = $diaSemDao->SelectPorCodigo($row['diaSemana_codigo']);
+			$diaSemana = DiaSemanaDao::SelectPorCodigo($row['diaSemana_codigo']);
 		}
 		else {
 			$diaSemana = new DiaSemana;
@@ -67,7 +64,7 @@ class DiaAlmocoDao {
 
 		$dias = array();
 		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-			array_push ($dias, $this->Popula($row));
+			array_push ($dias, self::Popula($row));
 		}
 
 		return $dias;
@@ -80,7 +77,7 @@ class DiaAlmocoDao {
 		$dias = array();
 
 		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-			array_push($dias, $this->Popula($row));
+			array_push($dias, self::Popula($row));
 		}
 
 		return $dias;
@@ -96,19 +93,15 @@ class DiaAlmocoDao {
 		return $row['codigo'];
 	}
 
-	public static function SelectAlimentos ($dias) {
-		//print_r ($dias[0]);
-		$alimentoDao = new AlimentoDao;
+	public static function SelectAlimentos ($dia) {
+		
+		$alimentos = AlimentoDao::SelectPorDia($dia->getCodigo());
 
-		for ($i=0; $i < count($dias); $i++) {
-			$alimentos = $alimentoDao->SelectPorDia($dias[$i]->getCodigo());
-
-			for ($j=0; $j < count($alimentos); $j++) { 
-				$dias[$i]->setAlimento($alimentos[$j]);
-			}
+		for ($i=0; $i < count($alimentos); $i++) { 
+			$dia->setAlimento($alimentos[$i]);
 		}
-
-		return $dias;
+		
+		return $dia;
 	}
 
 	
@@ -117,9 +110,8 @@ class DiaAlmocoDao {
 
 	public static function Deletar (DiaAlmoco $dia) {
 		$alimentos = $dia->getAlimentos();
-		$alimentoDao = new AlimentoDao;
 		for ($i=0; $i < count($alimentos); $i++) { 
-			$alimentoDao->Deletar($alimentos[$i]);
+			AlimentoDao::Deletar($alimentos[$i]);
 		}
 
 		$sql = "DELETE FROM DiaAlmoco WHERE codigo = :codigo";

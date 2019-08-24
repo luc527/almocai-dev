@@ -44,7 +44,7 @@ create table if not exists Alimento (
 
 create table if not exists Aluno (
     matricula int primary key,
-    senha varchar(40),
+    senha varchar(255),
     nome varchar(100)
 );
 

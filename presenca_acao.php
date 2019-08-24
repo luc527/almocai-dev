@@ -16,9 +16,10 @@ $alunoPres->setAluno( $aluno );
 $alunoPres->setPresenca( $presenca );
 
 $diaAlmoco = new DiaAlmoco;
+$diaAlmoco->setCodigo( $_POST['dia'] );
 $diaAlmoco->setPresenca( $alunoPres );
 
-DiaAlmocoDao::InserirPresencas($diaAlmoco);
+DiaAlmocoDao::InserirPresencas($diaAlmoco);	
 
 header("location:semanaCardapio_view.php?codigo=".$cod_semana);
 

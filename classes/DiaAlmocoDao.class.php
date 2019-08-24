@@ -18,21 +18,39 @@ class DiaAlmocoDao {
 		$presencas = $diaAlmoco->getPresencas();
 
 		for ($i=0; $i < count($presencas); $i++) { 
+			self::DeletarPresenca($presencas[$i]->getAluno()->getCodigo(), $diaAlmoco->getCodigo());
+			// Se já existe uma presença marcada pra esse dia, o sistema a deleta e insere uma nova
+			// Se não existe, ele tenta deletar, mas não deleta nada (porque não existe), e simplesmente insere uma nova
+
 			try {
-				$sql = "INSERT INTO Presenca (aluno_matricula, dia_id) VALUES (:aluno, :dia)";
+				$sql = "INSERT INTO Presenca (aluno_matricula, diaAlmoco_codigo, presenca) VALUES (:aluno, :dia, :presenca)";
 				
 				$stmt = Conexao::conexao()->prepare($sql);
 				
 				$stmt->bindParam(":aluno", $aluno_mat);
 				$stmt->bindParam(":dia", $dia_cod);
+				$stmt->bindParam(":presenca", $pres);
 
 				$aluno_mat = $presencas[$i]->getAluno()->getCodigo();
 				$dia_cod = $diaAlmoco->getCodigo();
+				$pres = $presencas[$i]->getPresenca();
 
 				return $stmt->execute();
 			} catch (Exception $e) {
 				echo $e->getMessage();
 			}
+		}
+	}
+
+	public static function DeletarPresenca($aluno, $dia) {
+		try {	
+			$sql = "DELETE FROM Presenca WHERE aluno_matricula = :aluno AND diaAlmoco_codigo = :dia";
+			$stmt = Conexao::conexao()->prepare($sql);
+			$stmt->bindParam(":aluno", $aluno);
+			$stmt->bindParam(":dia", $dia);
+			return $stmt->execute();
+		} catch (Exception $e) {
+			echo $e->getMessage();
 		}
 	}
 

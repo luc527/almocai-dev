@@ -47,9 +47,9 @@ class DiaAlmoco extends AbsCodigo {
 		return $this->presencas;
 	}
 
-	public function setPresenca($aluno) {
-		if ($aluno instanceof Aluno) {
-			array_push($this->presencas, $aluno);
+	public function setPresenca($aluno_p) {
+		if ($aluno_p instanceof AlunoPresenca) {
+			array_push($this->presencas, $aluno_p);
 		}
 	}
 }

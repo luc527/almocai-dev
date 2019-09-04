@@ -12,12 +12,23 @@ if (isset($acao)) {
 		$alimento = new Alimento;
 		$alimento->setDescricao($_POST['descricao']);
 
-		$alimentoDao = new AlimentoDao;
-		$alimentoDao->Inserir($alimento, $_POST['diaAlmoco_codigo']);
+		AlimentoDao::Inserir($alimento, $_POST['diaAlmoco_codigo']);
 
-		header("location:semanaCardapio_list.php");
+		header("location:semanaCardapio_cad+list.php");
+
+	} else if ($acao == 'Deletar') {
+
+		$codigo = $_GET['codigo'];
+
+		$alimento = new Alimento;
+		$alimento->setCodigo($codigo);
+
+		AlimentoDao::Deletar($alimento);
+
+		header("location:semanaCardapio_cad+list.php");
 
 	}
+
 
 }
 

@@ -16,7 +16,7 @@ class SemanaCardapioDao {
 	/////////////////////////
 	// FUNÇÕES DE INSERÇÃO //
 
-	public function Inserir (SemanaCardapio $semanaCardapio) {
+	public static function Inserir (SemanaCardapio $semanaCardapio) {
 		$sql = "INSERT INTO SemanaCardapio (data_inicio) VALUES (:data_inicio)";
 
 		$pdo = Conexao::conexao();
@@ -43,7 +43,7 @@ class SemanaCardapioDao {
 	////////////////////////
 	// FUNÇÕES DE SELEÇÃO //
 
-	public function Popula ($row) {
+	public static function Popula ($row) {
 		$semana = new SemanaCardapio;
 		$semana->setCodigo($row['codigo']);
 		$semana->setData_inicio($row['data_inicio']);
@@ -51,7 +51,7 @@ class SemanaCardapioDao {
 		return $semana;
 	}
 
-	public function SelectPorCriterio ($pesquisa, $criterio) {
+	public static function SelectPorCriterio ($pesquisa, $criterio) {
 		if ($criterio == 'data_inicio') {
 			$pesquisa = Funcoes::DataUserParaBD($pesquisa);
 		}
@@ -61,51 +61,46 @@ class SemanaCardapioDao {
 
 		$semanas = array();
 		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-			array_push ($semanas, $this->Popula($row));
+			array_push ($semanas, self::Popula($row));
 		}
 
 		return $semanas;
 	}
 
-	public function SelectPorCodigo ($codigo) {
-		return SelectPorCriterio ($codigo, 'codigo');
+	public static function SelectPorCodigo ($codigo) {
+		$semanas = self::SelectPorCriterio ($codigo, 'codigo');
+		return $semanas[0];
 	}
 
-	public function SelectTodos () {
+	public static function SelectTodos () {
 		$sql = "SELECT * FROM SemanaCardapio ORDER BY codigo";
 
 		$query = Conexao::conexao()->query($sql);
 
 		$semanas = array();
 		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-			array_push($semanas, $this->Popula($row));
+			array_push($semanas, self::Popula($row));
 		}
 
 		return $semanas;
 	}
 
-	public function SelectDias ($semanas) {
-		// Função que incrementa qualquer outro select de semanas
-		// O parâmetro precisa ser um array
-		// Recebe array de semanas que só têm código e data_inicio
-		// E retorna array de semanas com esses + os dias
+	public static function SelectDias ($semana) {
+		// Recebe um objeto semana sem dias
+		// Retorna um objeto semana com os dias devidos, conforme seu código
 
-		$diaDao = new DiaAlmocoDao;
+		$dias = DiaAlmocoDao::SelectPorSemana($semana->getCodigo());
+
+		if (isset($dias)) {
+			for ($i=0; $i < count($dias); $i++)	{ 
+				$semana->setDia($dias[$i]);
+			}					
+		}
 		
-		for ($i=0; $i < count($semanas); $i++) { 
-			$dias = $diaDao->SelectPorSemana($semanas[$i]->getCodigo());
-
-			if (isset($dias)) {
-				for ($j=0; $j < count($dias); $j++)	{ 
-					$semanas[$i]->setDia($dias[$j]);
-				}					
-			}
-		}
-
-		return $semanas;
+		return $semana;
 	}
 
-	public function SelectUltimoCod () {
+	public static function SelectUltimoCod () {
 		$sql = "SELECT codigo FROM SemanaCardapio ORDER BY codigo DESC LIMIT 1";
 
 		$query = Conexao::conexao()->query($sql);
@@ -118,6 +113,24 @@ class SemanaCardapioDao {
 
 	public static function GerarSelectHTML () {
 		return Funcoes::GerarSelectHTML("SemanaCardapio", "semanaCardapio_codigo", 0, "codigo", "codigo");
+	}
+
+
+	////////////////////////
+	// FUNÇÕES DE DELETAR //
+
+	public static function Deletar (SemanaCardapio $semana) {
+		$dias = $semana->getDias();
+		for ($i=0; $i < count($dias); $i++) { 
+			DiaAlmocoDao::Deletar($dias[$i]);
+		}
+
+		$sql = "DELETE FROM SemanaCardapio WHERE codigo = :codigo";
+		$p_sql = Conexao::conexao()->prepare($sql);
+		$p_sql->bindParam(":codigo", $codigo);
+		$codigo = $semana->getCodigo();
+		
+		return $p_sql->execute();
 	}
 
 }

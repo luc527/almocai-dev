@@ -16,7 +16,7 @@ class DiaSemanaDao {
 	////////////////////////
 	// FUNÇÕES DE SELEÇÃO //
 
-	public function Popula ($row) {
+	public static function Popula ($row) {
 		$diaSemana = new DiaSemana;
 		$diaSemana->setCodigo($row['codigo']);
 		$diaSemana->setDescricao($row['descricao']);
@@ -24,24 +24,24 @@ class DiaSemanaDao {
 		return $diaSemana;
 	}
 
-	public function SelectTodos () {
+	public static function SelectTodos () {
 		$sql = "SELECT * FROM DiaSemana ORDER BY codigo";
 
 		$query = Conexao::conexao()->query($sql);
 
 		$diasSemana = array();
 		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-			array_push ($diasSemana, $this->Popula($row));
+			array_push ($diasSemana, self::Popula($row));
 		}
 
 		return $diasSemana;
 	}
 
-	public function SelectPorCodigo ($codigo) {
+	public static function SelectPorCodigo ($codigo) {
 		$sql = "SELECT * FROM DiaSemana WHERE codigo = ".$codigo." ORDER BY codigo";
 		$query = Conexao::conexao()->query($sql);
 		$row = $query->fetch(PDO::FETCH_ASSOC);
-		return $this->Popula($row);
+		return self::Popula($row);
 	}
 
 	public static function GerarSelectHTML () {

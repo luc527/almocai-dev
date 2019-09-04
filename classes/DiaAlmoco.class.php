@@ -6,6 +6,7 @@ class DiaAlmoco extends AbsCodigo {
 	private $alimentos = array();
 	private $data;
 	private $diaSemana;
+	private $presencas = array();
 
 	/*
 	public function __construct ($data)
@@ -39,6 +40,16 @@ class DiaAlmoco extends AbsCodigo {
 	public function setDiaSemana ($diaSemana) {
 		if ($diaSemana instanceof DiaSemana) {
 			$this->diaSemana = $diaSemana;
+		}
+	}
+
+	public function getPresencas() {
+		return $this->presencas;
+	}
+
+	public function setPresenca($aluno_p) {
+		if ($aluno_p instanceof AlunoPresenca) {
+			array_push($this->presencas, $aluno_p);
 		}
 	}
 }

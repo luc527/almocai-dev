@@ -5,16 +5,12 @@
 require_once "autoload.php";
 
 class AlimentoDao {
-	public static $instance;
+	
+	
+	////////////////////////
+	// FUNÇÕES DE INSERIR //
 
-	public static function getInstance () {
-		if (!isset(self::$instance)) {
-			self::$instance = new AlimentoDao;
-		}
-		return $instance;
-	}
-
-	public function Inserir (Alimento $alimento, $diaAlmoco_codigo)	{
+	public static function Inserir (Alimento $alimento, $diaAlmoco_codigo)	{
 		$sql = "INSERT INTO Alimento (descricao, diaAlmoco_codigo) VALUES (:descricao, :diaAlmoco_codigo)";
 		
 		$pdo = Conexao::conexao();
@@ -29,10 +25,10 @@ class AlimentoDao {
 		return $p_sql->execute();
 	}
 
+	///////////////////////
+	// FUNÇÕES DE SELECT //
 
-
-
-	public function Popula ($row) {
+	public static function Popula ($row) {
 		$alimento = new Alimento;
 		$alimento->setCodigo($row['codigo']);
 		$alimento->setDescricao($row['descricao']);
@@ -40,7 +36,7 @@ class AlimentoDao {
 		return $alimento;
 	}
 
-	public function SelectPorDia ($dia_codigo) {
+	public static function SelectPorDia ($dia_codigo) {
 		$sql = "SELECT * FROM alimento WHERE diaAlmoco_codigo = ".$dia_codigo;
 		//echo $sql;
 
@@ -48,10 +44,23 @@ class AlimentoDao {
 
 		$alimentos = array();
 		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-			array_push($alimentos, $this->Popula($row));
+			array_push($alimentos, self::Popula($row));
 		}
 
 		return $alimentos;
+	}
+
+
+	////////////////////////
+	// FUNÇÕES DE DELETAR //
+
+	public static function Deletar (Alimento $alimento) {
+		$sql = "DELETE FROM Alimento WHERE codigo = :codigo";
+		$p_sql = Conexao::conexao()->prepare($sql);
+		$p_sql->bindParam(":codigo", $codigo);
+		$codigo = $alimento->getCodigo();
+
+		return $p_sql->execute();
 	}
 }
 

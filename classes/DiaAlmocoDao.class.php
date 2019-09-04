@@ -1,44 +1,56 @@
 <?php
 
+require_once('autoload.php');
+
 class DiaAlmocoDao {
-	private $instance;
-
-	public static function getInstance () {
-		if (!isset(self::$instance)) {
-			self::$instance = new DiaAlmocoDao;
-		}
-		return $instance;
-	}
-
 
 	/////////////////////////
 	// FUNÇÕES DE INSERÇÃO //
 
-	/* Usuário nunca irá inserir dias, pois o banco de dados cria 5 dias (Seg, Ter ...) automaticamente para cada semana.
-	public function Inserir (DiaAlmoco $diaAlmoco, $semanaCardapio_codigo) {
-		$sql = "INSERT INTO DiaAlmoco (`data`, diaSemana_codigo, semanaCardapio_codigo) VALUES (:data, :diaSemana_codigo, :semanaCardapio_codigo)";
-		var_dump($sql);
-		
-		$pdo = Conexao::conexao();
-
-		$p_sql = $pdo->prepare($sql);
-
-		$p_sql->bindParam(":data", $data);
-		$p_sql->bindParam(":diaSemana_codigo", $diaSemana_codigo);
-		$p_sql->bindParam(":semanaCardapio_codigo", $semanaCardapio_codigo);
-
-		$diaSemana_codigo = $diaAlmoco->getDiaSemana()->getCodigo();
-		$data = $diaAlmoco->getData();
-
-		return $p_sql->execute();
-	}
-	*/
-
-	public function InserirAlimentos (DiaAlmoco $diaAlmoco) {
+	public static function InserirAlimentos (DiaAlmoco $diaAlmoco) {
 		$alimentos = $diaAlmoco->getAlimentos();
 		for ($i=0; $i < count($alimentos); $i++) { 
-			$alimentoDao = new AlimentoDao;
-			$alimentoDao->Inserir($alimentos[$i], $diaAlmoco->getCodigo());
+			AlimentoDao::Inserir($alimentos[$i], $diaAlmoco->getCodigo());
+		}
+	}
+
+	public static function InserirPresencas (DiaAlmoco $diaAlmoco) {
+		$presencas = $diaAlmoco->getPresencas();
+
+		for ($i=0; $i < count($presencas); $i++) { 
+			self::DeletarPresenca($presencas[$i]->getAluno()->getCodigo(), $diaAlmoco->getCodigo());
+			// Se já existe uma presença marcada pra esse dia, o sistema a deleta e insere uma nova
+			// Se não existe, ele tenta deletar, mas não deleta nada (porque não existe), e simplesmente insere uma nova
+
+			try {
+				$sql = "INSERT INTO Presenca (aluno_matricula, diaAlmoco_codigo, presenca) VALUES (:aluno, :dia, :presenca)";
+				
+				$stmt = Conexao::conexao()->prepare($sql);
+				
+				$stmt->bindParam(":aluno", $aluno_mat);
+				$stmt->bindParam(":dia", $dia_cod);
+				$stmt->bindParam(":presenca", $pres);
+
+				$aluno_mat = $presencas[$i]->getAluno()->getCodigo();
+				$dia_cod = $diaAlmoco->getCodigo();
+				$pres = $presencas[$i]->getPresenca();
+
+				return $stmt->execute();
+			} catch (Exception $e) {
+				echo $e->getMessage();
+			}
+		}
+	}
+
+	public static function DeletarPresenca($aluno, $dia) {
+		try {	
+			$sql = "DELETE FROM Presenca WHERE aluno_matricula = :aluno AND diaAlmoco_codigo = :dia";
+			$stmt = Conexao::conexao()->prepare($sql);
+			$stmt->bindParam(":aluno", $aluno);
+			$stmt->bindParam(":dia", $dia);
+			return $stmt->execute();
+		} catch (Exception $e) {
+			echo $e->getMessage();
 		}
 	}
 
@@ -46,13 +58,11 @@ class DiaAlmocoDao {
 	////////////////////////
 	// FUNÇÕES DE SELEÇÃO //
 
-	public function Popula ($row) {
+	public static function Popula ($row) {
 		// Função que recebe uma linha de um SELECT FROM DiaAlmoco e popula um objeto DiaAlmoco com as informações recebidas
 
-		$diaSemDao = new DiaSemanaDao;
-
 		if (isset($row['diaSemana_codigo'])) {
-			$diaSemana = $diaSemDao->SelectPorCodigo($row['diaSemana_codigo']);
+			$diaSemana = DiaSemanaDao::SelectPorCodigo($row['diaSemana_codigo']);
 		}
 		else {
 			$diaSemana = new DiaSemana;
@@ -66,32 +76,32 @@ class DiaAlmocoDao {
 		return $dia;
 	}
 
-	public function SelectTodos () {
+	public static function SelectTodos () {
 		$sql = "SELECT * FROM DiaAlmoco ORDER BY codigo";
 		$query = Conexao::conexao()->query($sql);
 
 		$dias = array();
 		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-			array_push ($dias, $this->Popula($row));
+			array_push ($dias, self::Popula($row));
 		}
 
 		return $dias;
 	}
 
-	public function SelectPorSemana ($semana_codigo) {
+	public static function SelectPorSemana ($semana_codigo) {
 		$sql = "SELECT * FROM DiaAlmoco WHERE semanaCardapio_codigo = ".$semana_codigo." ORDER BY `data`";
 		$query = Conexao::conexao()->query($sql);
 
 		$dias = array();
 
 		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-			array_push($dias, $this->Popula($row));
+			array_push($dias, self::Popula($row));
 		}
 
 		return $dias;
 	}
 
-	public function SelectUltimoCod () {
+	public static function SelectUltimoCod () {
 		$sql = "SELECT codigo FROM DiaAlmoco ORDER BY codigo DESC LIMIT 1";
 
 		$query = Conexao::conexao()->query($sql);
@@ -101,19 +111,33 @@ class DiaAlmocoDao {
 		return $row['codigo'];
 	}
 
-	public function SelectAlimentos ($dias) {
-		//print_r ($dias[0]);
-		$alimentoDao = new AlimentoDao;
+	public static function SelectAlimentos ($dia) {
+		
+		$alimentos = AlimentoDao::SelectPorDia($dia->getCodigo());
 
-		for ($i=0; $i < count($dias); $i++) {
-			$alimentos = $alimentoDao->SelectPorDia($dias[$i]->getCodigo());
+		for ($i=0; $i < count($alimentos); $i++) { 
+			$dia->setAlimento($alimentos[$i]);
+		}
+		
+		return $dia;
+	}
 
-			for ($j=0; $j < count($alimentos); $j++) { 
-				$dias[$i]->setAlimento($alimentos[$j]);
-			}
+	
+	////////////////////////
+	// FUNÇÕES DE DELETAR //	
+
+	public static function Deletar (DiaAlmoco $dia) {
+		$alimentos = $dia->getAlimentos();
+		for ($i=0; $i < count($alimentos); $i++) { 
+			AlimentoDao::Deletar($alimentos[$i]);
 		}
 
-		return $dias;
+		$sql = "DELETE FROM DiaAlmoco WHERE codigo = :codigo";
+		$p_sql = Conexao::conexao()->prepare($sql);
+		$p_sql->bindParam(":codigo", $codigo);
+		$codigo = $dia->getCodigo();
+
+		return $p_sql->execute();
 	}
 }
 

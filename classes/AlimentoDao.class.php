@@ -44,7 +44,7 @@ class AlimentoDao {
 	}
 
 	public static function SelectPorDia ($dia_codigo) {
-		$sql = "SELECT * FROM alimento WHERE diaAlmoco_codigo = ".$dia_codigo;
+		$sql = "SELECT * FROM Alimento WHERE diaAlmoco_codigo = ".$dia_codigo;
 		//echo $sql;
 
 		$query = Conexao::conexao()->query($sql);

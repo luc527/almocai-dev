@@ -1,64 +1,69 @@
-<?php 
+<?php
 	require_once "autoload.php";
 
 	class AlunoDao {
-		public static function Inserir(Aluno $aluno) {
+		public static function Inserir(Usuario $usuario) {
 			try {
-				$sql = "INSERT INTO Aluno (
-					matricula,
-					senha,
-					nome)
-					VALUES(
-					:matricula,
-					:senha,
-					:nome)";
+				$sql = "INSERT INTO Usuario (matricula, senha, nome, tipo_cod)
+					VALUES(:matricula, :senha, :nome, :tipo_cod)";
 
 				$stmt = Conexao::conexao()->prepare($sql);
 
-				$stmt->bindValue(":matricula", $aluno->getCodigo());
-				$stmt->bindValue(":senha", $aluno->getSenha());
-				$stmt->bindValue(":nome", $aluno->getNome());
+				$stmt->bindValue(":matricula", $codigo);
+				$stmt->bindValue(":senha", $senha);
+				$stmt->bindValue(":nome", $nome;
+				$stmt->bindValue(":tipo_cod", $tipo);
+
+				$codigo = $usuario->getCodigo();
+				$senha = $usuario->getSenha();
+				$nome = $usuario->getNome();
+				$tipo = $usuario->getTipo()->getCodigo();
 
 				return $stmt->execute();
 			} catch (Exception $e){
-				print "Ocorreu um erro ao tentar executar esta ação<br> ". $e->
+				print "Erro ". $e->
 				getCode() . " Mensagem: " . $e->getMessage();
 			}
 		}
 
 		public static function Popula ($row) {
-			$aluno = new Aluno;
-			$aluno->setCodigo( $row['matricula'] );
-			$aluno->setSenha( $row['senha'] );
-			$aluno->setNome( $row['nome'] );
+			$usuario = new Usuario;
+			$usuario->setCodigo( $row['matricula'] );
+			$usuario->setSenha( $row['senha'] );
+			$usuario->setNome( $row['nome'] );
 
-			return $aluno;
+			$tipo = new Tipo;
+			$tipo->setCodigo( $row['tipo_cod'] );
+			$usuario->setTipo($tipo);
+
+			return $usuario;
 		}
 
 		public static function Select ($criterio, $pesquisa) {
 			try {
 				switch ($criterio) {
 					case 'nome':
-						$sql = "SELECT * FROM aluno WHERE $criterio like '%$pesquisa%'";
+						$sql = "SELECT * FROM Usuario WHERE $criterio like '%$pesquisa%'";
 						break;
-					
+
 					case 'matricula':
-						$sql = "SELECT * FROM aluno WHERE $criterio = '$pesquisa'";
+					case 'tipo_cod':
+						$sql = "SELECT * FROM Usuario WHERE $criterio = '$pesquisa'";
 						break;
 
 					case 'todos':
-						$sql = "SELECT * FROM aluno";
+						$sql = "SELECT * FROM Usuario";
 						break;
 				}
 
 				$query = Conexao::conexao()->query($sql);
 
-				$alunos = array();
+				$usuarios = array();
 				while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-					array_push($alunos, self::Popula($row));
+					array_push($usuarios, self::Popula($row));
 				}
 
-				return $alunos;
+				return $usuarios;
 			} catch (Exception $e) {
 				echo $e->getMessage();
 			}
@@ -67,15 +72,15 @@
 		public static function SelectPorMatricula ($matricula) {
 			// Retorna o objeto luno em vez de um array com um só objeto, que seria o resultado do Select ()
 			try {
-				$alunos = self::Select('matricula', $matricula);
-				return $alunos[0];
+				$usuarios = self::Select('matricula', $matricula);
+				return $usuarios[0];
 			} catch (Exception $e) {
 
 			}
 		}
 
-		public static function Login (Aluno $aluno) {
-			
+		public static function Login (Usuario $usuario) {
+
 			$login = array(); // Array de informações que essa função retornará
 			$login[0] = ''; // Mantem o erro que ocorreu ou a ação a ser tomada
 			$login[1] = ''; // Mantem, caso o login será feito, a matrícula do aluno
@@ -87,9 +92,12 @@
 
 					$senha = $aluno->getSenha();
 					if ( self::SenhaCorreta($matricula, $senha) ) {
+						$usuario = self::SelectPorMatricula($matricula);
+
 						$login[0] = 'fazer_login';
 						$login[1] = $matricula;
-						$login[2] = self::SelectPorMatricula($matricula)->getNome();
+						$login[2] = $usuario->getNome();
+						$login[3] = $usuario->getTipo()->getCodigo(); 
 					} else {
 						$login[0] = 'senha_incorreta';
 					}
@@ -106,8 +114,8 @@
 
 		public static function MatriculaCadastrada ($matricula) {
 			// Recebe uma matricula e retorna se ela existe ou não no BD (bool)
-			try {  
-				$sql = "SELECT * FROM aluno WHERE matricula = $matricula";
+			try {
+				$sql = "SELECT * FROM Usuario WHERE matricula = $matricula";
 				$query = Conexao::conexao()->query($sql);
 				$row = $query->fetch(PDO::FETCH_ASSOC);
 
@@ -124,7 +132,7 @@
 		public static function SenhaCorreta ($matricula, $senha) {
 			// Rceebe uma matrícula e uma senha e retorna se a senha recebida condiz com a senha que está no BD
 			try {
-				$sql = "SELECT * FROM aluno WHERE matricula = $matricula";
+				$sql = "SELECT * FROM Usuario WHERE matricula = $matricula";
 				$query = Conexao::conexao()->query($sql);
 				$row = $query->fetch(PDO::FETCH_ASSOC);
 

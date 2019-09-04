@@ -1,0 +1,51 @@
+// Seção da tela de login do usuário
+
+.login-section {
+  min-height: 100vh;
+
+  &__container {
+    height: 100%;
+  }
+
+  &__imagem {
+    background: linear-gradient(135deg, rgba($primary-color, 0.3), rgba($secondary-color, 0.5)), url("../img/fundo-comida.png");
+    background-position: left;
+    background-size: cover;
+    height: 100%;
+  }
+
+  &__title {
+    font-size: 3rem;
+    margin: 0;
+    padding-bottom: 1rem;
+    background: linear-gradient(to right, $primary-color, $primary-color-dark);
+    background-clip: text;
+    letter-spacing: .6rem;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &__padding-zero {
+    padding: 0 0.3rem !important;
+    @media #{$medium-and-down} {
+      padding: 0 !important;
+    }
+  }
+
+  &__button {
+    width: 100%;
+    margin: 1rem auto 1rem auto;
+    @extend .z-depth-3;
+    &:hover {
+      @extend .z-depth-2;
+    }
+    &:active, :focus {
+      @extend .z-depth-0;
+    }
+  }
+
+  &__form {
+    // nada 
+  }
+
+}

@@ -3,21 +3,22 @@ use almocai;
 
 create table if not exists SemanaCardapio (
 	codigo int primary key auto_increment,
-    data_inicio date -- o primeiro dia (segunda) da semana, p. ex. 2019-08-12
+  data_inicio date -- o primeiro dia (segunda) da semana, p. ex. 2019-08-12
 );
 
 create table if not exists DiaSemana (
 	codigo int primary key auto_increment,
-    descricao varchar(45)
+  descricao varchar(45)
 );
 
 create table if not exists DiaAlmoco (
 	codigo int primary key auto_increment,
-    `data` date,
-    semanaCardapio_codigo int,
-    diaSemana_codigo int,
-    foreign key (semanaCardapio_codigo) references SemanaCardapio(codigo),
-    foreign key (diaSemana_codigo) references DiaSemana(codigo)
+  `data` date,
+  semanaCardapio_codigo int,
+  diaSemana_codigo int,
+
+  foreign key (semanaCardapio_codigo) references SemanaCardapio(codigo),
+  foreign key (diaSemana_codigo) references DiaSemana(codigo)
 );
 
 delimiter :)
@@ -38,11 +39,16 @@ create table if not exists Tipo_alimento (
 	codigo int primary key auto_increment,
 	descricao varchar(50)
 );
+insert into Tipo_alimento values
+	(1, "Normal"),
+	(2, "Carne"),
+	(3, "Opção vegetariana"),
+	(4, "Opção vegana");
 
 create table if not exists Alimento (
 	codigo int primary key auto_increment,
-    descricao varchar(100),
-    diaAlmoco_codigo int,
+  descricao varchar(100),
+  diaAlmoco_codigo int,
 	tipo_cod int,
 
 	foreign key (tipo_cod) references Tipo_alimento(codigo)
@@ -58,12 +64,17 @@ create table if not exists Tipo_usuario (
 	codigo int primary key auto_increment,
 	descricao varchar(50)
 );
+insert into Tipo_usuario (codigo, descricao) values
+	(1, "Administrador(a)"),
+	(2, "Funcionário(a)"),
+	(3, "Aluno(a)");
 
 create table if not exists Usuario (
-    matricula int primary key auto_increment,
-    senha varchar(255),
-    nome varchar(100),
+  matricula int primary key auto_increment,
+  senha varchar(255),
+  nome varchar(100),
 	tipo_cod int,
+
 	foreign key (tipo_cod) references Tipo_usuario(codigo)
 		on update cascade
 		on delete set null
@@ -71,14 +82,14 @@ create table if not exists Usuario (
 
 create table if not exists Presenca (
 	usuario_matricula int,
-    diaAlmoco_codigo int,
-    presenca tinyint,
-    primary key (usuario_matricula, diaAlmoco_codigo),
-    
-    foreign key (usuario_matricula) references Usuario(matricula)
+  diaAlmoco_codigo int,
+  presenca tinyint,
+  primary key (usuario_matricula, diaAlmoco_codigo),
+
+  foreign key (usuario_matricula) references Usuario(matricula)
 		on delete cascade
-        on update cascade,
-    foreign key (diaAlmoco_codigo) references DiaAlmoco(codigo)
+    on update cascade,
+  foreign key (diaAlmoco_codigo) references DiaAlmoco(codigo)
 		on delete cascade
-        on update cascade
+    on update cascade
 );

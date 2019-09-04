@@ -26,8 +26,8 @@ class Conexao {
 	}
 
 	public static function conexao () {
-		if (!self::$instance) {
-			new Conexao;
+		if (!isset(self::$instance)) {
+			self::$instance = new Conexao;
 		}
 
 		return self::$instance;

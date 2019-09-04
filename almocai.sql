@@ -10,7 +10,6 @@ create table if not exists DiaSemana (
 	codigo int primary key auto_increment,
     descricao varchar(45)
 );
--- insert into DiaSemana (descricao) values ('Segunda'), ('Terça'), ('Quarta'), ('Quinta'), ('Sexta');
 
 create table if not exists DiaAlmoco (
 	codigo int primary key auto_increment,
@@ -19,11 +18,11 @@ create table if not exists DiaAlmoco (
     diaSemana_codigo int,
     foreign key (semanaCardapio_codigo) references SemanaCardapio(codigo),
     foreign key (diaSemana_codigo) references DiaSemana(codigo)
-); 
+);
 
 delimiter :)
 create trigger cria_dias_semana
-after insert on SemanaCardapio 
+after insert on SemanaCardapio
 for each row
 begin
 	insert into DiaAlmoco (`data`, semanaCardapio_codigo, diaSemana_codigo) values
@@ -35,24 +34,51 @@ begin
 end :)
 delimiter ;
 
+create table if not exists Tipo_alimento (
+	codigo int primary key auto_increment,
+	descricao varchar(50)
+);
+
 create table if not exists Alimento (
 	codigo int primary key auto_increment,
     descricao varchar(100),
     diaAlmoco_codigo int,
-    foreign key (diaAlmoco_codigo) references DiaAlmoco(codigo)
+	tipo_cod int,
+
+	foreign key (tipo_cod) references Tipo_alimento(codigo)
+		on delete set null
+		on update cascade,
+
+	foreign key (diaAlmoco_codigo) references DiaAlmoco(codigo)
+		on delete cascade
+		on update cascade
 );
 
-create table if not exists Aluno (
-    matricula int primary key,
+create table if not exists Tipo_usuario (
+	codigo int primary key auto_increment,
+	descricao varchar(50)
+);
+
+create table if not exists Usuario (
+    matricula int primary key auto_increment,
     senha varchar(255),
-    nome varchar(100)
+    nome varchar(100),
+	tipo_cod int,
+	foreign key (tipo_cod) references Tipo_usuario(codigo)
+		on update cascade
+		on delete set null
 );
 
 create table if not exists Presenca (
-	aluno_matricula int,
+	usuario_matricula int,
     diaAlmoco_codigo int,
     presenca tinyint,
-    primary key (aluno_matricula, diaAlmoco_codigo),
-    foreign key (aluno_matricula) references Aluno(matricula),
+    primary key (usuario_matricula, diaAlmoco_codigo),
+    
+    foreign key (usuario_matricula) references Usuario(matricula)
+		on delete cascade
+        on update cascade,
     foreign key (diaAlmoco_codigo) references DiaAlmoco(codigo)
+		on delete cascade
+        on update cascade
 );

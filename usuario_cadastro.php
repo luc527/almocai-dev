@@ -7,7 +7,7 @@
     <title>Cadastro do Aluno</title>
 </head>
 <body>
-    <form action="aluno_acao.php" method="post">
+    <form action="usuario_acao.php" method="post">
         <fieldset>
             <label for="matricula">Matrícula: </label> <br/>
             <input type="text" name="matricula" id="matricula"> <br/><br/>
@@ -17,11 +17,10 @@
 
             <label for="nome">Nome completo </label> <br/>
             <input type="text" name="nome" id="nome"> <br/><br/>
-            <center>
-                <button type="submit" name="acao" value="inserir">Cadastrar</button>
-            </center>
+
+            <button type="submit" name="acao" value="inserir">Cadastrar</button>
         </fieldset>
-        
+
     </form>
 </body>
 </html>

@@ -21,11 +21,11 @@ after insert on SemanaCardapio
 for each row
 begin
 	insert into DiaAlmoco (`data`, semanaCardapio_codigo, diaSemana) values
-    (new.data_inicio, new.codigo, 'SEGUNDA'),
-    (date_add(new.data_inicio, interval 1 day), new.codigo, 'TERCA'),
-    (date_add(new.data_inicio, interval 2 day), new.codigo, 'QUARTA'),
-    (date_add(new.data_inicio, interval 3 day), new.codigo, 'QUINTA'),
-    (date_add(new.data_inicio, interval 4 day), new.codigo, 'SEXTA');
+    (new.data_inicio, new.codigo, 'Segunda-feira'),
+    (date_add(new.data_inicio, interval 1 day), new.codigo, 'Terça-feira'),
+    (date_add(new.data_inicio, interval 2 day), new.codigo, 'Quarta-feira'),
+    (date_add(new.data_inicio, interval 3 day), new.codigo, 'Quinta-feira'),
+    (date_add(new.data_inicio, interval 4 day), new.codigo, 'Sexta-feira');
 end :)
 delimiter ;
 
@@ -34,7 +34,7 @@ create table if not exists Alimento (
 	descricao varchar(100),
 	diaAlmoco_codigo int,
 	tipo varchar(45),
-    
+
 	foreign key (diaAlmoco_codigo) references DiaAlmoco(codigo)
 		on delete cascade
 		on update cascade

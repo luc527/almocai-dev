@@ -18,9 +18,9 @@ include 'valida_secao.php';
 		e você é um usuário do tipo <b>".$_SESSION['tipo']."</b></p>";
 
 		echo "<table>
-		<tr> <td><b>".ADM."</b></td> <td>Administrador(a)</td> </tr>
-		<tr> <td><b>".FUNC."</b></td> <td>Funcionário(a)</td> </tr>
-		<tr> <td><b>".ALUNO."</b></td> <td>Aluno(a)</td> </tr>
+		<tr> <td><b>".ADM."</b></td> <td>ADM</td>  <td>Administrador(a)</td> </tr>
+		<tr> <td><b>".FUNC."</b></td> <td>FUNC</td> <td>Funcionário(a)</td> </tr>
+		<tr> <td><b>".ALUNO."</b></td> <td>ALUNO</td> <td>Aluno(a)</td> </tr>
 		</table>";
 
 		if($_SESSION['tipo'] == ADM) {

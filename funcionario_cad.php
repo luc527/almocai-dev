@@ -10,7 +10,7 @@
 
   <body>
 
-    <form action="usuario_acao.php" method="post">
+    <form action="usuario_acao.php" method="post"> <fieldset>
       <label for="matricula">Matrícula</label> <br/>
       <input type="text" name="matricula"> <br/><br/>
 
@@ -20,10 +20,10 @@
       <label for="senha">Senha</label> <br/>
       <input type="password" name="senha"> <br/><br/>
 
-      <input type="hidden" name="tipo" value="2"> <!-- 2: tipo funcionário(a) -->
+      <input type="hidden" name="tipo" value="<?php echo FUNC; ?>">
 
-      <button type="submit" name="acao" value="inserir">
-    </form>
+      <button type="submit" name="acao" value="inserir">Cadastrar</button>
+    </fiedset> </form>
 
   </body>
 </html>

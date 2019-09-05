@@ -1,4 +1,6 @@
 <?php
+    include 'constantes.php';
+
     require_once "autoload.php";
 
     if (isset($_POST['acao'])) $acao = $_POST['acao'];
@@ -10,7 +12,7 @@
         $matricula = isset($_POST['matricula'])?$_POST['matricula']:"";
         $senha = isset($_POST['senha'])?sha1($_POST['senha']):"";
         $nome = isset($_POST['nome'])?$_POST['nome']:"";
-        $tipo_cod = isset($_POST['tipo']) ? $_POST['tipo'] : 3; //3: tipo do aluno
+        $tipo_cod = isset($_POST['tipo']) ? $_POST['tipo'] : ALUNO; //3: tipo do aluno
 
         // Populando Objeto Tipo do usuário
         $tipo = new TipoUsuario;
@@ -46,9 +48,7 @@
             $_SESSION['matricula'] = $login_info[1];
             $_SESSION['nome'] = $login_info[2];
             $_SESSION['tipo'] = $login_info[3];
-            if ($_SESSION['tipo'] != 1)
-              header("location:index.php");
-            else header("location:adm_painel.php");
+            header("location:index.php");
         }
     }
 ?>

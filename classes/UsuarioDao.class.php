@@ -9,10 +9,10 @@
 
 				$stmt = Conexao::conexao()->prepare($sql);
 
-				$stmt->bindValue(":matricula", $codigo);
-				$stmt->bindValue(":senha", $senha);
-				$stmt->bindValue(":nome", $nome);
-				$stmt->bindValue(":tipo_cod", $tipo);
+				$stmt->bindParam(":matricula", $codigo);
+				$stmt->bindParam(":senha", $senha);
+				$stmt->bindParam(":nome", $nome);
+				$stmt->bindParam(":tipo_cod", $tipo);
 
 				$codigo = $usuario->getCodigo();
 				$senha = $usuario->getSenha();

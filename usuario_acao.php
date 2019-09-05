@@ -25,7 +25,8 @@
 
         // Inserindo Usuario no BD
         UsuarioDao::Inserir($usuario);
-        #header("aluno_cadastro.php");
+
+        header("location:login.php");
     } else if ($acao == 'Login') {
         // Populando Objeto Usuario
         $usuario = new Usuario;

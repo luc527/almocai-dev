@@ -4,6 +4,7 @@
 <?php
 
 require_once "autoload.php";
+include "config.php";
 
 if (isset($_POST['acao'])) $acao = $_POST['acao'];
 else if (isset($_GET['acao'])) $acao = $_GET['acao'];
@@ -112,6 +113,7 @@ for ($i=0; $i < count($semanas); $i++) {
 								for ($k=0; $k < count($alimentos); $k++) {
 									echo "<li>";
 									echo "<b>".$alimentos[$k]->getDescricao()."</b> [#".$alimentos[$k]->getCodigo()."]";
+									echo " (".$alimentos[$k]->getTipo().")";
 									echo " - <a href='alimento_acao.php?acao=Deletar&codigo=".$alimentos[$k]->getCodigo()."'>Deletar</a>";
 									echo "</li>";
 								}
@@ -125,7 +127,13 @@ for ($i=0; $i < count($semanas); $i++) {
 									echo "<fieldset>";
 										echo "<input type='text' name='descricao'>";
 										echo "<input type='hidden' name='diaAlmoco_codigo' value='".$dias[$j]->getCodigo()."'>";
-										echo "<button name='acao' value='Inserir'>Adicionar</button>";
+										echo "<br/><select name='tipo'>
+											<option value='NORMAL'>".NORMAL."</option>
+											<option value='CARNE'>".CARNE."</option>
+											<option value='VEGETARIANA'>".VEGETARIANA."</option>
+											<option value='VEGANA'>".VEGANA."</option>
+										</select>";
+										echo "<br/><button name='acao' value='Inserir'>Adicionar</button>";
 									echo "</fieldset>";
 								echo "</form>";
 

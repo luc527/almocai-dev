@@ -2,7 +2,7 @@
 
 <?php
 require_once('autoload.php');
-include 'valida_secao_aluno.php';
+include 'valida_secao.php';
 
 if (isset($_POST['codigo'])) $codigo = $_POST['codigo'];
 else if (isset($_GET['codigo'])) $codigo = $_GET['codigo'];
@@ -52,7 +52,7 @@ if (isset($codigo)) {
 
 							<tbody>
 							<?php
-								for ($i=0; $i < count($dias); $i++) { 
+								for ($i=0; $i < count($dias); $i++) {
 								?>
 									<tr>
 										<td> <?php echo $dias[$i]->getCodigo(); ?> </td>
@@ -63,8 +63,8 @@ if (isset($codigo)) {
 											<?php
 												$dias[$i] = DiaAlmocoDao::SelectAlimentos($dias[$i]);
 												$alimentos = $dias[$i]->getAlimentos();
-												for ($j=0; $j < count($alimentos); $j++) { 
-													echo "<li>".$alimentos[$j]->getDescricao()."</li>";
+												for ($j=0; $j < count($alimentos); $j++) {
+													echo "<li>".$alimentos[$j]->getDescricao()." (".$alimentos[$j]->getTipo().")</li>";
 												}
 											?>
 											</ul>
@@ -73,7 +73,7 @@ if (isset($codigo)) {
 										<td>
 											<form action="presenca_acao.php" method="post"> <fieldset>
 												<input type="hidden" name="cod_semana" value="<?php echo $codigo; ?>">
-												<input type="hidden" name="matricula" value="<?php echo $_SESSION['aluno_matricula']; ?>">
+												<input type="hidden" name="matricula" value="<?php echo $_SESSION['matricula']; ?>">
 												<input type="hidden" name="dia" value="<?php echo $dias[$i]->getCodigo(); ?>">
 												<center>
 													<button type="submit" name="presenca" value="1">Estarei presente</button> <br/>

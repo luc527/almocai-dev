@@ -11,6 +11,7 @@ if (isset($acao)) {
 
 		$alimento = new Alimento;
 		$alimento->setDescricao($_POST['descricao']);
+		$alimento->setTipo($_POST['tipo']);
 
 		AlimentoDao::Inserir($alimento, $_POST['diaAlmoco_codigo']);
 

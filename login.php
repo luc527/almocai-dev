@@ -14,7 +14,7 @@ else $erro = '';
 	<meta charset="utf-8">
 </head>
 <body>
-	<div class="container" style="width:70%; margin: auto;">
+	<div class="container">
 		<form action="usuario_acao.php" method="post"> <fieldset>
 			<label for="matricula">Matrícula: </label> <br/>
 			<input type="text" name="matricula"> <br/><br/>

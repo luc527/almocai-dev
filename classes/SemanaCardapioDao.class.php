@@ -23,7 +23,8 @@ class SemanaCardapioDao {
 
 		$p_sql = $pdo->prepare($sql);
 
-		$p_sql->bindParam(":data_inicio", $semanaCardapio->getData_inicio());
+		$p_sql->bindParam(":data_inicio", $data_inicio);
+		$data_inicio = $semanaCardapio->getData_inicio();
 
 		return $p_sql->execute();
 	}
@@ -32,7 +33,7 @@ class SemanaCardapioDao {
 
 	public function InserirDias (SemanaCardapio $semanaCardapio) {
 		$dias = $semanaCardapio->getDias();
-		for ($i=0; $i < count($dias); $i++)	{ 
+		for ($i=0; $i < count($dias); $i++)	{
 			$diaAlmocoDao = new DiaAlmocoDao;
 			$diaAlmocoDao->Inserir($dias[$i], $semanaCardapio->getCodigo());
 		}
@@ -92,11 +93,11 @@ class SemanaCardapioDao {
 		$dias = DiaAlmocoDao::SelectPorSemana($semana->getCodigo());
 
 		if (isset($dias)) {
-			for ($i=0; $i < count($dias); $i++)	{ 
+			for ($i=0; $i < count($dias); $i++)	{
 				$semana->setDia($dias[$i]);
-			}					
+			}
 		}
-		
+
 		return $semana;
 	}
 
@@ -106,7 +107,7 @@ class SemanaCardapioDao {
 		$query = Conexao::conexao()->query($sql);
 
 		$row = $query->fetch(PDO::FETCH_ASSOC);
-		
+
 		return $row['codigo'];
 	}
 
@@ -121,7 +122,7 @@ class SemanaCardapioDao {
 
 	public static function Deletar (SemanaCardapio $semana) {
 		$dias = $semana->getDias();
-		for ($i=0; $i < count($dias); $i++) { 
+		for ($i=0; $i < count($dias); $i++) {
 			DiaAlmocoDao::Deletar($dias[$i]);
 		}
 
@@ -129,7 +130,7 @@ class SemanaCardapioDao {
 		$p_sql = Conexao::conexao()->prepare($sql);
 		$p_sql->bindParam(":codigo", $codigo);
 		$codigo = $semana->getCodigo();
-		
+
 		return $p_sql->execute();
 	}
 

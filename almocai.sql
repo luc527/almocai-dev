@@ -73,12 +73,15 @@ create table if not exists Usuario (
   matricula int primary key auto_increment,
   senha varchar(255),
   nome varchar(100),
-	tipo_cod int,
+  tipo_cod int,
 
 	foreign key (tipo_cod) references Tipo_usuario(codigo)
 		on update cascade
 		on delete set null
 );
+insert into Usuario (matricula, senha, nome, tipo_cod) values
+('2019','d033e22ae348aeb5660fc2140aec35850c4da997','admin',1);
+-- senha (provisória): admin
 
 create table if not exists Presenca (
 	usuario_matricula int,

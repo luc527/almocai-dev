@@ -26,10 +26,8 @@ else $erro = '';
 		</fieldset> </form>
 		<br/>
 		<?php
-			if ($erro == 'matricula_nao_existe') {
-				echo "<i>Erro: a matrícula informada não existe.</i>";
-			} else if ($erro == 'senha_incorreta') {
-				echo "<i>Erro: a senha informada está incorreta.</i>";
+			if($erro == 'infos_incorretas') {
+				echo "<b>Erro: </b>As informações informadas estão incorretas.";
 			}
 		?>
 </body>

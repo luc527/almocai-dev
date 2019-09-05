@@ -79,82 +79,13 @@
 			}
 		}
 
-		public static function Login (Usuario $usuario) {
-
-			$login_info = array(); // Array de informações que essa função retornará
-			$login_info[0] = ''; // Mantem o erro que ocorreu ou a ação a ser tomada
-			$login_info[1] = ''; // Mantem, caso o login será feito, a matrícula do aluno
-			$login_info[2] = ''; // Mantem, caso o login será feito, o nome do aluno
-
-			try {
-				$matricula = $usuario->getCodigo();
-				if ( self::MatriculaCadastrada( $matricula ) ) {
-
-					$senha = $usuario->getSenha();
-					if ( self::SenhaCorreta($matricula, $senha) ) {
-						$usuario = self::SelectPorMatricula($matricula);
-
-						$login_info[0] = 'fazer_login';
-						$login_info[1] = $matricula;
-						$login_info[2] = $usuario->getNome();
-						$login_info[3] = $usuario->getTipo()->getCodigo();
-					} else {
-						$login_info[0] = 'senha_incorreta';
-					}
-
-				} else {
-					$login_info[0] = 'matricula_nao_existe';
-				}
-
-				return $login_info;
-			} catch (Exception $e) {
-				echo $e->getMessage();
-			}
-		}
-
-		public static function MatriculaCadastrada ($matricula) {
-			// Recebe uma matricula e retorna se ela existe ou não no BD (bool)
-			try {
-				$sql = "SELECT * FROM Usuario WHERE matricula = $matricula";
-				$query = Conexao::conexao()->query($sql);
-				$row = $query->fetch(PDO::FETCH_ASSOC);
-
-				if (!$row) {
-					return false;
-				} else {
-					return true;
-				}
-			} catch (Exception $e) {
-				echo $e->getMessage();
-			}
-		}
-
-		public static function SenhaCorreta ($matricula, $senha) {
-			// Rceebe uma matrícula e uma senha e retorna se a senha recebida condiz com a senha que está no BD
-			try {
-				$sql = "SELECT * FROM Usuario WHERE matricula = $matricula";
-				$query = Conexao::conexao()->query($sql);
-				$row = $query->fetch(PDO::FETCH_ASSOC);
-
-				if ( $senha == $row['senha'] ) {
-					return true;
-				} else {
-					return false;
-				}
-			} catch (Exception $e) {
-				echo $e->getMessage();
-			}
-		}
-
-		public static function Login_adm(Usuario $usuario) {
+		public static function Login(Usuario $usuario) {
 			$matricula = $usuario->getCodigo();
 			$senha = $usuario->getSenha();
-			$tipo = 1;
 
 			$sql = "SELECT * FROM Usuario
 			WHERE `matricula` = '$matricula'
-			AND `senha` = '$senha'
-			AND `tipo_cod` = '$tipo'";
+			AND `senha` = '$senha'";
 
 			try { $query = Conexao::conexao()->query($sql);
 			} catch (PDOException $e) { echo $e->getMessage(); }
@@ -176,7 +107,7 @@
 				$login_info[0] = "fazer_login";
 				$login_info[1] = $row['matricula'];
 				$login_info[2] = $row['nome'];
-				$login_info[3] = 1; //tipo (adm)
+				$login_info[3] = $row['tipo_cod']; //tipo (adm)
 			} else {
 				$login_info[0] = 'infos_incorretas';
 			}

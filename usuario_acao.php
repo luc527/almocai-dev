@@ -34,16 +34,20 @@
 
         // Recebe o vetor "login", com informações sobre como proceder
         // Ver classes/UsuarioDao.php:82
-        $login = UsuarioDao::Login($usuario);
+        $login_info = UsuarioDao::Login($usuario);
 
-        if ($login[0] != 'fazer_login') {
-            header("location:login.php?erro=".$login[0]);
+        var_dump($login_info);
+
+        if ($login_info[0] != 'fazer_login') {
+            header("location:login.php?erro=".$login_info[0]);
         } else {
             session_start();
-            $_SESSION['matricula'] = $login[1];
-            $_SESSION['nome'] = $login[2];
-            $_SESSION['tipo'] = $login[3];
-            header("location:index.php");
+            $_SESSION['matricula'] = $login_info[1];
+            $_SESSION['nome'] = $login_info[2];
+            $_SESSION['tipo'] = $login_info[3];
+            if ($_SESSION['tipo'] != 1)
+              header("location:index.php");
+            else header("location:adm_painel.php");
         }
     }
 ?>

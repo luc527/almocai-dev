@@ -13,6 +13,7 @@
     if ($login_info[0] == 'infos_incorretas') {
       echo "<b>Erro: </b> As informações informadas estão incorretas.";
     } else if ($login_info[0] == 'fazer_login') {
+      session_start();
       $_SESSION['matricula'] = $login_info[1];
       $_SESSION['nome'] = $login_info[2];
       $_SESSION['tipo'] = $login_info[3];

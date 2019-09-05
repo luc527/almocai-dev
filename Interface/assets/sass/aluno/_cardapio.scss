@@ -1,0 +1,129 @@
+// Estilo do cartão para a confirmação do aluno
+.painel {
+  background-image: linear-gradient(to left bottom, $secondary-color-dark, $secondary-color-light);
+
+  &__title {
+    @extend .almocai-text;
+    @extend .text-branco;
+    @extend .center;
+    @extend .nunito;
+    padding: 1rem;
+    margin: 0;
+  }
+
+}
+
+// Estilo para o banner do cardápio
+.banner {
+  background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/fundo-cardapio.jpg);
+  background-size: cover;
+  min-height: 30rem;
+  -webkit-clip-path: polygon(0 0%, 100% 0%, 100% 80%, 0% 100%);
+  clip-path: polygon(0 0%, 100% 0%, 100% 80%, 0% 100%);
+  
+  &__titulo {
+    text-align: center;
+    color: $branco;
+    @extend .nunito;
+  }
+  &__subtitulo {
+    text-align: center;
+    color: $branco;
+    font-weight: lighter;
+  }
+
+}
+
+
+// Estilo dos cartões de cardápio
+.cardapio {
+
+  padding-top: 2rem;
+
+  &__painel {
+    padding: 0;
+    position: relative;
+    @extend .hoverable;
+  }
+
+  &__lista {
+    position: relative;
+    margin: 0;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    list-style: none;
+    width: 75%;
+    padding-bottom: 1rem;
+
+    li {
+      text-align: center;
+      font-size: 1rem;
+      padding: 1rem;
+
+      &:not(:last-child) {
+        border-bottom: .1rem solid #C5C5C5;
+      }
+    }
+
+    &--veggie {
+      height: 1rem; 
+      position: absolute; 
+      margin: .25rem auto auto .5rem
+    }
+
+  }
+
+  &__picture {
+    background-size: cover;
+    height: 23rem;
+    background-blend-mode: color;
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    border-top-left-radius: .3rem;
+    border-top-right-radius: .3rem;
+    &--1 {
+      background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.5), rgba($primary-color-dark, 0.5)), url(../img/cartoes/cartao-1.png);
+    }
+    &--2 {
+      background-image: linear-gradient(to right bottom, rgba($secondary-color-light, 0.5), rgba($secondary-color-dark, 0.5)), url(../img/cartoes/cartao-2.png);
+    }
+    &--3 {
+      background-image: linear-gradient(to right bottom, rgba($tertiary-color-light, 0.5), rgba($tertiary-color-dark, 0.5)), url(../img/cartoes/cartao-3.png);
+    }
+    &--4 {
+      background-image: linear-gradient(to right bottom, rgba($quaternary-color-light, 0.5), rgba($quaternary-color-dark, 0.5)), url(../img/cartoes/cartao-4.png);
+    }
+  }
+
+  &__cabecalho {
+    font-size: 2.8rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    text-align: right;
+    color: $branco;
+    position: absolute;
+    top: 12rem;
+    right: 2rem;
+    width: 75%;
+  }
+
+  &__cabecalho-span {
+    padding: .25rem 1.5rem;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    @extend .nunito;
+    &--1 {
+      background-image: linear-gradient(to right bottom, rgba($primary-color-light, .6), rgba($primary-color-dark, .6));
+    }
+    &--2 {
+      background-image: linear-gradient(to right bottom, rgba($secondary-color-light, .6), rgba($secondary-color-dark, .6));
+    }
+    &--3 {
+      background-image: linear-gradient(to right bottom, rgba($tertiary-color-light, .6), rgba($tertiary-color-dark, .6));
+    }
+    &--4 {
+      background-image: linear-gradient(to right bottom, rgba($quaternary-color-light, .6), rgba($quaternary-color-dark, .6));
+    }
+  }
+}

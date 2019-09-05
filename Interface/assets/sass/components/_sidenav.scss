@@ -39,11 +39,11 @@
   }
 
   li > a {
-    color: $sidenav-font-color;
     display: block;
     font-size: $sidenav-font-size;
     font-weight: 500;
     height: $sidenav-item-height;
+    color: $primary-color;
     line-height: $sidenav-line-height;
     padding: 0 ($sidenav-padding * 2);
     position: relative;
@@ -53,23 +53,10 @@
       color: $primary-color !important;
     }
 
-    &:after {
-      content: '';
-      position: absolute;
-      border-left: 5px solid $primary-color-dark;
-      bottom: .2rem;
-      left: 0;
-      top: 100%;
-      transition: all .3s;
-    }
-
     &.active {
       color: $primary-color-dark;
       .material-icons {
         color: $primary-color-dark !important;
-      }
-      &:after {
-        top: .1rem;
       }
     }
 
@@ -78,9 +65,6 @@
       color: $primary-color-dark;
       .material-icons {
         color: $primary-color-dark !important;
-      }
-      &:after {
-        top: .1rem;
       }
     }
 

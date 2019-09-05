@@ -46,6 +46,10 @@ $tertiary-color: #eba63f !default;
 $tertiary-color-light: lighten($tertiary-color, 10%) !default;
 $tertiary-color-dark: darken($tertiary-color, 10%) !default;
 
+$quaternary-color: #e40c2b !default;
+$quaternary-color-light: lighten($quaternary-color, 10%) !default;
+$quaternary-color-dark: darken($quaternary-color, 10%) !default;
+
 $black: #1d1d2c !default;
 $branco: #fafafa;
 $background-color-default: $branco !default;

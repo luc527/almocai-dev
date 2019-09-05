@@ -8,9 +8,15 @@
   }
 
   &__imagem {
-    background: linear-gradient(135deg, rgba($primary-color, 0.3), rgba($secondary-color, 0.5)), url("../img/fundo-comida.png");
+    -webkit-clip-path: polygon(0 0, 100% 0, 75% 100%, 0% 100%);
+    clip-path: polygon(0 0, 100% 0, 75% 100%, 0% 100%);
+    background: linear-gradient(135deg, rgba($primary-color-light, 0.5), rgba($secondary-color-light, 0.5)), url("../img/fundo-comida.png");
     background-position: left;
     background-size: cover;
+    height: 100%;
+  }
+
+  &__valign {
     height: 100%;
   }
 
@@ -42,10 +48,6 @@
     &:active, :focus {
       @extend .z-depth-0;
     }
-  }
-
-  &__form {
-    // nada 
   }
 
 }

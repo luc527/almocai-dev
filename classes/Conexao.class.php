@@ -6,8 +6,7 @@
 require_once "autoload.php";
 
 class Conexao {
-	protected static $instance;
-	public $conexao;
+	protected static $conexao;
 
 
 	private function __construct ()	{

@@ -39,4 +39,10 @@
             header("location:index.php");
         }
     }
+
+    elseif($acao == 'loginoff'){
+        session_start();
+        session_destroy();
+        header("location:login.php");
+    }
 ?>

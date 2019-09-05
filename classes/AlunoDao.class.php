@@ -12,7 +12,8 @@
 					:matricula,
 					:senha,
 					:nome)";
-
+				$pdo = Conexao::conexao();
+				var_dump($pdo);
 				$stmt = Conexao::conexao()->prepare($sql);
 
 				$stmt->bindValue(":matricula", $aluno->getCodigo());
@@ -39,15 +40,15 @@
 			try {
 				switch ($criterio) {
 					case 'nome':
-						$sql = "SELECT * FROM aluno WHERE $criterio like '%$pesquisa%'";
+						$sql = "SELECT * FROM Aluno WHERE $criterio like '%$pesquisa%'";
 						break;
 					
 					case 'matricula':
-						$sql = "SELECT * FROM aluno WHERE $criterio = '$pesquisa'";
+						$sql = "SELECT * FROM Aluno WHERE $criterio = '$pesquisa'";
 						break;
 
 					case 'todos':
-						$sql = "SELECT * FROM aluno";
+						$sql = "SELECT * FROM Aluno";
 						break;
 				}
 
@@ -83,6 +84,7 @@
 
 			try {
 				$matricula = $aluno->getCodigo();
+				var_dump($matricula);
 				if ( self::MatriculaCadastrada( $matricula ) ) {
 
 					$senha = $aluno->getSenha();
@@ -107,7 +109,7 @@
 		public static function MatriculaCadastrada ($matricula) {
 			// Recebe uma matricula e retorna se ela existe ou não no BD (bool)
 			try {  
-				$sql = "SELECT * FROM aluno WHERE matricula = $matricula";
+				$sql = "SELECT * FROM Aluno WHERE matricula = $matricula";
 				$query = Conexao::conexao()->query($sql);
 				$row = $query->fetch(PDO::FETCH_ASSOC);
 
@@ -124,7 +126,7 @@
 		public static function SenhaCorreta ($matricula, $senha) {
 			// Rceebe uma matrícula e uma senha e retorna se a senha recebida condiz com a senha que está no BD
 			try {
-				$sql = "SELECT * FROM aluno WHERE matricula = $matricula";
+				$sql = "SELECT * FROM Aluno WHERE matricula = $matricula";
 				$query = Conexao::conexao()->query($sql);
 				$row = $query->fetch(PDO::FETCH_ASSOC);
 

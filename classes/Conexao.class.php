@@ -7,6 +7,7 @@ require_once "autoload.php";
 
 class Conexao {
 	protected static $instance;
+	public $conexao;
 
 	private function __construct ()	{
 		$db_host = "localhost";
@@ -25,9 +26,9 @@ class Conexao {
 		}
 	}
 
-	public static function conexao () {
+	public static function conexao() {
 		if (!isset(self::$instance)) {
-			self::$instance = new Conexao;
+			new Conexao();
 		}
 
 		return self::$instance;

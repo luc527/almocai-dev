@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 
-<?php 
-	
+<?php
+
 require_once "autoload.php";
 
 if (isset($_POST['acao'])) $acao = $_POST['acao'];
@@ -11,12 +11,12 @@ else if (isset($_GET['acao'])) $acao = $_GET['acao'];
 if (isset($acao)) {
 	if ($acao == 'SelectPorCriterio') {
 		$semanas = SemanaCardapioDao::SelectPorCriterio($_POST['pesquisa'], $_POST['criterio']);
-	} 
+	}
 } else {
 	$semanas = SemanaCardapioDao::SelectTodos();
 }
 
-for ($i=0; $i < count($semanas); $i++) { 
+for ($i=0; $i < count($semanas); $i++) {
 	$semanas[$i] = SemanaCardapioDao::SelectDias($semanas[$i]);
 }
 
@@ -40,7 +40,7 @@ for ($i=0; $i < count($semanas); $i++) {
 		<fieldset>
 			<legend>Listagem</legend>
 			<input type="text" name="pesquisa" placeholder="Digite sua pesquisa aqui"> <br/>
-			
+
 			<label for="criterio">Critério</label> <br/>
 			<label>
 				<input type="radio" name="criterio" value="data_inicio">
@@ -71,9 +71,9 @@ for ($i=0; $i < count($semanas); $i++) {
 			<tbody>
 
 			<?php
-			for ($i=0; $i < count($semanas); $i++) { 
+			for ($i=0; $i < count($semanas); $i++) {
 				echo "<tr>";
-				
+
 				echo "<td>".$semanas[$i]->getCodigo()."</td>";
 				$dataSemana = Funcoes::DataBDParaUser($semanas[$i]->getData_inicio());
 				echo "<td>".$dataSemana."</td>";
@@ -93,9 +93,9 @@ for ($i=0; $i < count($semanas); $i++) {
 							echo "</tr>";
 						echo "</thead>";
 
-						echo "<tbody>";						
-						
-					for ($j=0; $j < count($dias); $j++) { 
+						echo "<tbody>";
+
+					for ($j=0; $j < count($dias); $j++) {
 						$dias[$j] = DiaAlmocoDao::SelectAlimentos($dias[$j]);
 
 						$dataDia = Funcoes::DataBDParaUser($dias[$j]->getData());
@@ -103,13 +103,13 @@ for ($i=0; $i < count($semanas); $i++) {
 						echo "<tr>";
 							echo "<td>".$dias[$j]->getCodigo()."</td>";
 							echo "<td>".$dataDia."</td>";
-							echo "<td>".$dias[$j]->getDiaSemana()->getDescricao()."</td>";
+							echo "<td>".$dias[$j]->getDiaSemana()."</td>";
 							echo "<td>";
 
 							$alimentos = $dias[$j]->getAlimentos();
-							
+
 							echo "<ul>";
-								for ($k=0; $k < count($alimentos); $k++) { 
+								for ($k=0; $k < count($alimentos); $k++) {
 									echo "<li>";
 									echo "<b>".$alimentos[$k]->getDescricao()."</b> [#".$alimentos[$k]->getCodigo()."]";
 									echo " - <a href='alimento_acao.php?acao=Deletar&codigo=".$alimentos[$k]->getCodigo()."'>Deletar</a>";

@@ -38,9 +38,7 @@ class DiaAlmoco extends AbsCodigo {
 	}
 
 	public function setDiaSemana ($diaSemana) {
-		if ($diaSemana instanceof DiaSemana) {
-			$this->diaSemana = $diaSemana;
-		}
+		$this->diaSemana = $diaSemana;
 	}
 
 	public function getPresencas() {

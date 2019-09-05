@@ -11,8 +11,8 @@ class AlimentoDao {
 	// FUNÇÕES DE INSERIR //
 
 	public static function Inserir (Alimento $alimento, $diaAlmoco_codigo)	{
-		$sql = "INSERT INTO Alimento (descricao, diaAlmoco_codigo, tipo_cod)
-		VALUES (:descricao, :diaAlmoco_codigo, :tipo_id)";
+		$sql = "INSERT INTO Alimento (descricao, diaAlmoco_codigo, tipo)
+		VALUES (:descricao, :diaAlmoco_codigo, :tipo)";
 
 		$pdo = Conexao::conexao();
 
@@ -20,10 +20,10 @@ class AlimentoDao {
 
 		$stmt->bindParam(":descricao", $descricao);
 		$stmt->bindParam(":diaAlmoco_codigo", $diaAlmoco_codigo);
-		$stmt->bindParam(":tipo_cod", $tipo);
+		$stmt->bindParam(":tipo", $tipo);
 
 		$descricao = $alimento->getDescricao();
-		$tipo = $alimento->getTipo()->getCodigo();
+		$tipo = $alimento->getTipo();
 
 		return $stmt->execute();
 	}
@@ -35,10 +35,7 @@ class AlimentoDao {
 		$alimento = new Alimento;
 		$alimento->setCodigo($row['codigo']);
 		$alimento->setDescricao($row['descricao']);
-
-		$tipo = new TipoAlimento;
-		$tipo->setCodigo($row['tipo_cod']);
-		$alimento->setTipo($tipo);
+		$alimento->setTipo($row['tipo']);
 
 		return $alimento;
 	}

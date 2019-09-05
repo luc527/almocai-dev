@@ -25,9 +25,7 @@ class Alimento extends AbsCodigo {
 	}
 
 	public function setTipo($t) {
-		if ($t instanceof TipoAlimento) {
-			$this->tipo = $t;
-		}
+		$this->tipo = $t;
 	}
 }
 

@@ -47,7 +47,7 @@ create table if not exists Usuario (
 	tipo varchar(50)
 );
 insert into Usuario (matricula, senha, nome, tipo) values
-('2019','d033e22ae348aeb5660fc2140aec35850c4da997','admin','ADM');
+('2019','d033e22ae348aeb5660fc2140aec35850c4da997','admin','ADMINISTRADOR');
 -- senha (provisória): admin
 
 create table if not exists Presenca (

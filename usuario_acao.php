@@ -12,11 +12,7 @@
         $matricula = isset($_POST['matricula'])?$_POST['matricula']:"";
         $senha = isset($_POST['senha'])?sha1($_POST['senha']):"";
         $nome = isset($_POST['nome'])?$_POST['nome']:"";
-        $tipo_cod = isset($_POST['tipo']) ? $_POST['tipo'] : ALUNO; //3: tipo do aluno
-
-        // Populando Objeto Tipo do usuário
-        $tipo = new TipoUsuario;
-        $tipo->setCodigo($tipo_cod);
+        $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : ALUNO; //3: tipo do aluno
 
         // Populando Objeto Usuario
         $usuario = new Usuario;

@@ -23,9 +23,7 @@ class Usuario extends AbsCodigo {
     }
 
     public function setTipo($t) {
-      if ($t instanceof TipoUsuario) {
-        $this->tipo = $t;
-      }
+      $this->tipo = $t;
     }
 
     public function getTipo() {

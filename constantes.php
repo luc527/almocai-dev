@@ -1,5 +1,5 @@
 <?php // definição dos tipos de usuários
-define('ADM', 1);
-define('FUNC', 2);
-define('ALUNO', 3);
+define('ADM', "Administrador(a)");
+define('FUNC', "Funcionário(a)");
+define('ALUNO', "Aluno(a)");
 ?>

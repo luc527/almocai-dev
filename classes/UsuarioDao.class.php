@@ -4,20 +4,20 @@
 	class UsuarioDao {
 		public static function Inserir(Usuario $usuario) {
 			try {
-				$sql = "INSERT INTO Usuario (matricula, senha, nome, tipo_cod)
-					VALUES(:matricula, :senha, :nome, :tipo_cod)";
+				$sql = "INSERT INTO Usuario (matricula, senha, nome, tipo)
+					VALUES(:matricula, :senha, :nome, :tipo)";
 
 				$stmt = Conexao::conexao()->prepare($sql);
 
 				$stmt->bindParam(":matricula", $codigo);
 				$stmt->bindParam(":senha", $senha);
 				$stmt->bindParam(":nome", $nome);
-				$stmt->bindParam(":tipo_cod", $tipo);
+				$stmt->bindParam(":tipo", $tipo);
 
 				$codigo = $usuario->getCodigo();
 				$senha = $usuario->getSenha();
 				$nome = $usuario->getNome();
-				$tipo = $usuario->getTipo()->getCodigo();
+				$tipo = $usuario->getTipo();
 
 				return $stmt->execute();
 			} catch (Exception $e){
@@ -31,10 +31,7 @@
 			$usuario->setCodigo( $row['matricula'] );
 			$usuario->setSenha( $row['senha'] );
 			$usuario->setNome( $row['nome'] );
-
-			$tipo = new Tipo;
-			$tipo->setCodigo( $row['tipo_cod'] );
-			$usuario->setTipo($tipo);
+			$usuario->setTipo( $row['tipo'] );
 
 			return $usuario;
 		}
@@ -47,7 +44,7 @@
 						break;
 
 					case 'matricula':
-					case 'tipo_cod':
+					case 'tipo':
 						$sql = "SELECT * FROM Usuario WHERE $criterio = '$pesquisa'";
 						break;
 
@@ -107,7 +104,7 @@
 				$login_info[0] = "fazer_login";
 				$login_info[1] = $row['matricula'];
 				$login_info[2] = $row['nome'];
-				$login_info[3] = $row['tipo_cod']; //tipo (adm)
+				$login_info[3] = $row['tipo']; //tipo (adm)
 			} else {
 				$login_info[0] = 'infos_incorretas';
 			}

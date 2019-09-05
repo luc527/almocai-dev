@@ -22,11 +22,11 @@
         $alunoDao->Inserir($aluno);
         #header("aluno_cadastro.php");
     } else if ($acao == 'Login') {
-        $aluno = new Aluno;
+        $aluno = new Usuario;
         $aluno->setCodigo( $_POST['matricula'] );
         $aluno->setSenha( sha1($_POST['senha']) );
 
-        $login = AlunoDao::Login($aluno);
+        $login = UsuarioDao::Login($aluno);
 
         var_dump($login);
 

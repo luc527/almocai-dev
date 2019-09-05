@@ -6,7 +6,7 @@
 require_once "autoload.php";
 
 class Conexao {
-	protected static $instance;
+	protected static $conexao;
 
 	private function __construct ()	{
 		$db_host = "localhost";
@@ -16,9 +16,9 @@ class Conexao {
 		$db_driver = "mysql";
 
 		try	{
-			self::$instance = new PDO("$db_driver:host=$db_host; dbname=$db_nome", $db_usuario, $db_senha);
-			self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			self::$instance->exec("SET NAMES utf8");
+			self::$conexao = new PDO("$db_driver:host=$db_host; dbname=$db_nome", $db_usuario, $db_senha);
+			self::$conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			self::$conexao->exec("SET NAMES utf8");
 		}
 		catch (PDOException $e) {
 			die("Erro de conexão: ".$e->getMessage());
@@ -26,11 +26,10 @@ class Conexao {
 	}
 
 	public static function conexao () {
-		if (!isset(self::$instance)) {
-			self::$instance = new Conexao;
+		if (empty(self::$conexao)) {
+			new self;
 		}
-
-		return self::$instance;
+		return self::$conexao;
 	}
 }
 

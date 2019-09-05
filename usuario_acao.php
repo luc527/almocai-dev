@@ -6,28 +6,35 @@
     else $acao = '';
 
     if ($acao == "inserir") {
-        // adquirindo campos
+        // Adquirindo campos do formulário HTML
         $matricula = isset($_POST['matricula'])?$_POST['matricula']:"";
         $senha = isset($_POST['senha'])?sha1($_POST['senha']):"";
         $nome = isset($_POST['nome'])?$_POST['nome']:"";
+        $tipo_cod = isset($_POST['tipo']) ? $_POST['tipo'] : 3; //3: tipo do aluno
 
-        // Populando Usuario
+        // Populando Objeto Tipo do usuário
+        $tipo = new TipoUsuario;
+        $tipo->setCodigo($tipo_cod);
+
+        // Populando Objeto Usuario
         $usuario = new Usuario;
         $usuario->setCodigo($matricula);
         $usuario->setSenha($senha);
         $usuario->setNome($nome);
+        $usuario->setTipo($tipo);
 
-        // Inserindo Usuario
+        // Inserindo Usuario no BD
         UsuarioDao::Inserir($usuario);
         #header("aluno_cadastro.php");
     } else if ($acao == 'Login') {
+        // Populando Objeto Usuario
         $usuario = new Usuario;
         $usuario->setCodigo( $_POST['matricula'] );
         $usuario->setSenha( sha1($_POST['senha']) );
 
-        $login = UsuarioDao::Login($aluno);
-
-        var_dump($login);
+        // Recebe o vetor "login", com informações sobre como proceder
+        // Ver classes/UsuarioDao.php:82
+        $login = UsuarioDao::Login($usuario);
 
         if ($login[0] != 'fazer_login') {
             header("location:login.php?erro=".$login[0]);

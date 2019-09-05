@@ -1,7 +1,7 @@
 <?php
 	require_once "autoload.php";
 
-	class AlunoDao {
+	class UsuarioDao {
 		public static function Inserir(Usuario $usuario) {
 			try {
 				$sql = "INSERT INTO Usuario (matricula, senha, nome, tipo_cod)
@@ -11,7 +11,7 @@
 
 				$stmt->bindValue(":matricula", $codigo);
 				$stmt->bindValue(":senha", $senha);
-				$stmt->bindValue(":nome", $nome;
+				$stmt->bindValue(":nome", $nome);
 				$stmt->bindValue(":tipo_cod", $tipo);
 
 				$codigo = $usuario->getCodigo();
@@ -81,32 +81,32 @@
 
 		public static function Login (Usuario $usuario) {
 
-			$login = array(); // Array de informações que essa função retornará
-			$login[0] = ''; // Mantem o erro que ocorreu ou a ação a ser tomada
-			$login[1] = ''; // Mantem, caso o login será feito, a matrícula do aluno
-			$login[2] = ''; // Mantem, caso o login será feito, o nome do aluno
+			$login_info = array(); // Array de informações que essa função retornará
+			$login_info[0] = ''; // Mantem o erro que ocorreu ou a ação a ser tomada
+			$login_info[1] = ''; // Mantem, caso o login será feito, a matrícula do aluno
+			$login_info[2] = ''; // Mantem, caso o login será feito, o nome do aluno
 
 			try {
-				$matricula = $aluno->getCodigo();
+				$matricula = $usuario->getCodigo();
 				if ( self::MatriculaCadastrada( $matricula ) ) {
 
-					$senha = $aluno->getSenha();
+					$senha = $usuario->getSenha();
 					if ( self::SenhaCorreta($matricula, $senha) ) {
 						$usuario = self::SelectPorMatricula($matricula);
 
-						$login[0] = 'fazer_login';
-						$login[1] = $matricula;
-						$login[2] = $usuario->getNome();
-						$login[3] = $usuario->getTipo()->getCodigo(); 
+						$login_info[0] = 'fazer_login';
+						$login_info[1] = $matricula;
+						$login_info[2] = $usuario->getNome();
+						$login_info[3] = $usuario->getTipo()->getCodigo();
 					} else {
-						$login[0] = 'senha_incorreta';
+						$login_info[0] = 'senha_incorreta';
 					}
 
 				} else {
-					$login[0] = 'matricula_nao_existe';
+					$login_info[0] = 'matricula_nao_existe';
 				}
 
-				return $login;
+				return $login_info;
 			} catch (Exception $e) {
 				echo $e->getMessage();
 			}
@@ -144,6 +144,43 @@
 			} catch (Exception $e) {
 				echo $e->getMessage();
 			}
+		}
+
+		public static function Login_adm(Usuario $usuario) {
+			$matricula = $usuario->getCodigo();
+			$senha = $usuario->getSenha();
+			$tipo = 1;
+
+			$sql = "SELECT * FROM Usuario
+			WHERE `matricula` = '$matricula'
+			AND `senha` = '$senha'
+			AND `tipo_cod` = '$tipo'";
+
+			try { $query = Conexao::conexao()->query($sql);
+			} catch (PDOException $e) { echo $e->getMessage(); }
+
+			$row = $query->fetch(PDO::FETCH_ASSOC);
+
+			$login_info = array();
+			/** $login_info
+			 * Informações que a função retornará:
+			 * [0] -> se o login deverá ser efetuado OU, caso contrário, qual foi o erro
+			 * [1] -> matrícula do usuário
+			 * [2] -> nome do usuário
+			 * [3] -> tipo do usuário (adm)
+			 * [1 - 3] só serão preenchidas caso o login será feito
+			 * serão armazenadas em $_SESSION
+			 */
+
+			if ($row) {
+				$login_info[0] = "fazer_login";
+				$login_info[1] = $row['matricula'];
+				$login_info[2] = $row['nome'];
+				$login_info[3] = 1; //tipo (adm)
+			} else {
+				$login_info[0] = 'infos_incorretas';
+			}
+			return $login_info;
 		}
 	}
 ?>

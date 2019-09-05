@@ -23,15 +23,15 @@ class DiaAlmocoDao {
 			// Se não existe, ele tenta deletar, mas não deleta nada (porque não existe), e simplesmente insere uma nova
 
 			try {
-				$sql = "INSERT INTO Presenca (aluno_matricula, diaAlmoco_codigo, presenca) VALUES (:aluno, :dia, :presenca)";
+				$sql = "INSERT INTO Presenca (usuario_matricula, diaAlmoco_codigo, presenca) VALUES (:usuario, :dia, :presenca)";
 
 				$stmt = Conexao::conexao()->prepare($sql);
 
-				$stmt->bindParam(":aluno", $aluno_mat);
+				$stmt->bindParam(":usuario", $usuario_mat);
 				$stmt->bindParam(":dia", $dia_cod);
 				$stmt->bindParam(":presenca", $pres);
 
-				$aluno_mat = $presencas[$i]->getAluno()->getCodigo();
+				$usuario_mat = $presencas[$i]->getAluno()->getCodigo();
 				$dia_cod = $diaAlmoco->getCodigo();
 				$pres = $presencas[$i]->getPresenca();
 
@@ -42,11 +42,11 @@ class DiaAlmocoDao {
 		}
 	}
 
-	public static function DeletarPresenca($aluno, $dia) {
+	public static function DeletarPresenca($usuario, $dia) {
 		try {
-			$sql = "DELETE FROM Presenca WHERE aluno_matricula = :aluno AND diaAlmoco_codigo = :dia";
+			$sql = "DELETE FROM Presenca WHERE usuario_matricula = :usuario AND diaAlmoco_codigo = :dia";
 			$stmt = Conexao::conexao()->prepare($sql);
-			$stmt->bindParam(":aluno", $aluno);
+			$stmt->bindParam(":usuario", $usuario);
 			$stmt->bindParam(":dia", $dia);
 			return $stmt->execute();
 		} catch (Exception $e) {

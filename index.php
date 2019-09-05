@@ -25,6 +25,7 @@ include 'valida_secao.php';
 
 		if($_SESSION['tipo'] == ADMINISTRADOR) {
 			echo "<a href='adm_painel.php'>Painel do administrador</a>";
+			echo "<br/><br/>";
 		}
 	}
 	echo "<a href='usuario_acao.php?acao=logoff'>Sair</a>";

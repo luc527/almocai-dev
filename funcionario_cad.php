@@ -20,7 +20,7 @@
       <label for="senha">Senha</label> <br/>
       <input type="password" name="senha"> <br/><br/>
 
-      <input type="hidden" name="tipo" value="<?php echo FUNC; ?>"> <!-- constante definida em constantes.php-->
+      <input type="hidden" name="tipo" value="<?php echo FUNCIONARIO; ?>">
 
       <button type="submit" name="acao" value="inserir">Cadastrar</button>
     </fiedset> </form>

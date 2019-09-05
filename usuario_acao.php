@@ -1,5 +1,5 @@
 <?php
-    include 'constantes.php';
+    include 'config.php';
 
     require_once "autoload.php";
 
@@ -12,7 +12,7 @@
         $matricula = isset($_POST['matricula'])?$_POST['matricula']:"";
         $senha = isset($_POST['senha'])?sha1($_POST['senha']):"";
         $nome = isset($_POST['nome'])?$_POST['nome']:"";
-        $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : ALUNO; //3: tipo do aluno
+        $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : ALUNO;
 
         // Populando Objeto Usuario
         $usuario = new Usuario;
@@ -46,5 +46,9 @@
             $_SESSION['tipo'] = $login_info[3];
             header("location:index.php");
         }
+    } else if ($acao == 'logoff') {
+      session_start();
+      session_destroy();
+      header("location:login.php");
     }
 ?>

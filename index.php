@@ -18,16 +18,16 @@ include 'valida_secao.php';
 		e você é um usuário do tipo <b>".$_SESSION['tipo']."</b></p>";
 
 		echo "<table>
-		<tr> <td><b>".ADM."</b></td> <td>ADM</td>  <td>Administrador(a)</td> </tr>
-		<tr> <td><b>".FUNC."</b></td> <td>FUNC</td> <td>Funcionário(a)</td> </tr>
-		<tr> <td><b>".ALUNO."</b></td> <td>ALUNO</td> <td>Aluno(a)</td> </tr>
+		<tr> <td><b>ADMINISTRADOR</b></td> <td>".ADMINISTRADOR."</td> </tr>
+		<tr> <td><b>FUNCIONARIO</b></td> <td>".FUNCIONARIO."</td> </tr>
+		<tr> <td><b>ALUNO</b></td> <td>".ALUNO."</td> </tr>
 		</table>";
 
-		if($_SESSION['tipo'] == ADM) {
+		if($_SESSION['tipo'] == ADMINISTRADOR) {
 			echo "<a href='adm_painel.php'>Painel do administrador</a>";
 		}
 	}
-	echo "<a href='aluno_acao.php?acao=loginoff'>Sair</a>"
+	echo "<a href='usuario_acao.php?acao=logoff'>Sair</a>";
 
 	?>
 </body>

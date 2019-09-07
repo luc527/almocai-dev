@@ -19,6 +19,10 @@
 
   @extend .z-depth-1;
 
+  &__logo {
+    padding: 3rem 3rem 1rem 3rem;
+  }
+
   // Right Align
   &.right-aligned {
     right: 0;

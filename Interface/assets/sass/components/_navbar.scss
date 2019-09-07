@@ -47,6 +47,7 @@ nav {
     z-index: 1;
     height: $navbar-height-mobile;
     margin: 0 18px;
+    margin-top: -.125rem;
 
     i {
       height: $navbar-height-mobile;
@@ -243,13 +244,13 @@ nav {
     a {
       color: $branco;
       &:hover {
-        color: rgba($branco, 0.7);
+        color: rgba($branco, 0.6);
       }
     }
   }
   
   .active {
-    color: rgba($branco, 0.7);        
+    color: rgba($branco, 0.6);        
   }
 
 }

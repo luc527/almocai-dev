@@ -5,18 +5,18 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-  <title>Cardápio - Almoçaí</title>
+  <title>Página Inicial - Almoçaí</title>
 
   <!-- Favicon -->
-  <link rel="shortcut icon" href="../../assets/img/favicon.png" />
+  <link rel="shortcut icon" href="../assets/img/favicon.png" />
 
   <!-- Fontes -->
-  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,200&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">  
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,200" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">  
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <!-- CSS -->
-  <link href="../../assets/css/almocai.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="../assets/css/almocai.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 
 <body>
@@ -24,9 +24,8 @@
   <header>
 
     <nav class="navbar-transparent">
-      <!-- TODO:: Fazer navbar transparent -->
       <div class="nav-wrapper container">
-        <img class="no-select brand-logo" src="../../assets/img/logo-branco.svg">
+        <img class="no-select brand-logo" src="../assets/img/logo-branco.svg">
         <a href="#" data-target="mobile-sidenav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
           <li><a class="waves-effect active" href="./"><i class="material-icons left">home</i>Página Inicial</a></li> 
@@ -38,7 +37,7 @@
     </nav>
 
     <ul class="sidenav" id="mobile-sidenav">
-      <li class="nunito almocai-text center" style="font-size: 2rem; padding: .5rem;">Almoçaí</li>
+      <li class="sidenav__logo"><img src="../assets/img/logo-verde.svg"></li>
       <li><a class="waves-effect active" href="./"><i class="material-icons left">home</i>Página Inicial</a></li> 
       <li><a class="waves-effect" href="perfil/"><i class="material-icons left">face</i>Perfil</a></li> 
       <li><a class="waves-effect" href="cardapio/"><i class="material-icons left">menu_book</i>Cardápio</a></li>
@@ -63,21 +62,21 @@
       <!-- Confimação do aluno -->
         <div class="col s12 m6 l7 xl9">
           <div class="row">
-            <div class="card col s12 l8 offset-l2">
+            <div class="card col s12 l8 offset-l2" style="padding: 2rem">
               <h4 class="confirmacao-aluno__titulo">Você irá almoçar no IFC hoje?</h4>
               <h6 class="confirmacao-aluno__data">02/09</h6>
               <div class="col s6 center">
-                <a href="" class="waves-effect waves-light btn login-section__button">Sim</a>
+                <a href="" class="waves-effect btn login-section__button">Sim</a>
               </div>
               <div class="col s6 center">
-                <a href="" class="waves-effect waves-light btn login-section__button almocai vermelho">Não</a>
+                <a href="" class="waves-effect btn login-section__button almocai vermelho">Não</a>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Primeiro cartão -->
-        <div class="col s12 m6 l5 xl3">
+        <div class="col s12 m6 l5 xl3 margin-zero-mobile">
           <div class="card-panel cardapio__painel">
             <div class="cardapio__picture cardapio__picture--1"></div>
             <h4 class="cardapio__cabecalho">
@@ -90,7 +89,7 @@
                   <li>Feijão</li>
                   <li>Nhoque</li>
                   <li>Salada</li>
-                  <li>Panqueca <img src="../assets/img/aluno/cartoes/folha.svg" alt="folha" class="cardapio__lista--veggie"></li>
+                  <li>Panqueca <img src="../assets/img/aluno/cartoes/folha.svg" class="cardapio__lista--icon"></li>
                 </ul>
               </div>
             </div>
@@ -111,7 +110,7 @@
 
   </main>
 
-  <footer >sim>
+  <footer >
     <!-- Apenas a parte de "copyright" -->
   </footer>
 

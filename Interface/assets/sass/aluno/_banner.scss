@@ -1,12 +1,20 @@
 // Estilo para o banner do cardápio
 .banner {
+  
   background-size: cover;
+  // Cardápio
   &--1 {
     background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/aluno/fundo-cardapio.jpg);
   }
+  // Página inicial
   &--2 {
     background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/aluno/fundo-pagina-inicial.jpg);
   }
+  // Perfil
+  &--3 {
+    background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/aluno/fundo-perfil.jpg);
+  }
+
   min-height: 30rem;
   -webkit-clip-path: polygon(0 0%, 100% 0%, 100% 80%, 0% 100%);
   clip-path: polygon(0 0%, 100% 0%, 100% 80%, 0% 100%);
@@ -20,7 +28,7 @@
 
   @media #{$small-and-down} {
     &__titulo {
-      font-size: 4.5rem;
+      font-size: 4rem;
     }
   }
 

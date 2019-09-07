@@ -13,30 +13,21 @@
 
 }
 
-// Estilo para o banner do cardápio
-.banner {
-  background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/fundo-cardapio.jpg);
-  background-size: cover;
-  min-height: 30rem;
-  -webkit-clip-path: polygon(0 0%, 100% 0%, 100% 80%, 0% 100%);
-  clip-path: polygon(0 0%, 100% 0%, 100% 80%, 0% 100%);
-  
-  &__titulo {
-    text-align: center;
-    color: $branco;
-    @extend .nunito;
-  }
-  &__subtitulo {
-    text-align: center;
-    color: $branco;
-    font-weight: lighter;
-  }
-
-}
-
-
 // Estilo dos cartões de cardápio
 .cardapio {
+
+  &__indisponivel {
+    background: linear-gradient(to right bottom, $quaternary-color-light, $quaternary-color-dark);
+    & h2 {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+      margin: 0;
+      @extend .center;
+      @extend .almocai-text;
+      @extend .text-branco;
+      @extend .nunito;
+    }
+  }
 
   padding-top: 2rem;
 
@@ -83,16 +74,16 @@
     border-top-left-radius: .3rem;
     border-top-right-radius: .3rem;
     &--1 {
-      background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.5), rgba($primary-color-dark, 0.5)), url(../img/cartoes/cartao-1.png);
+      background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.5), rgba($primary-color-dark, 0.5)), url(../img/aluno/cartoes/cartao-1.png);
     }
     &--2 {
-      background-image: linear-gradient(to right bottom, rgba($secondary-color-light, 0.5), rgba($secondary-color-dark, 0.5)), url(../img/cartoes/cartao-2.png);
+      background-image: linear-gradient(to right bottom, rgba($secondary-color-light, 0.5), rgba($secondary-color-dark, 0.5)), url(../img/aluno/cartoes/cartao-2.png);
     }
     &--3 {
-      background-image: linear-gradient(to right bottom, rgba($tertiary-color-light, 0.5), rgba($tertiary-color-dark, 0.5)), url(../img/cartoes/cartao-3.png);
+      background-image: linear-gradient(to right bottom, rgba($tertiary-color-light, 0.5), rgba($tertiary-color-dark, 0.5)), url(../img/aluno/cartoes/cartao-3.png);
     }
     &--4 {
-      background-image: linear-gradient(to right bottom, rgba($quaternary-color-light, 0.5), rgba($quaternary-color-dark, 0.5)), url(../img/cartoes/cartao-4.png);
+      background-image: linear-gradient(to right bottom, rgba($quaternary-color-light, 0.5), rgba($quaternary-color-dark, 0.5)), url(../img/aluno/cartoes/cartao-4.png);
     }
   }
 

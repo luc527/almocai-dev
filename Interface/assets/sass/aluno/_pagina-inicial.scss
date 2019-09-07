@@ -1,0 +1,14 @@
+.confirmacao-aluno {
+  &__titulo {
+    @extend .nunito;
+    @extend .center;
+    @extend .almocai-text;
+  }
+
+  &__data {
+    @extend .center;
+    @extend .almocai-text;
+    @extend .text-preto;
+  }
+
+}

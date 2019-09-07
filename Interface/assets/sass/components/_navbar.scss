@@ -57,19 +57,17 @@ nav {
 
   // Logo
   .brand-logo {
-    position: absolute;
+    position: absolute; 
+    padding-top: .15rem;
     color: $navbar-font-color;
     display: inline-block;
     font-size: $navbar-brand-font-size;
     padding: 0;
+    height: 4rem;
 
     &.center {
       left: 50%;
       transform: translateX(-50%);
-    }
-
-    & img {
-      height: 4rem;
     }
 
     @media #{$medium-and-down} {
@@ -236,6 +234,8 @@ nav {
   .brand-logo {
     color: $branco !important;
     z-index: 1;
+    padding: 1rem;
+    height: 4rem; 
   }
 
   // Navbar Links

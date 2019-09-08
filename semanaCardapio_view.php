@@ -2,7 +2,10 @@
 
 <?php
 require_once('autoload.php');
-include 'valida_secao.php';
+include('valida_secao.php');
+
+$usuario = new Usuario;
+$usuario->setCodigo($_SESSION['matricula']);
 
 if (isset($_POST['codigo'])) $codigo = $_POST['codigo'];
 else if (isset($_GET['codigo'])) $codigo = $_GET['codigo'];
@@ -73,7 +76,7 @@ if (isset($codigo)) {
 										<td>
 											<form action="presenca_acao.php" method="post"> <fieldset>
 												<input type="hidden" name="cod_semana" value="<?php echo $codigo; ?>">
-												<input type="hidden" name="matricula" value="<?php echo $_SESSION['matricula']; ?>">
+												<input type="hidden" name="matricula" value="<?php echo $usuario->getCodigo(); ?>">
 												<input type="hidden" name="dia" value="<?php echo $dias[$i]->getCodigo(); ?>">
 												<center>
 													<button type="submit" name="presenca" value="1">Estarei presente</button> <br/>
@@ -82,9 +85,13 @@ if (isset($codigo)) {
 											</fieldset> </form>
 										</td>
 
-										<td>
-
-										</td>
+										<td> <center>
+											<?php
+												$presenca = UsuarioDao::SelectPresenca($dias[$i]->getCodigo(), $usuario->getCodigo());
+												if($presenca) echo 'Presente';
+												else echo 'Ausente';
+											?>
+										</center> </td>
 									</tr>
 								<?php
 								}

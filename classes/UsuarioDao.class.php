@@ -67,12 +67,20 @@
 		}
 
 		public static function SelectPorMatricula ($matricula) {
-			// Retorna o objeto luno em vez de um array com um só objeto, que seria o resultado do Select ()
-			try {
-				$usuarios = self::Select('matricula', $matricula);
-				return $usuarios[0];
-			} catch (Exception $e) {
+			// Retorna o objeto aluno em vez de um array com um só objeto, que seria o resultado do Select ()
+			$usuarios = self::Select('matricula', $matricula);
+			return $usuarios[0];
+		}
 
+		public static function SelectPresenca($dia_cod, $user_mat) {
+			$sql = "SELECT * FROM Presenca WHERE diaAlmoco_codigo = $dia_cod
+			AND usuario_matricula = $user_mat";
+			try {
+				$query = Conexao::conexao()->query($sql);
+				$row = $query->fetch(PDO::FETCH_ASSOC);
+				return $row['presenca'];
+			} catch (PDOException $e) {
+				echo $e->getMessage();
 			}
 		}
 

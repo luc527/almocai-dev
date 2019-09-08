@@ -197,8 +197,8 @@ $input-icon-size: 2rem;
 $placeholder-text-color: lighten($input-border-color, 20%) !default;
 
 // Radio Buttons
-$radio-fill-color: #949494 !default;
-$radio-empty-color: #949494 !default;
+$radio-fill-color: $primary-color !default;
+$radio-empty-color: $primary-color !default;
 $radio-border: 2px solid $radio-fill-color !default;
 
 // Range

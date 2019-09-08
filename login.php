@@ -22,7 +22,9 @@ else $erro = '';
 			<label for="senha">Senha: </label> <br/>
 			<input type="password" name="senha"> <br/><br/>
 
-			<button type="submit" name="acao" value="Login">Login</button>
+			<button type="submit" name="acao" value="Login">Login</button> <br/><br/>
+
+			Ainda não se cadastrou? <a href="usuario_cadastro.php">Cadastre-se</a>.
 		</fieldset> </form>
 		<br/>
 		<?php

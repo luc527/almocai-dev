@@ -5,12 +5,13 @@
 
   &__container {
     height: 100%;
+    width: 100% !important;
   }
 
   &__imagem {
     -webkit-clip-path: polygon(0 0, 100% 0, 75% 100%, 0% 100%);
     clip-path: polygon(0 0, 100% 0, 75% 100%, 0% 100%);
-    background: linear-gradient(135deg, rgba($primary-color-light, 0.5), rgba($secondary-color-light, 0.5)), url("../img/fundo-comida.png");
+    background: linear-gradient(135deg, rgba($primary-color-light, 0.5), rgba($primary-color-dark, 0.5)), url("../img/fundo-comida.png");
     background-position: left;
     background-size: cover;
     height: 100%;
@@ -18,17 +19,6 @@
 
   &__valign {
     height: 100%;
-  }
-
-  &__title {
-    font-size: 3rem;
-    margin: 0;
-    padding-bottom: 1rem;
-    background: linear-gradient(to right, $primary-color, $primary-color-dark);
-    background-clip: text;
-    letter-spacing: .6rem;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
   }
 
   &__padding-zero {

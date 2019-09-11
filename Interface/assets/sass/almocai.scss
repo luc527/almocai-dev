@@ -42,11 +42,16 @@
 
 // Páginas
 
+
+
 // Entrar
-@import "entrar";
+@import "entrar/entrar";
 
 // Aluno
 @import "aluno/cardapio";
 @import "aluno/banner";
 @import "aluno/pagina-inicial";
 @import "aluno/perfil";
+
+// Servidor
+@import "servidor/servidor";

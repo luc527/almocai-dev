@@ -64,7 +64,12 @@ nav {
     display: inline-block;
     font-size: $navbar-brand-font-size;
     padding: 0;
-    height: 4rem;
+    height: 2.5rem;
+    margin-top: .85rem;
+    
+    @media #{$small-and-down} {
+      height: 2.25rem;
+    }
 
     &.center {
       left: 50%;

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Página Inicial - Almoçaí</title>
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="../assets/img/icons/icon-128x128.png" />
+
+  <!-- Manifest -->
+  <link rel="manifest" href="../assets/pwa/manifest.json">
+
+  <!-- Fontes -->
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- CSS -->
+  <link href="../assets/css/almocai.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+
+<body>
+
+  <header>
+
+    <nav class="navbar">
+      <div class="nav-wrapper container">
+        <img class="no-select brand-logo" src="../assets/img/logo-verde.svg">
+        <a href="#" data-target="mobile-sidenav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li><a class="waves-effect" href="../entrar/"><i class="material-icons left">power_settings_new</i>Sair</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <ul class="sidenav" id="mobile-sidenav">
+      <li class="sidenav__logo"><img src="../assets/img/logo-verde.svg"></li>
+      <li><a class="waves-effect" href="../entrar/"><i class="material-icons left">power_settings_new</i>Sair</a></li>
+    </ul>
+  </header>
+
+  <main>
+
+    <div class="section row container">
+      <div class="col s12 m6 offset-m3 l4 offset-l4">
+        <div class="card hoverable">
+          <h6 class="servidor__subtitulo">Quantidade de alunos que irão almoçar hoje</h6>
+          <h6 class="servidor__quantidade">76</h6>
+        </div>
+      </div>
+    </div>
+
+  </main>
+  <footer class="page-footer">
+    <div class="footer-copyright">
+      <div class="container">
+      © 2019 Almoçaí
+      <a class="right" href="../sobre">Sobre</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.sidenav');
+      var instances = M.Sidenav.init(elems);
+    });
+  </script>
+</body>
+
+</html>

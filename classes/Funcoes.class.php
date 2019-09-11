@@ -6,13 +6,6 @@ class Funcoes
 {
 	private $instance;
 
-	public static function getInstance () {
-		if (!isset(self::$instance)) {
-			self::$instance = new SemanaCardapioDao;
-		}
-		return $instance;
-	}
-
 	public static function GerarSelectHTML ($tabela, $selectName, $selecionado, $value, $texto) {
 		$txt = '';
 

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Página Inicial - Almoçaí</title>
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="../assets/img/icons/icon-128x128.png" />
+
+  <!-- Manifest -->
+  <link rel="manifest" href="../assets/pwa/manifest.json">
+
+  <!-- Fontes -->
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,200" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- CSS -->
+  <link href="../assets/css/almocai.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+
+<body>
+
+  <header>
+
+    <nav class="navbar-transparent">
+      <div class="nav-wrapper container">
+        <img class="no-select brand-logo" src="../assets/img/logo-branco.svg">
+        <a href="#" data-target="mobile-sidenav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li><a class="waves-effect active" href="./"><i class="material-icons left">home</i>Página Inicial</a></li> 
+          <li><a class="waves-effect" href="perfil/"><i class="material-icons left">face</i>Perfil</a></li> 
+          <li><a class="waves-effect" href="cardapio/"><i class="material-icons left">menu_book</i>Cardápio</a></li>
+          <li><a class="waves-effect" href="../entrar/"><i class="material-icons left">power_settings_new</i>Sair</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <ul class="sidenav" id="mobile-sidenav">
+      <li class="sidenav__logo"><img src="../assets/img/logo-verde.svg"></li>
+      <li><a class="waves-effect active" href="./"><i class="material-icons left">home</i>Página Inicial</a></li> 
+      <li><a class="waves-effect" href="perfil/"><i class="material-icons left">face</i>Perfil</a></li> 
+      <li><a class="waves-effect" href="cardapio/"><i class="material-icons left">menu_book</i>Cardápio</a></li>
+      <li><a class="waves-effect" href="../entrar/"><i class="material-icons left">power_settings_new</i>Sair</a></li>
+    </ul>
+  </header>
+
+  <main>
+
+    <div class="section banner valign-wrapper banner--2">
+      <div class="row">
+        <div class="col s12">
+          <h1 class="banner__titulo">Bem vindo!</h1>
+          <h4 class="banner__subtitulo">Visitante</h4>
+        </div>
+      </div>
+    </div>
+
+    <div class="section container">
+      <div class="row">
+        
+      <!-- Confimação do aluno -->
+        <div class="col s12 m6 l7 xl8">
+          <div class="row">
+            <div class="card col s12 l8 offset-l2" style="padding: 2rem">
+              <h4 class="confirmacao-aluno__titulo">Você irá almoçar no IFC hoje?</h4>
+              <h6 class="confirmacao-aluno__data">02/09</h6>
+              <div class="col s6 center">
+                <a href="" class="waves-effect btn login-section__button">Sim</a>
+              </div>
+              <div class="col s6 center">
+                <a href="" class="waves-effect btn login-section__button almocai vermelho">Não</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Primeiro cartão -->
+        <div class="col s12 m6 l5 xl4 margin-zero-mobile">
+          <div class="card-panel cardapio__painel">
+            <div class="cardapio__picture cardapio__picture--1"></div>
+            <h4 class="cardapio__cabecalho">
+              <span class="cardapio__cabecalho-span cardapio__cabecalho-span--1">Segunda-feira</span>
+            </h4>
+            <div class="row">
+              <div class="col s12">
+                <ul class="cardapio__lista">
+                  <li>Arroz</li>
+                  <li>Feijão</li>
+                  <li>Nhoque</li>
+                  <li>Salada</li>
+                  <li>Panqueca <img src="../assets/img/aluno/cartoes/folha.svg" class="cardapio__lista--icon"></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    
+    <!-- Mensagem caso não haja cardápio -->
+    <div class="section container">
+      <div class="row">
+          <div class="cardapio__indisponivel card col s12 m6 offset-m3">
+            <h2 class="no-select">Cardápio indisponível</h2>
+          </div>
+      </div>
+    </div>
+
+  </main>
+  <footer class="page-footer">
+    <div class="footer-copyright">
+      <div class="container">
+      © 2019 Almoçaí
+      <a class="right" href="">Sobre</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.sidenav');
+      var instances = M.Sidenav.init(elems);
+    });
+  </script>
+</body>
+
+</html>

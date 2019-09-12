@@ -6,7 +6,7 @@
     if (isset($_POST['acao'])) $acao = $_POST['acao'];
     else if (isset($_GET['acao'])) $acao = $_GET['acao'];
     else $acao = '';
-
+    
     if ($acao == "inserir") {
         // Adquirindo campos do formulário HTML
         $matricula = isset($_POST['matricula'])?$_POST['matricula']:"";
@@ -50,5 +50,9 @@
       session_start();
       session_destroy();
       header("location:login.php");
+    }elseif($acao == 'verificaMatricula'){
+        $matricula = isset($_GET['matricula'])?$_GET['matricula']:0;
+        $numUsuario = count(UsuarioDao::Select('matricula', $matricula));
+        echo $numUsuario;
     }
 ?>

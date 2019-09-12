@@ -52,7 +52,7 @@
 						$sql = "SELECT * FROM Usuario";
 						break;
 				}
-
+				
 				$query = Conexao::conexao()->query($sql);
 
 				$usuarios = array();

@@ -8,7 +8,7 @@
     <script src="js/ajax.js"></script>
 </head>
 <body>
-    <h1 id='erro'></h1>
+    <h1 id='matricula_info'></h1>
     <form action="usuario_acao.php" method="post" id="form-cadastro-usr">
             <input type="hidden" id="acao" value="verificaMatricula">
             <label for="matricula">Matrícula: </label> <br/>

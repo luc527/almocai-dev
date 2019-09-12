@@ -5,11 +5,13 @@ window.onload = function(){
 }
 
 function ValidaMatricula(){
-  ajax = new XMLHttpRequest();   
-    ajax.onreadystagechange = function(){ 
+  ajax = new XMLHttpRequest();
+    ajax.onreadystagechange = function(){
     if(ajax.status == 200){
-      if(ajax.responseText != 0){
-        document.getElementById('erro').innerHTML = "Matricula já cadastrada";
+      if(ajax.responseText == 1){
+        document.getElementById('matricula_info').innerHTML = "Matricula já cadastrada";
+      }else{
+        document.getElementById('matricula_info').innerHTML = "Matrícula disponível";
       }
     }
   }
@@ -17,5 +19,5 @@ function ValidaMatricula(){
   matricula = document.getElementById('matricula').value;
   ajax.open('GET', 'usuario_acao.php?acao='+acao+'&matricula='+matricula, true);
   ajax.send();
-  
+
 }

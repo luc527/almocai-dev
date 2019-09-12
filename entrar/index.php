@@ -11,7 +11,7 @@ $entrar = str_replace('{{footer}}', "", $entrar);
 $entrar = str_replace('{{scripts}}', "", $entrar);
 $entrar = str_replace('{peso_fonte}', "", $entrar);
 
-// Componente <main>
+// Componente <main> (formulário de login)
 $main = file_get_contents('main.html');
 $entrar = str_replace('{{main}}', $main, $entrar);
 

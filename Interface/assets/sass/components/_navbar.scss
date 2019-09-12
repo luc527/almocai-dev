@@ -64,12 +64,7 @@ nav {
     display: inline-block;
     font-size: $navbar-brand-font-size;
     padding: 0;
-    height: 2.5rem;
-    margin-top: .85rem;
-    
-    @media #{$small-and-down} {
-      height: 2.25rem;
-    }
+    height: 4rem;
 
     &.center {
       left: 50%;
@@ -256,6 +251,17 @@ nav {
   
   .active {
     color: rgba($branco, 0.6);        
+  }
+
+}
+
+.logo-navbar-verde {
+
+  height: 2.5rem !important;
+  margin-top: .85rem !important;
+  
+  @media #{$small-and-down} {
+    height: 2.25rem !important;
   }
 
 }

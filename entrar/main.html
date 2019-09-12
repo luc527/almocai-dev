@@ -1,9 +1,11 @@
+<!-- {{erro -->
+
 <div class="login-section valign-wrapper">
   <div class="row login-section__container">
     <div class="hide-on-med-and-down col l6 login-section__imagem"></div>
 
     <div class="col s12 l6 almocai branco login-section__valign valign-wrapper">
-      <form class="login-section__form container">
+      <form class="login-section__form container" action="acao.php" method="post">
 
         <div class="row col s12 l6 offset-l2">
           <img class="no-select" src="{root_path}assets/img/logo-verde.svg">
@@ -11,13 +13,13 @@
 
         <div class="row">
           <div class="input-field col s12 l6 offset-l2">
-            <input id="matricula" type="text">
-            <label for="matricula">Matrícula</label>
+            <input id="matricula" type="text" name="matricula">
+            <label for="matricula">Matricula</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12 l6 offset-l2">
-            <input id="senha" type="password">
+            <input id="senha" type="password" name="senha">
             <label for="senha">Senha</label>
           </div>
         </div>
@@ -29,9 +31,11 @@
             </label>
           </p>
         </div>
+        {{erro}}
 
         <div class="row center col s12 l6 offset-l2 login-section__padding-zero">
-          <a class="waves-effect waves-light btn login-section__button" href="{root_path}aluno">Entrar</a>
+          <button type="submit" class="waves-effect waves-light btn login-section__button"
+          name="acao" value="Login">Entrar</button>
         </div>
 
       </form>

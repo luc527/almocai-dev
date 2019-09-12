@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<!--
+  Itens necessários:
+  Informação: {title}, {root_path}, {peso_fonte}
+  Tags: {{nav}}, {{main}}, {{footer}}, {{scripts}}
+ -->
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>{title} - Almoçaí</title>
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="{root_path}assets/img/icons/icon-128x128.png" />
+
+  <!-- Manifest -->
+  <link rel="manifest" href="{root_path}assets/pwa/manifest.json">
+
+  <!-- Fontes -->
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400{peso_fonte}" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- CSS -->
+  <link href="{root_path}assets/css/almocai.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+
+<body>
+
+  <header>
+    {{nav}}
+  </header>
+
+  <main>
+    {{main}}
+  </main>
+
+  <footer>
+    {{footer}}
+  </footer>
+
+  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    {{scripts}}
+  </script>
+</body>
+
+
+</html>

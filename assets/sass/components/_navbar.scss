@@ -1,0 +1,261 @@
+nav {
+  &.nav-extended {
+    height: auto;
+
+    .nav-wrapper {
+      min-height: $navbar-height-mobile;
+      height: auto;
+    }
+
+    .nav-content {
+      position: relative;
+      line-height: normal;
+    }
+  }
+
+  color: $navbar-font-color;
+  background-color: $background-color-default;
+  width: 100%;
+  height: $navbar-height-mobile;
+  line-height: $navbar-line-height-mobile;
+
+  a { color: $navbar-font-color; }
+
+  i,
+  [class^="mdi-"], [class*="mdi-"],
+  i.material-icons {
+    display: block;
+    font-size: 24px;
+    height: $navbar-height-mobile;
+    line-height: $navbar-line-height-mobile;
+  }
+
+  .nav-wrapper {
+    position: relative;
+    height: 100%;
+  }
+
+  @media #{$large-and-up} {
+    a.sidenav-trigger { display: none; }
+  }
+
+
+  // Collapse button
+  .sidenav-trigger {
+    float: left;
+    position: relative;
+    z-index: 1;
+    height: $navbar-height-mobile;
+    margin: 0 18px;
+    margin-top: -.125rem;
+
+    i {
+      height: $navbar-height-mobile;
+      line-height: $navbar-line-height-mobile;
+    }
+  }
+
+
+  // Logo
+  .brand-logo {
+    position: absolute; 
+    padding-top: .15rem;
+    color: $navbar-font-color;
+    display: inline-block;
+    font-size: $navbar-brand-font-size;
+    padding: 0;
+    height: 2.5rem;
+    margin-top: .85rem;
+    
+    @media #{$small-and-down} {
+      height: 2.25rem;
+    }
+
+    &.center {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    @media #{$medium-and-down} {
+      left: 50%;
+      transform: translateX(-50%);
+
+    
+      & img {
+        height: 3rem;
+        margin-top: .5rem;
+      }  
+
+      &.left, &.right {
+        padding: 0;
+        transform: none;
+      }
+
+      &.left { left: 0.5rem; }
+      &.right {
+        right: 0.5rem;
+        left: auto;
+      }
+    }
+
+    &.right {
+      right: 0.5rem;
+      padding: 0;
+    }
+
+    i,
+    [class^="mdi-"], [class*="mdi-"],
+    i.material-icons {
+      float: left;
+      margin-right: 15px;
+    }
+  }
+
+
+  // Title
+  .nav-title {
+    display: inline-block;
+    font-size: 32px;
+    padding: 28px 0;
+  }
+
+
+  // Navbar Links
+  ul {
+    margin: 0;
+
+    li {
+      transition: background-color .3s;
+      float: left;
+      position: relative;
+    }
+    a {
+      font-size: $navbar-font-size;
+      color: $navbar-font-color;
+      padding: 0 15px;
+      text-decoration: none;
+      text-align: center;
+      display: block;
+      position: relative;
+      transition: all 0.3s ease;
+      cursor: pointer;
+
+      &.btn, &.btn-large, &.btn-flat, &.btn-floating {
+        margin-top: -2px;
+        margin-left: 15px;
+        margin-right: 15px;
+
+        & > .material-icons {
+          height: inherit;
+          line-height: inherit;
+        }
+      }
+
+      &:hover {
+        color: $primary-color-dark;
+      }
+
+      &:hover::before {
+        right: 0;
+        left: 0;
+      }
+    }
+
+    &.left {
+      float: left;
+    }
+  }
+  
+  .active {
+    color: $primary-color-dark;        
+  }
+
+}
+
+// Fixed Navbar
+.navbar-fixed {
+  position: relative;
+  height: $navbar-height-mobile;
+  z-index: 997;
+
+  nav {
+    position: fixed;
+  }
+}
+@media #{$medium-and-up} {
+  nav.nav-extended .nav-wrapper {
+    min-height: $navbar-height;
+  }
+  nav, nav .nav-wrapper i, nav a.sidenav-trigger, nav a.sidenav-trigger i {
+    height: $navbar-height;
+    line-height: $navbar-line-height;
+  }
+  .navbar-fixed {
+    height: $navbar-height;
+  }
+}
+
+// Navbar transparente
+.navbar-transparent {
+
+  color: $branco !important;
+  background-color: transparent !important;
+  width: 100%;
+  height: $navbar-height-mobile;
+  line-height: $navbar-line-height-mobile;
+
+  a { color: $branco; }
+
+  i,
+  [class^="mdi-"], [class*="mdi-"],
+  i.material-icons {
+    display: block;
+    font-size: 24px;
+    height: $navbar-height-mobile;
+    line-height: $navbar-line-height-mobile;
+  }
+
+  .nav-wrapper {
+    position: relative;
+    height: 100%;
+  }
+
+  @media #{$large-and-up} {
+    a.sidenav-trigger { display: none; }
+  }
+
+
+  // Collapse button
+  .sidenav-trigger {
+    i {
+      color: $branco !important;
+      &:hover {
+        color: rgba($branco, 0.7) !important;
+      }
+    }
+  }
+
+
+  // Logo
+  .brand-logo {
+    color: $branco !important;
+    z-index: 1;
+    padding: 1rem;
+    height: 4rem; 
+  }
+
+  // Navbar Links
+  ul {
+    a {
+      color: $branco;
+      &:hover {
+        color: rgba($branco, 0.6);
+      }
+    }
+  }
+  
+  .active {
+    color: rgba($branco, 0.6);        
+  }
+
+}

@@ -1,7 +1,13 @@
 <?php
 	require_once("Conexao.class.php");
 	class UsuarioDao {
-		public static function Inserir(Usuario $usuario) {
+
+
+		/**
+		 * INSERT
+		 */
+
+		public static function Insert(Usuario $usuario) {
 			try {
 				$sql = "INSERT INTO Usuario (matricula, senha, nome, tipo)
 					VALUES(:matricula, :senha, :nome, :tipo)";
@@ -24,6 +30,11 @@
 				getCode() . " Mensagem: " . $e->getMessage();
 			}
 		}
+
+
+		/**
+		 * SELECT
+		 */
 
 		public static function Popula ($row) {
 			$usuario = new Usuario;
@@ -82,6 +93,11 @@
 				echo $e->getMessage();
 			}
 		}
+
+
+		/**
+		 * LOGIN
+		 */
 
 		public static function Login(Usuario $usuario) {
 			$matricula = $usuario->getCodigo();

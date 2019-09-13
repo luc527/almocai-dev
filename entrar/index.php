@@ -1,5 +1,8 @@
 <?php
-$entrar = file_get_contents('../template.html');
+// Caminho à raiz do projeto
+$root_path = "../";
+
+$entrar = file_get_contents($root_path.'template.html');
 
 // Título da página
 $title = "Entrar";
@@ -25,8 +28,6 @@ if(isset($_GET['erro'])) {
 }
 $entrar = str_replace('{{erro}}', $erroHTML, $entrar);
 
-// Caminho à raiz do sistema
-$root_path = "../";
 $entrar = str_replace('{root_path}', $root_path, $entrar);
 
 print($entrar);

@@ -19,10 +19,9 @@ $main = file_get_contents('main.html');
 $entrar = str_replace('{{main}}', $main, $entrar);
 
 // Erro (se houver)
-$erro = "";
+$erroHTML = "";
 if(isset($_GET['erro'])) {
-  $erro .= $_GET['erro'];
-  if($erro = 'infos_incorretas') $erro_msg = 'As informações digitadas estão incorretas.';
+  if($_GET['erro'] == 'infos_incorretas') $erro_msg = 'As informações digitadas estão incorretas.';
   $erroHTML = file_get_contents('erro.html');
   $erroHTML = str_replace('{erro_msg}', $erro_msg, $erroHTML);
 }

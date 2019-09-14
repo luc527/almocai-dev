@@ -30,4 +30,7 @@ $entrar = str_replace('{{erro}}', $erroHTML, $entrar);
 $entrar = str_replace('{root_path}', $root_path, $entrar);
 
 print($entrar);
+
+
+
 ?>

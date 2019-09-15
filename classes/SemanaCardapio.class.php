@@ -1,6 +1,6 @@
 <?php
-
-require_once "autoload.php";
+require_once("AbsCodigo.class.php");
+require_once("DiaAlmoco.class.php");
 
 class SemanaCardapio extends AbsCodigo
 {

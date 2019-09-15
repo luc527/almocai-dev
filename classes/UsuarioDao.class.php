@@ -1,5 +1,7 @@
 <?php
 	require_once("Conexao.class.php");
+	require_once("Usuario.class.php");
+
 	class UsuarioDao {
 
 

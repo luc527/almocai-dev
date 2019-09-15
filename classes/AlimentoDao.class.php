@@ -2,7 +2,8 @@
 
 // Dao = Data Acess Object = Objeto de acesso à dados
 
-require_once "autoload.php";
+require_once("Conexao.class.php");
+require_once("Alimento.class.php");
 
 class AlimentoDao {
 

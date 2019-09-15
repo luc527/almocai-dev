@@ -1,5 +1,6 @@
 <?php
 require_once("AbsCodigo.class.php");
+
 class Usuario extends AbsCodigo {
     private $nome;
     private $senha;

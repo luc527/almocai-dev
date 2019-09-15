@@ -1,17 +1,10 @@
 <?php
-
-require_once "autoload.php";
+require_once("Conexao.class.php");
+require_once("SemanaCardapio.class.php");
+require_once("Funcoes.class.php");
+require_once("DiaAlmocoDao.class.php");
 
 class SemanaCardapioDao {
-	private $instance;
-
-	public static function getInstance () {
-		if (!isset(self::$instance)) {
-			self::$instance = new SemanaCardapioDao;
-		}
-		return $instance;
-	}
-
 
 	/////////////////////////
 	// FUNÇÕES DE INSERÇÃO //

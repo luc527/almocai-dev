@@ -1,6 +1,5 @@
 <?php
-
-require_once "autoload.php";
+require_once("AbsCodigo.class.php");
 
 class Alimento extends AbsCodigo {
 	private $descricao;

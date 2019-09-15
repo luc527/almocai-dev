@@ -1,6 +1,7 @@
 <?php
-
-require_once('autoload.php');
+require_once("AlimentoDao.class.php");
+require_once("Conexao.class.php");
+require_once("DiaAlmoco.class.php");
 
 class DiaAlmocoDao {
 

@@ -28,10 +28,6 @@ $cardapio = str_replace("{{scripts}}", $scripts, $cardapio);
 // Vazios (peso_fonte)
 $cardapio = str_replace("{peso_fonte}", "", $cardapio);
 
-// Carrega caminho à raiz (root_path)
-$cardapio = str_replace("{root_path}", $root_path, $cardapio);
-
-
 /**
  * Carrega a semana/cardápio / os cartões de cada dia / os alimentos
  */
@@ -47,9 +43,24 @@ for ($i=0; $i < count($dias); $i++) {
 // Cria cada <li> alimento </li>
 for ($i=0; $i < count($alimentos); $i++) { 
   for ($j=0; $j < count($alimentos[$i]); $j++) {
+
+    $icon_alimento = "";
+    switch ($alimentos[$i][$j]->getTipo()) {
+      case 'CARNE':
+        $icon_alimento = file_get_contents("icon_alimento.html");
+        $icon_alimento = str_replace("{icon_alimento}", 'carne.svg', $icon_alimento);
+        break;
+      
+      case 'VEGETARIANA':
+      case 'VEGANA':
+        $icon_alimento = file_get_contents("icon_alimento.html");
+        $icon_alimento = str_replace("{icon_alimento}", 'folha.svg', $icon_alimento);
+        break;
+    }
+
     $li = file_get_contents("alimento_li.html");
     $alimentos[$i][$j] = str_replace("{nome_alimento}", $alimentos[$i][$j]->getDescricao(), $li);
-    $alimentos[$i][$j] = str_replace("{{icon_alimento}}", "", $alimentos[$i][$j]);
+    $alimentos[$i][$j] = str_replace("{{icon_alimento}}", $icon_alimento, $alimentos[$i][$j]);
     // As variáveis que antes eram objetos tornam-se strings aqui
   }
 }
@@ -80,6 +91,10 @@ $data_fim = date("d/m", strtotime($semana->getData_inicio().' + 3 days'));
 $periodo = $data_inic." a ".$data_fim;
 $cardapio = str_replace('{periodo_cardapio}', $periodo, $cardapio);
 
+
+
+// Carrega caminho à raiz (root_path) SEMPRE NO FINAL, ANTES DO PRINT
+$cardapio = str_replace("{root_path}", $root_path, $cardapio);
 
 print($cardapio);
 ?>

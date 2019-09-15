@@ -15,7 +15,7 @@ $cardapio = str_replace("{title}", $title, $cardapio);
 
 // Carrega componentes/nav-transparent.html 
 $nav = file_get_contents($root_path."componentes/nav-transparent.html");
-$cardapio = str_replace("{{header}}", $nav, $cardapio);
+$cardapio = str_replace("{{nav}}", $nav, $cardapio);
 
 // Carrega componentes/footer.html 
 $footer = file_get_contents($root_path."componentes/footer.html");

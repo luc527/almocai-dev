@@ -24,8 +24,7 @@ begin
     (new.data_inicio, new.codigo, 'Segunda-feira'),
     (date_add(new.data_inicio, interval 1 day), new.codigo, 'Terça-feira'),
     (date_add(new.data_inicio, interval 2 day), new.codigo, 'Quarta-feira'),
-    (date_add(new.data_inicio, interval 3 day), new.codigo, 'Quinta-feira'),
-    (date_add(new.data_inicio, interval 4 day), new.codigo, 'Sexta-feira');
+    (date_add(new.data_inicio, interval 3 day), new.codigo, 'Quinta-feira');
 end :)
 delimiter ;
 

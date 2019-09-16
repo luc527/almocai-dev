@@ -29,6 +29,9 @@ $cardapio = str_replace("{{scripts}}", $scripts, $cardapio);
 $cardapio = str_replace("{peso_fonte}", "", $cardapio);
 
 
+
+
+
 /**
  * Carrega a semana/cardápio / os cartões de cada dia / os alimentos
  */
@@ -104,6 +107,9 @@ $cardapio = str_replace("{{dias_cartoes}}", $dias_cartoes, $cardapio);
 /**
  * Fim do carregamento do cardápio
  */
+
+
+
 
 
 // Carrega período da semana

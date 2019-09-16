@@ -28,20 +28,26 @@ $cardapio = str_replace("{{scripts}}", $scripts, $cardapio);
 // Vazios (peso_fonte)
 $cardapio = str_replace("{peso_fonte}", "", $cardapio);
 
+
 /**
  * Carrega a semana/cardápio / os cartões de cada dia / os alimentos
  */
-$codigo = isset($_GET['cod']) ? $_GET['cod'] : '';
+$codigo = isset($_GET['cod']) ? $_GET['cod'] : SemanaCardapioDao::SelectUltimoCod();
+// (se não receber um código por get, o código é o da última semana cadastrada)
+
 // Pega a semana do BD
 $semana = SemanaCardapioDao::SelectPorCodigo($codigo);
+
 // Pega os dias da semana do BD
 $semana = SemanaCardapioDao::SelectDias($semana);
 $dias = $semana->getDias();
+
 // Pega os alimentos de cada dia do BD
 for ($i=0; $i < count($dias); $i++) { 
   $dias[$i] = DiaAlmocoDao::SelectAlimentos($dias[$i]);
   $alimentos[$i] = $dias[$i]->getAlimentos();
 }
+
 // Cria cada <li> alimento </li>
 for ($i=0; $i < count($alimentos); $i++) { 
   for ($j=0; $j < count($alimentos[$i]); $j++) {
@@ -68,38 +74,43 @@ for ($i=0; $i < count($alimentos); $i++) {
     // As variáveis que antes eram objetos tornam-se strings aqui
   }
 }
+
 // Cria cada cartão/dia
 for ($i=0; $i < count($dias); $i++) { 
   $data = $dias[$i]->getData();
   $diaSemana = $dias[$i]->getDiaSemana();
   $dias[$i] = file_get_contents("dia_cartao.html"); // Variável que tinha objeto Dia agora tem string
   $alimentosHTML = "";
+
   // Concatena os <li>alimento</li> em um $alimentosHTML para cada dia
   for ($j=0; $j < count($alimentos[$i]); $j++) { 
     $alimentosHTML .= $alimentos[$i][$j];
   }
+
   // Carrega os valores e a lista de alimentos ao template dia_cartao.html
   $dias[$i] = str_replace("{{alimentos}}", $alimentosHTML, $dias[$i]);
   $dias[$i] = str_replace("{dia_semana}", $diaSemana, $dias[$i]);
   $dias[$i] = str_replace("{num_dia}", $i+1, $dias[$i]);
 }
+
 // Cria o conjunto de cartões (concatena para {{dias_cartoes}} do main.html)
 $dias_cartoes = "";
 for ($i=0; $i < count($dias); $i++) { 
   $dias_cartoes .= $dias[$i];
 }
+
 // Carrega $dias_cartoes em {{dias_cartoes}} no main.html
 $cardapio = str_replace("{{dias_cartoes}}", $dias_cartoes, $cardapio);
 /**
  * Fim do carregamento do cardápio
  */
 
+
 // Carrega período da semana
 $data_inic = date("d/m", strtotime($semana->getData_inicio()) );
 $data_fim = date("d/m", strtotime($semana->getData_inicio().' + 3 days'));
 $periodo = $data_inic." a ".$data_fim;
 $cardapio = str_replace('{periodo_cardapio}', $periodo, $cardapio);
-
 
 
 // Carrega caminho à raiz (root_path) SEMPRE NO FINAL, ANTES DO PRINT

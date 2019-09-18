@@ -54,32 +54,32 @@ create table if not exists Usuario (
 	tipo varchar(50),
     
     alimentacao int,
-    foreign key (alimentacao) references Alimentacao(id_alimentacao),
+    foreign key (alimentacao) references Alimentacao(codigo),
     
     frequencia int,
-    foreign key (frequencia) references Frequencia(id_frequencia)
+    foreign key (frequencia) references Frequencia(codigo)
 );
 
 create table if not exists Alimentacao (
-	id_alimentacao int primary key auto_increment,
+	codigo int primary key auto_increment,
     descricao varchar(45)
 );
 insert into Alimentacao (descricao) values ('Normal'), ('Vegetariano'), ('Vegano');
 
 create table if not exists Carne (
-	id_carne int primary key auto_increment,
+	codigo int primary key auto_increment,
     descricao varchar(45)
 );
 insert into Carne (descricao) values ('Frango'), ('Porco'), ('Boi');
 
 create table if not exists Carne_usuario (
 	usuario_matricula int,
-    carne_id int,
+    carne_cod int,
     
-    primary key (usuario_matricula, carne_id),
+    primary key (usuario_matricula, carne_cod),
     
     foreign key (usuario_matricula) references Usuario(matricula),
-    foreign key (carne_id) references Carne(id_carne)
+    foreign key (carne_cod) references Carne(codigo_carne)
 );
 
 # insert into Usuario (matricula, senha, nome, tipo) values

@@ -16,4 +16,9 @@ define('CARNE', "Carne");
 define('VEGETARIANA', "Opção vegetariana");
 define('VEGANA', "Opção vegana");
 
+$NUM_DIA['Segunda-feira'] = 1;
+$NUM_DIA['Terça-feira'] = 2;
+$NUM_DIA['Quarta-feira'] = 3;
+$NUM_DIA['Quinta-feira'] = 4;
+
 ?>

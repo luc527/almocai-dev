@@ -39,11 +39,26 @@ create table if not exists Alimento (
 		on update cascade
 );
 
+create table if not exists Frequencia (
+	# se o usuário geralmente almoça no IF ou nunca almoça
+    # usado para determinar, automaticamente, a presença do aluno 
+    id_frequencia int primary key auto_increment,
+    descricao varchar(100)
+);
+insert into Frequencia (descricao) values ('Sempre'), ('Geralmente'), ('Poucas vezes'), ('Nunca');
+
 create table if not exists Usuario (
 	matricula int primary key auto_increment,
 	senha varchar(255),
 	nome varchar(100),
-	tipo varchar(50)
+	tipo varchar(50),
+    vegetariano tinyint default 0,
+    vegano tinyint default 0,
+    
+    frequencia int,
+    foreign key (frequencia) references Frequencia(id_frequencia)
+		on update cascade
+        on delete restrict
 );
 insert into Usuario (matricula, senha, nome, tipo) values
 ('2019','d033e22ae348aeb5660fc2140aec35850c4da997','admin','ADMINISTRADOR');

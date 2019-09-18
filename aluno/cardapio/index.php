@@ -38,6 +38,10 @@ $cardapio = str_replace("{peso_fonte}", "", $cardapio);
 $codigo = isset($_GET['cod']) ? $_GET['cod'] : SemanaCardapioDao::SelectUltimoCod();
 // (se não receber um código por get, o código é o da última semana cadastrada)
 
+if ($codigo === null) {
+  header("location:".$root_path."aluno");
+}
+
 // Pega a semana do BD
 $semana = SemanaCardapioDao::SelectPorCodigo($codigo);
 

@@ -42,10 +42,16 @@ create table if not exists Alimento (
 create table if not exists Frequencia (
 	# se o usuário geralmente almoça no IF ou nunca almoça
     # usado para determinar, automaticamente, a presença do aluno 
-    id_frequencia int primary key auto_increment,
+    codigo int primary key auto_increment,
     descricao varchar(100)
 );
 insert into Frequencia (descricao) values ('Sempre'), ('Geralmente'), ('Poucas vezes'), ('Nunca');
+
+create table if not exists Alimentacao (
+	codigo int primary key auto_increment,
+    descricao varchar(45)
+);
+insert into Alimentacao (descricao) values ('Normal'), ('Vegetariano'), ('Vegano');
 
 create table if not exists Usuario (
 	matricula int primary key auto_increment,
@@ -60,12 +66,6 @@ create table if not exists Usuario (
     foreign key (frequencia) references Frequencia(codigo)
 );
 
-create table if not exists Alimentacao (
-	codigo int primary key auto_increment,
-    descricao varchar(45)
-);
-insert into Alimentacao (descricao) values ('Normal'), ('Vegetariano'), ('Vegano');
-
 create table if not exists Carne (
 	codigo int primary key auto_increment,
     descricao varchar(45)
@@ -79,11 +79,11 @@ create table if not exists Carne_usuario (
     primary key (usuario_matricula, carne_cod),
     
     foreign key (usuario_matricula) references Usuario(matricula),
-    foreign key (carne_cod) references Carne(codigo_carne)
+    foreign key (carne_cod) references Carne(codigo)
 );
 
-# insert into Usuario (matricula, senha, nome, tipo) values
-# ('2019','d033e22ae348aeb5660fc2140aec35850c4da997','admin','ADMINISTRADOR');
+insert into Usuario (matricula, senha, nome, tipo) values
+('2019','d033e22ae348aeb5660fc2140aec35850c4da997','admin','ADMINISTRADOR');
 -- senha (provisória): admin
 
 create table if not exists Presenca (

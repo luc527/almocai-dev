@@ -6,7 +6,7 @@ class Usuario extends AbsCodigo {
     private $senha;
     private $tipo;
     private $alimentacao; // vegetariano, vegano ou nenhum dos dois
-    private $carnes = array(); // quais carnes come
+    private $carnes_come = array(); // quais carnes come
 
     public function setSenha ($senha) {
         $this->senha = $senha;
@@ -32,11 +32,23 @@ class Usuario extends AbsCodigo {
     }
 
     public function setAlimentacao ($a) {
-        $this->alimentacao = $a;
+        if ($a instanceof Alimentacao) { 
+            $this->alimentacao = $a;
+        }
     }
 
     public function getAlimentacao () {
         return $this->alimentacao;
+    }
+
+    public function setCarne ($c) {
+        if ($c instanceof Carne) {
+            array_push($this->carnes_come, $c);
+        }
+    }
+
+    public function getCarnes () {
+        return $this->carnes_come;
     }
 }
 ?>

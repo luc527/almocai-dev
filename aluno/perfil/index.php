@@ -46,7 +46,12 @@ $perfil = str_replace("{{main}}", $main, $perfil);
  */
 
 /**
- * function gerarCartao(): gera os cartões com checkboxes ou radios
+ * function gerarCartao(): gera os cartões com checkboxes ou radios cujos itens
+ * vêm de uma tabela específica do BD
+ * 
+ * (essa função poderia ser mais abstrata ainda e poderia ser usada p/ qlqr coisa
+ * com itens que são registros do BD -- listagens etc.)
+ * 
  * Por exemplo:
  * $nomeArquivoCartao = 'cartao_alimentacao.html';
  * $nomeArquivoItem = 'cartao_alimentacao_item.html';

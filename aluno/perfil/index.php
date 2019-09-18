@@ -3,6 +3,7 @@ $root_path = "../../";
 require_once($root_path."classes/Conexao.class.php");
 require_once($root_path."classes/CarneDao.class.php");
 require_once($root_path."classes/AlimentacaoDao.class.php");
+require_once($root_path."classes/FrequenciaDao.class.php");
 
 /** PROVISÓRIO (p/ testar) */
 //include($root_path.'valida_secao.php');
@@ -43,9 +44,21 @@ $perfil = str_replace("{{main}}", $main, $perfil);
 /**
  * CARTÕES
  */
-// Cartão almoço
-$almoco = file_get_contents("cartao_almoco.html");
-$perfil = str_replace("{{cartao_almoco}}", $almoco, $perfil);
+// Cartão frequência
+$freqs = FrequenciaDao::SelectTodas();
+$itens = '';
+foreach ($freqs as $freq) {
+	$item = file_get_contents("cartao_frequencia_item.html");
+	$item = str_replace('{codigo}', $freq->getCodigo(), $item);
+	$item = str_replace('{descricao}', $freq->getDescricao(), $item);
+	// CHECKED deve vir do usuario
+	$item = str_replace('{checked}', '', $item);
+	$itens .= $item;
+}
+$almoco = file_get_contents("cartao_frequencia.html");
+$almoco = str_replace('{{itens}}', $itens, $almoco);
+$perfil = str_replace("{{cartao_frequencia}}", $almoco, $perfil);
+
 // Cartão intolerância
 $intolerancia = file_get_contents("cartao_intolerancia.html");
 $perfil = str_replace("{{cartao_intolerancia}}", $intolerancia, $perfil);
@@ -78,7 +91,7 @@ foreach ($alims as $alim) {
 }
 $alim_cartao = file_get_contents('cartao_alimentacao.html');
 $alim_cartao = str_replace("{{itens}}", $itens, $alim_cartao);
-$perfil = str_replace("{{alimentacao}}", $alim_cartao, $perfil);
+$perfil = str_replace("{{cartao_alimentacao}}", $alim_cartao, $perfil);
 
 // Cartão alt_senha
 $alt_senha = file_get_contents("cartao_alt_senha.html");

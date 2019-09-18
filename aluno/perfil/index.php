@@ -44,59 +44,50 @@ $perfil = str_replace("{{main}}", $main, $perfil);
 /**
  * CARTÕES
  */
-// Cartão frequência
-$freqs = FrequenciaDao::SelectTodas();
-$itens = '';
-foreach ($freqs as $freq) {
-	$item = file_get_contents("cartao_frequencia_item.html");
-	$item = str_replace('{codigo}', $freq->getCodigo(), $item);
-	$item = str_replace('{descricao}', $freq->getDescricao(), $item);
-	// CHECKED deve vir do usuario
-	$item = str_replace('{checked}', '', $item);
-	$itens .= $item;
+
+/**
+ * function gerarCartao(): gera os cartões com checkboxes ou radios
+ * Por exemplo:
+ * $nomeArquivoCartao = 'cartao_alimentacao.html';
+ * $nomeArquivoItem = 'cartao_alimentacao_item.html';
+ * $registros = AlimentacaoDao::SelectTodas();
+ * 
+ * Retorna HTML a ser substituído em, por exemplo {{cartao_alimentacao}}
+ */
+function gerarCartao($nomeArquivoCartao, $nomeArquivoItem, $registros) {
+	$itens = '';
+	foreach ($registros as $registro) {
+		$item = file_get_contents($nomeArquivoItem);
+		$item = str_replace('{codigo}', $registro->getCodigo(), $item);
+		$item = str_replace('{descricao}', $registro->getDescricao(), $item);
+		// {checked} deve vir do usuário. Por enquanto fica vazio
+		$item = str_replace('{checked}', "", $item);
+		$itens .= $item;
+	}
+	$cartao = file_get_contents($nomeArquivoCartao);
+	$cartao = str_replace('{{itens}}', $itens, $cartao);
+	return $cartao;
 }
-$almoco = file_get_contents("cartao_frequencia.html");
-$almoco = str_replace('{{itens}}', $itens, $almoco);
-$perfil = str_replace("{{cartao_frequencia}}", $almoco, $perfil);
+
+// Cartão frequência
+$cartao_freq = gerarCartao('cartao_frequencia.html', 'cartao_frequencia_item.html', FrequenciaDao::SelectTodas());
+$perfil = str_replace("{{cartao_frequencia}}", $cartao_freq, $perfil);
 
 // Cartão intolerância
 $intolerancia = file_get_contents("cartao_intolerancia.html");
 $perfil = str_replace("{{cartao_intolerancia}}", $intolerancia, $perfil);
 
 // Cartão carne
-$itens = '';
-$carnes = CarneDao::SelectTodas();
-foreach ($carnes as $carne) {
-	$item = file_get_contents('cartao_carne_item.html');
-	$item = str_replace("{carne_codigo}", $carne->getCodigo(), $item);
-	$item = str_replace("{carne_nome}", $carne->getDescricao(), $item);
-	/* CARNE_CHECKED deve vir da tabela Carne_usuario // "" ou "checked='checked'" */
-	$item = str_replace("{carne_checked}", '', $item);
-	$itens .= $item;
-}
-$cartao_carne = file_get_contents("cartao_carne.html");
-$cartao_carne = str_replace("{{carnes}}", $itens, $cartao_carne);
+$cartao_carne = gerarCartao('cartao_carne.html', 'cartao_carne_item.html', CarneDao::SelectTodas());
 $perfil = str_replace("{{cartao_carne}}", $cartao_carne, $perfil);
 
 // Cartão alimentação
-$itens = '';
-$alims = AlimentacaoDao::SelectTodas();
-foreach ($alims as $alim) {
-	$item = file_get_contents('cartao_alimentacao_item.html');
-	$item = str_replace('{codigo}', $alim->getCodigo(), $item);
-	$item = str_replace('{descricao}', $alim->getDescricao(), $item);
-	/* CHECKED deve vir da tabela do usuario (campo alimentacao) */
-	$item = str_replace('{checked}', '', $item);
-	$itens .= $item;
-}
-$alim_cartao = file_get_contents('cartao_alimentacao.html');
-$alim_cartao = str_replace("{{itens}}", $itens, $alim_cartao);
-$perfil = str_replace("{{cartao_alimentacao}}", $alim_cartao, $perfil);
+$cartao_alim = gerarCartao('cartao_alimentacao.html', 'cartao_alimentacao_item.html', AlimentacaoDao::SelectTodas());
+$perfil = str_replace("{{cartao_alimentacao}}", $cartao_alim, $perfil);
 
 // Cartão alt_senha
 $alt_senha = file_get_contents("cartao_alt_senha.html");
 $perfil = str_replace("{{cartao_alt_senha}}", $alt_senha, $perfil);
-
 
 
 

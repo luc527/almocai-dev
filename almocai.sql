@@ -52,16 +52,38 @@ create table if not exists Usuario (
 	senha varchar(255),
 	nome varchar(100),
 	tipo varchar(50),
-    vegetariano tinyint default 0,
-    vegano tinyint default 0,
+    
+    alimentacao int,
+    foreign key (alimentacao) references Alimentacao(id_alimentacao),
     
     frequencia int,
     foreign key (frequencia) references Frequencia(id_frequencia)
-		on update cascade
-        on delete restrict
 );
-insert into Usuario (matricula, senha, nome, tipo) values
-('2019','d033e22ae348aeb5660fc2140aec35850c4da997','admin','ADMINISTRADOR');
+
+create table if not exists Alimentacao (
+	id_alimentacao int primary key auto_increment,
+    descricao varchar(45)
+);
+insert into Alimentacao (descricao) values ('Normal'), ('Vegetariano'), ('Vegano');
+
+create table if not exists Carne (
+	id_carne int primary key auto_increment,
+    descricao varchar(45)
+);
+insert into Carne (descricao) values ('Frango'), ('Porco'), ('Boi');
+
+create table if not exists Carne_usuario (
+	usuario_matricula int,
+    carne_id int,
+    
+    primary key (usuario_matricula, carne_id),
+    
+    foreign key (usuario_matricula) references Usuario(matricula),
+    foreign key (carne_id) references Carne(id_carne)
+);
+
+# insert into Usuario (matricula, senha, nome, tipo) values
+# ('2019','d033e22ae348aeb5660fc2140aec35850c4da997','admin','ADMINISTRADOR');
 -- senha (provisória): admin
 
 create table if not exists Presenca (

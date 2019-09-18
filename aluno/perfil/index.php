@@ -2,6 +2,7 @@
 $root_path = "../../";
 require_once($root_path."classes/Conexao.class.php");
 require_once($root_path."classes/CarneDao.class.php");
+require_once($root_path."classes/AlimentacaoDao.class.php");
 
 /** PROVISÓRIO (p/ testar) */
 //include($root_path.'valida_secao.php');
@@ -64,12 +65,21 @@ $cartao_carne = file_get_contents("cartao_carne.html");
 $cartao_carne = str_replace("{{carnes}}", $itens, $cartao_carne);
 $perfil = str_replace("{{cartao_carne}}", $cartao_carne, $perfil);
 
-// Cartão vegetariano
-$vegetariano = file_get_contents("cartao_vegetariano.html");
-$perfil = str_replace("{{cartao_vegetariano}}", $vegetariano, $perfil);
-// Cartão vegano
-$vegano = file_get_contents("cartao_vegano.html");
-$perfil = str_replace("{{cartao_vegano}}", $vegano, $perfil);
+// Cartão alimentação
+$itens = '';
+$alims = AlimentacaoDao::SelectTodas();
+foreach ($alims as $alim) {
+	$item = file_get_contents('cartao_alimentacao_item.html');
+	$item = str_replace('{codigo}', $alim->getCodigo(), $item);
+	$item = str_replace('{descricao}', $alim->getDescricao(), $item);
+	/* CHECKED deve vir da tabela do usuario (campo alimentacao) */
+	$item = str_replace('{checked}', '', $item);
+	$itens .= $item;
+}
+$alim_cartao = file_get_contents('cartao_alimentacao.html');
+$alim_cartao = str_replace("{{itens}}", $itens, $alim_cartao);
+$perfil = str_replace("{{alimentacao}}", $alim_cartao, $perfil);
+
 // Cartão alt_senha
 $alt_senha = file_get_contents("cartao_alt_senha.html");
 $perfil = str_replace("{{cartao_alt_senha}}", $alt_senha, $perfil);

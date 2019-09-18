@@ -1,5 +1,8 @@
 <?php
 require_once("AbsCodigo.class.php");
+require_once("Alimentacao.class.php");
+require_once("Carne.class.php");
+require_once("Frequencia.class.php");
 
 class Usuario extends AbsCodigo {
     private $nome;
@@ -7,6 +10,7 @@ class Usuario extends AbsCodigo {
     private $tipo;
     private $alimentacao; // vegetariano, vegano ou nenhum dos dois
     private $carnes_come = array(); // quais carnes come
+    private $frequencia; // se almoça sempre no if, nunca, as vezes etc.
 
     public function setSenha ($senha) {
         $this->senha = $senha;
@@ -49,6 +53,12 @@ class Usuario extends AbsCodigo {
 
     public function getCarnes () {
         return $this->carnes_come;
+    }
+
+    public function setFrequencia ($f) {
+        if ($f instanceof Frequencia) {
+            $this->frequencia = $f;
+        }
     }
 }
 ?>

@@ -1,14 +1,30 @@
 .funcionario {
-  &__subtitulo {
-    @extend .center;
-    padding: 1rem;
-    font-size: 1.75rem;
+  
+  margin-top: 1.5rem;
+
+  &__card {
+    @extend .card;
+    @extend .hoverable;
+    display: grid;
+    @extend .no-select;
+    align-content: center;
+    min-height: 22rem;
+
+    &--title {
+      margin: 1rem 0 0 0;
+      text-align: center;
+      font-size: 2rem;
+      padding: 0 1rem 0 1rem;
+    }
+
+    &--qtd {
+      @extend .nunito;
+      text-align: center;
+      font-size: 10rem;
+      padding: 0;
+      margin: 0;
+    }
+
   }
-  &__quantidade {
-    padding: 1rem;
-    @extend .center;
-    @extend .nunito;
-    @extend .almocai-text;
-    font-size: 8rem;
-  }
+
 }

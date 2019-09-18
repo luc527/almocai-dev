@@ -14,7 +14,7 @@
   <link rel="manifest" href="../assets/pwa/manifest.json">
 
   <!-- Fontes -->
-  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,200" rel="stylesheet">  
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">  
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -26,12 +26,11 @@
 
   <header>
 
-    <nav class="navbar-transparent">
+    <nav class="navbar">
       <div class="nav-wrapper container">
-        <img class="no-select brand-logo" src="../assets/img/logo-branco.svg">
+        <img class="no-select brand-logo logo-navbar-verde" src="../assets/img/logo-verde.svg">
         <a href="#" data-target="mobile-sidenav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
-          <li><a class="waves-effect active" href="./"><i class="material-icons left">home</i>Página Inicial</a></li>
           <li><a class="waves-effect" href="../entrar/"><i class="material-icons left">power_settings_new</i>Sair</a></li>
         </ul>
       </div>
@@ -39,63 +38,44 @@
 
     <ul class="sidenav" id="mobile-sidenav">
       <li class="sidenav__logo"><img src="../assets/img/logo-verde.svg"></li>
-      <li><a class="waves-effect active" href="./"><i class="material-icons left">home</i>Página Inicial</a></li>
       <li><a class="waves-effect" href="../entrar/"><i class="material-icons left">power_settings_new</i>Sair</a></li>
     </ul>
   </header>
 
   <main>
 
-    <div class="section banner valign-wrapper banner--4">
-      <div class="row">
-        <div class="col s12">
-          <h1 class="banner__titulo">Gerenciamento</h1>
-          <h4 class="banner__subtitulo">de usuários</h4>
+    <div class="row">
+      <div class="col s12">
+        <h3 class="nutricionista__titulo">Almoço: 18/09</h3>
+      </div>
+    </div>
+
+    <div class="nutricionista row container">
+      <div class="nutricionista__cartao col s12">
+        <div class="row">
+          <div class="col s12 m6 l3">
+            <h6>Quantidade de alunos que irão almoçar hoje</h6>
+            <h6>80</h6>
+          </div>
+          <div class="col s12 m6 l3">
+            <h6 class="nutricionista__tipo nutricionista__tipo--1">Vegetarianos</h6>
+            <h6 class="nutricionista__tipo nutricionista__tipo--1">Vegetarianos</h6>
+            
+          </div>
+          <div class="col s12 m6 l3">
+            <h6 class="nutricionista__tipo nutricionista__tipo--2">Veganos</h6>
+            <h6 class="nutricionista__tipo nutricionista__tipo--2">Veganos</h6>
+          </div>
+          <div class="col s12 m6 l3">
+            <h6 class="nutricionista__tipo nutricionista__tipo--3">Carnívoro</h6>
+            <h6 class="nutricionista__tipo nutricionista__tipo--3">Carnívoro</h6>
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="section row container">
-      <!-- Gerenciar alunos -->
-      <div class="col s12 m4">
-        <a href="alunos/">
-          <div class="adm__card card hoverable">
-            <p>
-              <i class="material-icons adm__card--icone almocai-text">school</i>
-            </p>
-            <h6 class="adm__card--titulo almocai-text">Gerenciar alunos</h6>
-          </div>
-        </a>
-      </div>
-
-      <!-- Gerenciar funcionarios -->
-      <div class="col s12 m4">
-        <a href="funcionarios/">
-          <div class="adm__card card hoverable">
-            <p>
-              <i class="material-icons adm__card--icone almocai-text text-azul">perm_identity</i>
-            </p>
-            <h6 class="adm__card--titulo almocai-text text-azul">Gerenciar funcionarios</h6>
-          </div>
-        </a>
-      </div>
-
-      <!-- Gerenciar nutricionistas -->
-      <div class="col s12 m4">
-        <a href="nutricionistas/">
-          <div class="adm__card card hoverable">
-            <p>
-              <i class="material-icons adm__card--icone almocai-text text-amarelo">local_dining</i>
-            </p>
-            <h6 class="adm__card--titulo almocai-text text-amarelo">Gerenciar nutricionistas</h6>
-          </div>
-        </a>
-      </div>
-
-    </div>
+    </div>  
 
   </main>
-
+  
   <footer class="page-footer">
     <div class="footer-copyright">
       <div class="container">

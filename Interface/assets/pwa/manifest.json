@@ -1,7 +1,6 @@
 {
   "name": "Almoçaí",
   "short_name": "Almoçaí",
-  "theme_color": "#fafafa",
   "background_color": "#fafafa",
   "display": "standalone",
   "orientation": "portrait",

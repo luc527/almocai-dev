@@ -98,6 +98,35 @@
 
 
 		/**
+		 * UPDATE
+		 */
+
+		public static function Update( Usuario $usuario) {
+			$sql = "UPDATE Usuario SET nome = :nome, tipo = :tipo, senha = :senha,
+			alimentacao = :alimentacao WHERE matricula = :matricula";
+			try {
+				$bd = Conexao::getInstance();
+				$stmt = $bd->prepare($sql);
+				
+				$stmt->bindParam(":nome", $nome);
+				$nome = $usuario->getNome();
+				$stmt->bindParam(":tipo", $tipo);
+				$tipo = $usuario->getTipo();
+				$stmt->bindParam(":senha", $senha);
+				$senha = $usuario->getSenha();
+				$stmt->bindParam(":alimentacao", $alimentacao);
+				$alimentacao = $usuario->getAlimentacao();
+				$stmt->bindParam(":matricula", $matricula);
+				$matricula = $usuario->getCodigo();
+			} catch (PDOException $e) {
+				echo "<b>Erro no preparo (UsuarioDao::Update): </b>".$e->getMessage();
+			}
+
+			return $stmt->execute();
+		}
+
+
+		/**
 		 * LOGIN
 		 */
 

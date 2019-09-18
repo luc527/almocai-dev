@@ -6,6 +6,8 @@ class Usuario extends AbsCodigo {
     private $nome;
     private $senha;
     private $tipo;
+    private $alimentcao;
+    private $carnes_come = array();
 
     public function setSenha ($senha) {
         $this->senha = $senha;
@@ -28,6 +30,26 @@ class Usuario extends AbsCodigo {
 
     public function getTipo() {
       return $this->tipo;
+    }
+
+    public function setAlimentacao ($a) {
+        if ($a instanceof Alimentacao) {
+            $this->alimentacao = $a;
+        }
+    }
+
+    public function getAlimentacao () {
+        return $this->alimentacao;
+    }
+
+    public function setCarne ($c) {
+        if ($c instanceof Carne) {
+            $this->carnes_come = $c;
+        }
+    }
+
+    public function getCarne () {
+        return $this->carnes_come;
     }
 }
 ?>

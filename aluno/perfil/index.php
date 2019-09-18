@@ -1,5 +1,7 @@
 <?php
 $root_path = "../../";
+require_once($root_path."classes/Conexao.class.php");
+require_once($root_path."classes/CarneDao.class.php");
 
 /** PROVISÓRIO (p/ testar) */
 //include($root_path.'valida_secao.php');
@@ -36,6 +38,7 @@ $main = file_get_contents("main.html");
 $perfil = str_replace("{{main}}", $main, $perfil);
 
 
+
 /**
  * CARTÕES
  */
@@ -45,9 +48,22 @@ $perfil = str_replace("{{cartao_almoco}}", $almoco, $perfil);
 // Cartão intolerância
 $intolerancia = file_get_contents("cartao_intolerancia.html");
 $perfil = str_replace("{{cartao_intolerancia}}", $intolerancia, $perfil);
+
 // Cartão carne
-$carne = file_get_contents("cartao_carne.html");
-$perfil = str_replace("{{cartao_carne}}", $carne, $perfil);
+$itens = '';
+$carnes = CarneDao::SelectTodas();
+foreach ($carnes as $carne) {
+	$item = file_get_contents('cartao_carne_item.html');
+	$item = str_replace("{carne_codigo}", $carne->getCodigo(), $item);
+	$item = str_replace("{carne_nome}", $carne->getDescricao(), $item);
+	/* CARNE_CHECKED deve vir da tabela Carne_usuario // "" ou "checked='checked'" */
+	$item = str_replace("{carne_checked}", '', $item);
+	$itens .= $item;
+}
+$cartao_carne = file_get_contents("cartao_carne.html");
+$cartao_carne = str_replace("{{carnes}}", $itens, $cartao_carne);
+$perfil = str_replace("{{cartao_carne}}", $cartao_carne, $perfil);
+
 // Cartão vegetariano
 $vegetariano = file_get_contents("cartao_vegetariano.html");
 $perfil = str_replace("{{cartao_vegetariano}}", $vegetariano, $perfil);
@@ -57,6 +73,8 @@ $perfil = str_replace("{{cartao_vegano}}", $vegano, $perfil);
 // Cartão alt_senha
 $alt_senha = file_get_contents("cartao_alt_senha.html");
 $perfil = str_replace("{{cartao_alt_senha}}", $alt_senha, $perfil);
+
+
 
 
 /**

@@ -113,6 +113,18 @@ class DiaAlmocoDao {
 		return $dia;
 	}
 
+	public static function SelectPorData($data) {
+		$sql = "SELECT * FROM DiaAlmoco WHERE `data` = '$data'";
+		try {
+			$bd = Conexao::conexao();
+			$query = $bd->query($sql);
+			$row = $query->fetch(PDO::FETCH_ASSOC);
+			return self::Popula($row);
+		} catch (PDOException $e) {
+			echo "<b>Erro (DiaAlmocoDao::SelectPorData): </b>" . $e->getMessage();
+		}
+	}
+
 
 	////////////////////////
 	// FUNÇÕES DE DELETAR //

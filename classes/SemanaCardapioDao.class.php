@@ -111,6 +111,17 @@ class SemanaCardapioDao {
 		return $row['codigo'];
 	}
 
+	public static function SelectPorDia($data) {
+		$sql = "SELECT semanaCardapio_codigo FROM diaAlmoco WHERE `data` = '$data'";
+		try {
+			$bd = Conexao::conexao();
+			$query = $bd->query($sql);
+			$row = $query->fetch(PDO::FETCH_ASSOC);
+		} catch (PDOException $e) {
+			echo "Erro (SemanaCardapioDao::SelectPorDia): " . $e->getMessage();
+		}
+		return self::SelectPorCodigo($row['semanaCardapio_codigo']);
+	}
 
 	public static function GerarSelectHTML () {
 		return Funcoes::GerarSelectHTML("SemanaCardapio", "semanaCardapio_codigo", 0, "codigo", "codigo");

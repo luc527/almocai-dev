@@ -54,7 +54,7 @@ $perfil = str_replace("{{main}}", $main, $perfil);
  * $nomeArquivoItem = 'cartao_alimentacao_item.html';
  * $registros = AlimentacaoDao::SelectTodas();
  * 
- * Retorna HTML a ser substituído em, por exemplo {{cartao_alimentacao}}
+ * Retorna HTML a ser substituído em, por exemplo, {{cartao_alimentacao}}
  */
 function gerarCartao($nomeArquivoCartao, $nomeArquivoItem, $registros) {
 	$itens = '';

@@ -82,7 +82,7 @@
 		{
 			// feita especificamente para a página de gerenciamento do administrador
 			// seleciona por um tipo específico + uma pesquisa que pode ser tanto o nome qto a matrícula do aluno
-			$sql = "SELECT * FROM usuario WHERE tipo = '$tipo' ";
+			$sql = "SELECT * FROM Usuario WHERE tipo = '$tipo' ";
 			if ($pesquisa != 'TODOS') {
 				$sql .= " AND (nome like '%$pesquisa%' OR matricula like '%$pesquisa%')";
 			}
@@ -145,6 +145,41 @@
 			}
 
 			return $stmt->execute();
+		}
+
+		public static function UpdateNome (Usuario $usuario) {
+			// Só altera nome
+			$sql = "UPDATE Usuario SET nome = :nome WHERE matricula = :matricula";
+			try {
+				$bd = Conexao::conexao();
+				$stmt = $bd->prepare($sql);
+
+				$nome = $usuario->getNome();
+				$stmt->bindParam(":nome", $nome);
+				$matricula = $usuario->getCodigo();
+				$stmt->bindParam(":matricula", $matricula);
+
+				return $stmt->execute();
+			} catch (PDOException $e) {
+				echo "Erro (UsuarioDao::UpdateNome): ".$e->getMessage();
+			}
+		}
+
+
+		/**
+		 * DELETE
+		 */
+
+		public static function Delete ($matricula) {
+			$sql = "DELETE FROM Usuario WHERE matricula = :matricula";
+			try {
+				$bd = Conexao::conexao();
+				$stmt = $bd->prepare($sql);
+				$stmt->bindParam(":matricula", $matricula);
+				return $stmt->execute();
+			} catch (PDOException $e) {
+				echo "Erro (UsuarioDao::Delete): ".$e->getMessage();
+			}
 		}
 
 

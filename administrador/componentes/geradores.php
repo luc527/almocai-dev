@@ -51,18 +51,20 @@ function gerarListUsers ($tipo, $pesquisa, $root_path) {
 
 
 
-function gerarLinhas ($registros) {
+function gerarLinhas ($users) {
   $linhas = "";
 
-  if ($registros !== null) { // só para não retornar erro caso não existam usuários cadastrados
-    foreach ($registros as $reg) {
+  if ($users !== null) { // só para não retornar erro caso não existam usuários cadastrados
+    foreach ($users as $user) {
       $linha = file_get_contents($GLOBALS['root_path']."administrador/componentes/linha_usuario.html");
       
-      $matricula = $reg->getCodigo();
-      $nome = $reg->getNome();
+      $matricula = $user->getCodigo();
+      $nome = $user->getNome();
+      $tipo = $user->getTipo();
 
       $linha = str_replace("{matricula}", $matricula, $linha);
       $linha = str_replace("{nome}", $nome, $linha); 
+      $linha = str_replace("{tipo}", $tipo, $linha);
       
       $linhas .= $linha;  
     }

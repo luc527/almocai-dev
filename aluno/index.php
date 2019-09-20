@@ -1,5 +1,8 @@
 <?php
 $root_path = "../";
+include($root_path."valida_secao.php");
+valida_secao($root_path);
+
 require_once($root_path."classes/UsuarioDao.class.php");
 require_once($root_path."classes/DiaAlmoco.class.php");
 require_once($root_path."classes/DiaAlmocoDao.class.php");
@@ -7,11 +10,7 @@ require_once($root_path."classes/AlimentoDao.class.php");
 include($root_path.'config.php');
 
 date_default_timezone_set("America/Sao_Paulo");
-//echo date("Y-m-d");
 
-/* para testes | remover abaixo qdo puder*/
-$_SESSION['matricula'] = 2019;
-/* fim testes | remover acima qdo puder*/
 $usuario = UsuarioDao::SelectPorMatricula($_SESSION['matricula']);
 
 // Carregando template

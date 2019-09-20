@@ -130,16 +130,16 @@
 				$bd = Conexao::getInstance();
 				$stmt = $bd->prepare($sql);
 				
-				$stmt->bindParam(":nome", $nome);
 				$nome = $usuario->getNome();
-				$stmt->bindParam(":tipo", $tipo);
+				$stmt->bindParam(":nome", $nome);
 				$tipo = $usuario->getTipo();
-				$stmt->bindParam(":senha", $senha);
+				$stmt->bindParam(":tipo", $tipo);
 				$senha = $usuario->getSenha();
-				$stmt->bindParam(":alimentacao", $alimentacao);
+				$stmt->bindParam(":senha", $senha);
 				$alimentacao = $usuario->getAlimentacao();
-				$stmt->bindParam(":matricula", $matricula);
+				$stmt->bindParam(":alimentacao", $alimentacao);
 				$matricula = $usuario->getCodigo();
+				$stmt->bindParam(":matricula", $matricula);
 			} catch (PDOException $e) {
 				echo "<b>Erro no preparo (UsuarioDao::Update): </b>".$e->getMessage();
 			}

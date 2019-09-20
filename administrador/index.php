@@ -3,7 +3,7 @@ $root_path = "../";
 
 // Valida seção (inclusive para que só adminsitradores acessem o painel)
 include($root_path."valida_secao.php");
-valida_secao_adm($root_path);
+valida_secao_tipo($root_path, 'ADMINISTRADOR');
 
 // Valores a ser carregados no template {}
 $title = 'Painel do administrador';

@@ -7,9 +7,9 @@ function valida_secao($root_path) {
   }
 }
 
-function valida_secao_adm ($root_path) {
+function valida_secao_tipo ($root_path, $tipo) {
   valida_secao($root_path);
-  if ($_SESSION['tipo'] != 'ADMINISTRADOR') {
+  if ($_SESSION['tipo'] != $tipo) {
     header("location:" . $root_path . "entrar");
   }
 }

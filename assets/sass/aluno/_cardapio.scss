@@ -17,7 +17,7 @@
 .cardapio {
 
   &__indisponivel {
-    background: linear-gradient(to right bottom, $quaternary-color-light, $quaternary-color-dark);
+    background-image: linear-gradient(to right bottom, #f42f4b, #e42740, #d41e36, #c4152c, #b40922);
     & h2 {
       padding-top: 4rem;
       padding-bottom: 4rem;

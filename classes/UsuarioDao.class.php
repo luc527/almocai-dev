@@ -1,8 +1,15 @@
 <?php
-	require_once "autoload.php";
+	require_once("Conexao.class.php");
+	require_once("Usuario.class.php");
 
 	class UsuarioDao {
-		public static function Inserir(Usuario $usuario) {
+
+
+		/**
+		 * INSERT
+		 */
+
+		public static function Insert(Usuario $usuario) {
 			try {
 				$sql = "INSERT INTO Usuario (matricula, senha, nome, tipo)
 					VALUES(:matricula, :senha, :nome, :tipo)";
@@ -25,6 +32,11 @@
 				getCode() . " Mensagem: " . $e->getMessage();
 			}
 		}
+
+
+		/**
+		 * SELECT
+		 */
 
 		public static function Popula ($row) {
 			$usuario = new Usuario;
@@ -52,7 +64,7 @@
 						$sql = "SELECT * FROM Usuario";
 						break;
 				}
-				
+
 				$query = Conexao::conexao()->query($sql);
 
 				$usuarios = array();
@@ -64,6 +76,29 @@
 			} catch (Exception $e) {
 				echo $e->getMessage();
 			}
+		}
+
+		public static function Select2($tipo, $pesquisa)
+		{
+			// feita especificamente para a página de gerenciamento do administrador
+			// seleciona por um tipo específico + uma pesquisa que pode ser tanto o nome qto a matrícula do aluno
+			$sql = "SELECT * FROM Usuario WHERE tipo = '$tipo' ";
+			if ($pesquisa != 'TODOS') {
+				$sql .= " AND (nome like '%$pesquisa%' OR matricula like '%$pesquisa%')";
+			}
+				
+			try {
+				$bd = Conexao::conexao();
+				$query = $bd->query($sql);
+				$registros = array();
+				while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+					array_push($registros, self::Popula($row));
+				}
+			} catch (PDOException $e) {
+				echo "Erro (UsuarioDao::Select2): " . $e->getMessage();
+			}
+
+			return $registros;
 		}
 
 		public static function SelectPorMatricula ($matricula) {
@@ -84,6 +119,74 @@
 			}
 		}
 
+		/**
+		 * UPDATE
+		 */
+
+		public static function Update( Usuario $usuario) {
+			$sql = "UPDATE Usuario SET nome = :nome, tipo = :tipo, senha = :senha,
+			alimentacao = :alimentacao WHERE matricula = :matricula";
+			try {
+				$bd = Conexao::getInstance();
+				$stmt = $bd->prepare($sql);
+				
+				$stmt->bindParam(":nome", $nome);
+				$nome = $usuario->getNome();
+				$stmt->bindParam(":tipo", $tipo);
+				$tipo = $usuario->getTipo();
+				$stmt->bindParam(":senha", $senha);
+				$senha = $usuario->getSenha();
+				$stmt->bindParam(":alimentacao", $alimentacao);
+				$alimentacao = $usuario->getAlimentacao();
+				$stmt->bindParam(":matricula", $matricula);
+				$matricula = $usuario->getCodigo();
+			} catch (PDOException $e) {
+				echo "<b>Erro no preparo (UsuarioDao::Update): </b>".$e->getMessage();
+			}
+
+			return $stmt->execute();
+		}
+
+		public static function UpdateNome (Usuario $usuario) {
+			// Só altera nome
+			$sql = "UPDATE Usuario SET nome = :nome WHERE matricula = :matricula";
+			try {
+				$bd = Conexao::conexao();
+				$stmt = $bd->prepare($sql);
+
+				$nome = $usuario->getNome();
+				$stmt->bindParam(":nome", $nome);
+				$matricula = $usuario->getCodigo();
+				$stmt->bindParam(":matricula", $matricula);
+
+				return $stmt->execute();
+			} catch (PDOException $e) {
+				echo "Erro (UsuarioDao::UpdateNome): ".$e->getMessage();
+			}
+		}
+
+
+		/**
+		 * DELETE
+		 */
+
+		public static function Delete ($matricula) {
+			$sql = "DELETE FROM Usuario WHERE matricula = :matricula";
+			try {
+				$bd = Conexao::conexao();
+				$stmt = $bd->prepare($sql);
+				$stmt->bindParam(":matricula", $matricula);
+				return $stmt->execute();
+			} catch (PDOException $e) {
+				echo "Erro (UsuarioDao::Delete): ".$e->getMessage();
+			}
+		}
+
+
+		/**
+		 * LOGIN
+		 */
+
 		public static function Login(Usuario $usuario) {
 			$matricula = $usuario->getCodigo();
 			$senha = $usuario->getSenha();
@@ -100,23 +203,22 @@
 			$login_info = array();
 			/** $login_info
 			 * Informações que a função retornará:
-			 * [0] -> se o login deverá ser efetuado OU, caso contrário, qual foi o erro
-			 * [1] -> matrícula do usuário
-			 * [2] -> nome do usuário
-			 * [3] -> tipo do usuário (adm)
-			 * [1 - 3] só serão preenchidas caso o login será feito
+			 * ['acao'] -> se o login deverá ser efetuado OU, caso contrário, qual foi o erro
+			 * ['matricula'] -> matrícula do usuário
+			 * ['nome'] -> nome do usuário
+			 * ['tipo'] -> tipo do usuário (adm)
+			 * ['matricula', 'nome' e 'tipo'] só serão preenchidas caso o login será feito
 			 * serão armazenadas em $_SESSION
 			 */
 
 			if ($row) {
-				$login_info[0] = "fazer_login";
-				$login_info[1] = $row['matricula'];
-				$login_info[2] = $row['nome'];
-				$login_info[3] = $row['tipo']; //tipo (adm)
+				$login_info['acao'] = "fazer_login";
+				$login_info['matricula'] = $row['matricula'];
+				$login_info['nome'] = $row['nome'];
+				$login_info['tipo'] = $row['tipo']; //tipo (adm)
 			} else {
-				$login_info[0] = 'infos_incorretas';
+				$login_info['acao'] = 'infos_incorretas';
 			}
 			return $login_info;
 		}
 	}
-?>

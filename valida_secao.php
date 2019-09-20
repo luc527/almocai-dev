@@ -3,7 +3,14 @@
 function valida_secao($root_path) {
   session_start();
   if(!isset($_SESSION['matricula'])) {
-    header($root_path."entrar");
+    header("location:" . $root_path . "entrar");
+  }
+}
+
+function valida_secao_adm ($root_path) {
+  valida_secao($root_path);
+  if ($_SESSION['tipo'] != 'ADMINISTRADOR') {
+    header("location:" . $root_path . "entrar");
   }
 }
 ?>

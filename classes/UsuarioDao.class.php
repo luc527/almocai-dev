@@ -78,6 +78,29 @@
 			}
 		}
 
+		public static function Select2($tipo, $pesquisa)
+		{
+			// feita especificamente para a página de gerenciamento do administrador
+			// seleciona por um tipo específico + uma pesquisa que pode ser tanto o nome qto a matrícula do aluno
+			$sql = "SELECT * FROM usuario WHERE tipo = '$tipo' ";
+			if ($pesquisa != 'TODOS') {
+				$sql .= " AND (nome like '%$pesquisa%' OR matricula like '%$pesquisa%')";
+			}
+				
+			try {
+				$bd = Conexao::conexao();
+				$query = $bd->query($sql);
+				$registros = array();
+				while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+					array_push($registros, self::Popula($row));
+				}
+			} catch (PDOException $e) {
+				echo "Erro (UsuarioDao::Select2): " . $e->getMessage();
+			}
+
+			return $registros;
+		}
+
 		public static function SelectPorMatricula ($matricula) {
 			// Retorna o objeto aluno em vez de um array com um só objeto, que seria o resultado do Select ()
 			$usuarios = self::Select('matricula', $matricula);
@@ -95,7 +118,6 @@
 				echo $e->getMessage();
 			}
 		}
-
 
 		/**
 		 * UPDATE

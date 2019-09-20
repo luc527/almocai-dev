@@ -3,18 +3,14 @@ $root_path = "../";
 
 // Valida seção (inclusive para que só adminsitradores acessem o painel)
 include($root_path."valida_secao.php");
-valida_secao($root_path);
-if ($_SESSION['tipo'] != 'ADMINISTRADOR') {
-  header("location:".$root_path."entrar"); 
-}
+valida_secao_adm($root_path);
 
 // Valores a ser carregados no template {}
 $title = 'Painel do administrador';
 $root_path = $root_path;
 $peso_fonte = ",200";
-
 // Componentes HTML a ser carregados no template {{}}
-$nav = file_get_contents($root_path."componentes/nav-transparent.html");
+$nav = file_get_contents($root_path."componentes/nav-administrador.html");
 $footer = file_get_contents($root_path."componentes/footer.html");
 $scripts = file_get_contents('scripts.js');
 // Componente main

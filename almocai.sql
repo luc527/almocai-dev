@@ -51,7 +51,7 @@ create table if not exists Alimentacao (
 	codigo int primary key auto_increment,
     descricao varchar(45)
 );
-insert into Alimentacao (descricao) values ('Normal'), ('Vegetariano'), ('Vegano');
+insert into Alimentacao (descricao) values ('Carnívoro'), ('Vegetariano'), ('Vegano');
 
 create table if not exists Usuario (
 	matricula int primary key auto_increment,
@@ -59,7 +59,7 @@ create table if not exists Usuario (
 	nome varchar(100),
 	tipo varchar(50),
     
-    alimentacao int,
+    alimentacao int default 1,
     foreign key (alimentacao) references Alimentacao(codigo),
     
     frequencia int,

@@ -798,3 +798,11 @@ td, th{
 .bold {
   font-weight: bold !important;
 }
+
+.aumentar-hover {
+  transition: all .25s;
+
+  &:hover {
+    transform: scale(1.025);
+  }
+}

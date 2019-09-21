@@ -3,6 +3,15 @@
 .login-section {
   min-height: 100vh;
 
+  @extend .almocai;
+  @extend .branco;
+
+  @media #{$medium-and-down} {
+    background: url('../img/entrar/entrar.svg') ;
+    background-size: cover;
+    background-position: center;
+  }
+
   &__container {
     height: 100%;
     width: 100% !important;
@@ -11,7 +20,7 @@
   &__imagem {
     -webkit-clip-path: polygon(0 0, 100% 0, 75% 100%, 0% 100%);
     clip-path: polygon(0 0, 100% 0, 75% 100%, 0% 100%);
-    background: linear-gradient(135deg, rgba($primary-color-light, 0.5), rgba($primary-color-dark, 0.5)), url("../img/fundo-comida.png");
+    background: linear-gradient(135deg, rgba($primary-color-light, 0.5), rgba($primary-color-dark, 0.5)), url("../img/entrar/fundo.png");
     background-position: left;
     background-size: cover;
     height: 100%;
@@ -38,6 +47,41 @@
     &:active, :focus {
       @extend .z-depth-0;
     }
+  }
+
+  &__modal {
+    background-image: linear-gradient(to right bottom, #f42f4b, #e42740, #d41e36, #c4152c, #b40922);
+    color: $branco;
+
+    &--title {
+      font-size: 2rem;
+    }
+
+    &--text {
+      font-size: 1.25rem;
+    }
+
+    &--btn {
+      @extend .almocai;
+      @extend .branco;
+      @extend .almocai-text;
+      @extend .text-vermelho;
+      @extend .bold;
+      @extend .z-depth-3;
+      @extend .waves-effect;
+      @extend .waves-light;
+      @extend .btn;
+      @extend .right;
+
+      margin: 1.5rem 0 1.5rem 0;
+      &:hover {
+        @extend .z-depth-2;
+      }
+      &:active, :focus {
+        @extend .z-depth-0;
+      }
+    }
+
   }
 
 }

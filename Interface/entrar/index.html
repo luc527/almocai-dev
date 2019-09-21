@@ -28,7 +28,7 @@
     <div class="row login-section__container">
       <div class="hide-on-med-and-down col l6 login-section__imagem"></div>
       
-      <div class="col s12 l6 almocai branco login-section__valign valign-wrapper">
+      <div class="col s12 l6 m8 offset-m2 login-section__valign valign-wrapper">
         <form class="login-section__form container">
           
           <div class="row col s12 l6 offset-l2">
@@ -50,7 +50,7 @@
           <div class="row">
             <p class="col s12 l6 offset-l2" >
               <label>
-                <input type="checkbox" class="filled-in" checked="checked" />
+                <input type="checkbox" class="filled-in" checked="checked"  onclick="erroLogin('Usuário ou senha incorreto, por favor, tente novamente.')"/>
                 <span>Mantenha-me conectado</span>
               </label>
             </p>
@@ -65,8 +65,31 @@
     </div>
   </div>
 
+  <div id="modal-erro" class="modal login-section__modal">
+    <div class="modal-content transparent">
+      <h4 class="login-section__modal--title">Falha ao conectar</h4>
+      <p class="login-section__modal--text" id="texto-erro"></p>
+      <a href="" class="login-section__modal--btn modal-close">Fechar e continuar</a>
+    </div>
+  </div>
+
   <!-- JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.modal');
+      var instances = M.Modal.init(elems);
+    });
+
+    function erroLogin(texto) {
+      const elem = document.getElementById('modal-erro');
+      const instance = M.Modal.init(elem);
+      var textId = document.getElementById('texto-erro');
+      textId.innerHTML = texto;
+      instance.open();
+    }
+
+  </script>
 </body>
 
 

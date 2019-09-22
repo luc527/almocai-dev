@@ -99,3 +99,35 @@ create table if not exists Presenca (
 		on delete cascade
 		on update cascade
 );
+delimiter :)
+create trigger AdicionaPresença
+after insert on DiaAlmoco 
+for each row
+begin
+	declare idFrequencia int;
+    declare descricaoFrequencia varchar(40);
+    declare finished int default 0;
+	declare id int;
+	declare usuarioCursor cursor for select matricula from Usuario;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;
+    
+    open usuarioCursor;
+    
+    add_presenca : loop fetch usuarioCursor into id;
+    if finished = 1 then
+      leave add_presenca;
+    end if;
+
+    select frequencia into idFrequencia from Usuario where matricula = id;
+    select descricao into descricaoFrequencia from Frequencia where codigo = idFrequencia;
+    
+    if descricaoFrequencia = 'Sim' then
+		insert into Presenca value(id, new.codigo, 1);
+	
+    else
+		insert into Presenca value(id, new.codigo, 0);
+	end if;
+  end loop;
+
+  close usuarioCursor;
+end:)

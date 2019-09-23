@@ -25,12 +25,12 @@
 @import "components/buttons";
 @import "components/dropdown";
 @import "components/waves";
-// @import "components/modal";
+@import "components/modal";
 @import "components/collapsible";
 // @import "components/chips";
 // @import "components/materialbox";
 @import "components/forms/forms";
-// @import "components/table_of_contents";
+@import "components/table_of_contents";
 @import "components/sidenav";
 // @import "components/preloader";
 // @import "components/slider";
@@ -39,10 +39,6 @@
 // @import "components/pulse";
 // @import "components/datepicker";
 // @import "components/timepicker";
-
-// Páginas
-
-
 
 // Entrar
 @import "entrar/entrar";
@@ -53,5 +49,11 @@
 @import "aluno/pagina-inicial";
 @import "aluno/perfil";
 
-// Servidor
-@import "servidor/servidor";
+// Funcionário
+@import "funcionario/funcionario";
+
+// Administrador
+@import "administrador/administrador";
+
+// Nutricionista
+@import "nutricionista/nutricionista";

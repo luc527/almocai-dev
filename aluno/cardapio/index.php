@@ -2,6 +2,8 @@
 $root_path = "../../";
 require_once($root_path."classes/SemanaCardapioDao.class.php");
 
+date_default_timezone_set("America/Sao_Paulo");
+
 // Carrega template geral
 $cardapio = file_get_contents($root_path."template.html");
 
@@ -35,7 +37,8 @@ $cardapio = str_replace("{peso_fonte}", "", $cardapio);
 /**
  * Carrega a semana/cardápio / os cartões de cada dia / os alimentos
  */
-$codigo = isset($_GET['cod']) ? $_GET['cod'] : SemanaCardapioDao::SelectUltimoCod();
+$semanahj = SemanaCardapioDao::SelectPorDia( date("Y-m-d") );
+$codigo = isset($_GET['cod']) ? $_GET['cod'] : $semanahj->getCodigo();
 // (se não receber um código por get, o código é o da última semana cadastrada)
 
 if ($codigo === null) {

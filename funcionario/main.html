@@ -1,8 +1,48 @@
-<div class="section row container">
-  <div class="col s12 m6 offset-m3 l4 offset-l4">
-    <div class="card hoverable">
-      <h6 class="funcionario__subtitulo">Quantidade de alunos que irão almoçar hoje</h6>
-      <h6 class="funcionario__quantidade">{qtd_alunos}</h6>
+<div class="section banner valign-wrapper banner--8">
+  <div class="row">
+    <div class="col s12">
+      <h1 class="banner__titulo">Almoço</h1>
+      <h4 class="banner__subtitulo">{data}</h4>
     </div>
   </div>
 </div>
+
+<!-- área com quantidade de alunos que irão almoçar conforme o dia -->
+<div class="funcionario row container">
+  <div class="col s12 m6 l3">
+    <div class="funcionario__card almocai-text text-azul">
+      <h3 class="funcionario__card--title">Quantidade de alunos que irão almoçar hoje</h3>
+      <h4 class="funcionario__card--qtd">{qtd_almocos}</h4>
+    </div>
+  </div>
+
+  <!-- Carnívoros -->
+  <div class="col s12 m6 l3">
+    <div class="funcionario__card almocai-text text-vermelho">
+      <h3 class="funcionario__card--title">Quantidade de alunos carnívoros</h3>
+      <h4 class="funcionario__card--qtd">{qtd_carnivoros}</h4>
+    </div>
+  </div>
+
+  <!-- Vegetarianos -->
+  <div class="col s12 m6 l3">
+    <div class="funcionario__card almocai-text text-amarelo">
+      <h3 class="funcionario__card--title">Quantidade de alunos vegetarianos</h3>
+      <h4 class="funcionario__card--qtd">{qtd_vegetarianos}</h4>
+    </div>
+  </div>
+
+  <!-- Veganos -->
+  <div class="col s12 m6 l3">
+    <div class="funcionario__card almocai-text">
+      <h3 class="funcionario__card--title">Quantidade de alunos veganos</h3>
+      <h4 class="funcionario__card--qtd">{qtd_veganos}</h4>
+    </div>
+  </div>
+</div>
+
+<!-- Mensagem caso ainda não tenha a quantidade de alunos necessária -->
+{{erro_qtd_indefinida}}
+
+<!-- Mensagem caso não haja cardápio -->
+{{erro_cardapio_indisponivel}}

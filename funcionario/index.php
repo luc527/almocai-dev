@@ -1,39 +1,40 @@
 <?php
 $root_path = "../";
-// if ($_SESSION['tipo'] == FUNCIONARIO) ... 
+include($root_path."valida_secao.php");
+valida_secao_tipo($root_path, 'FUNCIONARIO');
 
-// Template geral
-$funcionario = file_get_contents($root_path."template.html");
+date_default_timezone_set("America/Sao_Paulo");
 
-// Title, nav, footer, scripts
-$title = "Página inicial";
-$funcionario = str_replace("{title}", $title, $funcionario);
+$func = file_get_contents($root_path."template.html");
 
-$nav = file_get_contents($root_path . "componentes/nav-funcionario.html");
-$funcionario = str_replace("{{nav}}", $nav, $funcionario);
-
-$footer = file_get_contents($root_path . "componentes/footer.html");
-$funcionario = str_replace("{{footer}}", $footer, $funcionario);
-
+$title = 'Página inicial - Funcionário';
+$peso_fonte = ',200,700';
+$nav = file_get_contents($root_path."componentes/nav-funcionario-trp.html");
+$footer = file_get_contents($root_path."componentes/footer.html");
 $scripts = file_get_contents("scripts.js");
-$funcionario = str_replace("{{scripts}}", $scripts, $funcionario);
 
-// Vazios (peso_fonte)
-$funcionario = str_replace("{peso_fonte}", "", $funcionario);
+$func = str_replace("{title}", $title, $func);
+$func = str_replace("{peso_fonte}", $peso_fonte, $func);
+$func = str_replace("{{nav}}", $nav, $func);
+$func = str_replace("{{footer}}", $footer, $func);
+$func = str_replace("{{scripts}}", $title, $func);
 
-
-// MAIN
+/**
+ * MAIN
+ */
 $main = file_get_contents("main.html");
-$funcionario = str_replace("{{main}}", $main, $funcionario);
+// Valores e componentes
+$data = date("d/m");
+if (true) $erro_qtd_indef = "";
+if (true) $erro_card_indisp = "";
+// Carrega valores e componentes no template
+$main = str_replace("{data}", $data, $main);
+$main = str_replace("{{erro_qtd_indefinida}}", $erro_qtd_indef, $main);
+$main = str_replace("{{erro_cardapio_indisponivel}}", $erro_card_indisp, $main);
+// Carrega main na página
+$func = str_replace("{{main}}", $main, $func);
 
-// Quantidade de alunos no almoço
-//$qtd_alunos = AlunoPresencaDao:: etc
-$qtd_alunos = 76;
-$funcionario = str_replace("{qtd_alunos}", $qtd_alunos, $funcionario);
 
-
-// Caminho à raiz
-$funcionario = str_replace("{root_path}", $root_path, $funcionario);
-
-print($funcionario);
+$func = str_replace("{root_path}", $root_path, $func);
+print($func);
 ?>

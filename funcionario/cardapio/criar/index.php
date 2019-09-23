@@ -17,7 +17,7 @@ $criar_card = str_replace("{{scripts}}", "", $criar_card);
 $criar_card = str_replace("{peso_fonte}", "", $criar_card);
 
 // <NAV>
-$nav = file_get_contents($root_path."componentes/nav.html");
+$nav = file_get_contents($root_path."componentes/nav-funcionario.html");
 $criar_card = str_replace("{{nav}}", $nav, $criar_card);
 
 // <FOOTER>

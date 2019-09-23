@@ -18,7 +18,19 @@ if ($acao == 'Login') {
     $_SESSION['matricula'] = $login_info['matricula'];
     $_SESSION['nome'] = $login_info['nome'];
     $_SESSION['tipo'] = $login_info['tipo'];
-    header("location:".$root_path."aluno/cardapio");
+    
+    switch ($_SESSION['tipo']) {
+      case 'ALUNO':
+        $redir = $root_path . "aluno";
+        break;
+      case 'FUNCIONARIO':
+        $redir = $root_path . "funcionario";
+        break;
+      case 'ADMINISTRADOR':
+        $redir = $root_path . "administrador";
+        break;
+    }
+    header("location:".$redir);
   } else {
     header("location:".$root_path."entrar/?erro=".$login_info['acao']);
   }

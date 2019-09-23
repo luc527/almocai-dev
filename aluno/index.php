@@ -34,6 +34,9 @@ $main = str_replace("{nome}", $nome, $main);
 // Data de hoje
 $datahj = date("d/m");
 $main = str_replace("{data_hoje}", $datahj, $main);
+// Data para o cadastro da presença
+$data_bd = date("Y-m-d");
+$main = str_replace("{data_bd}", $data_bd, $main);
 
 /**
  * Cartão do dia + cardápio indisponível

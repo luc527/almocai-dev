@@ -12,18 +12,25 @@
 
   <!-- Confimação do aluno -->
     <div class="col s12 m6 l7 xl8">
-      <div class="row">
+      <form class="row" action="acao.php" method="post">
         <div class="card col s12 l8 offset-l2" style="padding: 2rem">
           <h4 class="confirmacao-aluno__titulo">Você irá almoçar no IFC hoje?</h4>
           <h6 class="confirmacao-aluno__data">{data_hoje}</h6>
           <div class="col s6 center">
-            <a href="" class="waves-effect btn login-section__button">Sim</a>
+            <button type="submit" name="acao" id="acao" value="PresencaSim"
+            class="waves-effect btn login-section__button">
+              Sim
+            </button>
           </div>
           <div class="col s6 center">
-            <a href="" class="waves-effect btn login-section__button almocai vermelho">Não</a>
+            <button type="submit" name="acao" id="acao" value="PresencaNao"
+            class="waves-effect btn login-section__button almocai vermelho">
+              Não
+            </button>
           </div>
+          <input type="hidden" name="data" id="data" value="{data_bd}">
         </div>
-      </div>
+      </form>
     </div>
 
     <!-- Primeiro cartão -->

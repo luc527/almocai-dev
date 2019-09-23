@@ -16,8 +16,7 @@ switch ($acao) {
   case 'PresencaSim':
     $presenca->setPresenca(1);
     break;
-  
-  default:
+  case 'PresencaNao':
     $presenca->setPresenca(0);
     break;
 }

@@ -15,6 +15,10 @@ class DiaAlmocoDao {
 		}
 	}
 
+	/**
+	 * Insire todos os objetos AlunoPresenca de um objeto DiaAlmoco no banco de dados
+	 * @param DiaAlmoco $diaAlmoco o dia com os objetos presença a ser inseridos
+	 */
 	public static function InserirPresencas (DiaAlmoco $diaAlmoco) {
 		$presencas = $diaAlmoco->getPresencas();
 

@@ -42,19 +42,21 @@ create table if not exists Alimento (
 create table if not exists Frequencia (
 	# se o usuário geralmente almoça no IF ou nunca almoça
     # usado para determinar, automaticamente, a presença do aluno 
-    codigo int primary key auto_increment,
+    codigo int primary key,
     descricao varchar(100)
 );
-insert into Frequencia (descricao) values ('Sempre'), ('Geralmente'), ('Poucas vezes'), ('Nunca');
+insert into Frequencia (codigo, descricao) values (1, 'Sempre'), (2, 'Geralmente'), (3, 'Pouca vezes'), (4, 'Nunca');
 
 create table if not exists Alimentacao (
 	codigo int primary key auto_increment,
     descricao varchar(45)
 );
+
 insert into Alimentacao (descricao) values ('Come Carne'), ('Vegetariano'), ('Vegano');
 
+
 create table if not exists Usuario (
-	matricula int primary key auto_increment,
+	matricula int primary key,
 	senha varchar(255),
 	nome varchar(100),
 	tipo varchar(50),
@@ -62,7 +64,7 @@ create table if not exists Usuario (
     alimentacao int default 1,
     foreign key (alimentacao) references Alimentacao(codigo),
     
-    frequencia int,
+    frequencia int default 1,
     foreign key (frequencia) references Frequencia(codigo)
 );
 
@@ -70,7 +72,7 @@ create table if not exists Carne (
 	codigo int primary key auto_increment,
     descricao varchar(45)
 );
-insert into Carne (descricao) values ('Frango'), ('Porco'), ('Boi');
+insert into Carne (codigo, descricao) values (1, 'Frango'), (2, 'Porco'), (3, 'Boi');
 
 create table if not exists Carne_usuario (
 	usuario_matricula int,
@@ -99,6 +101,7 @@ create table if not exists Presenca (
 		on delete cascade
 		on update cascade
 );
+
 delimiter :)
 create trigger AdicionaPresença
 after insert on DiaAlmoco 
@@ -121,7 +124,7 @@ begin
     select frequencia into idFrequencia from Usuario where matricula = id;
     select descricao into descricaoFrequencia from Frequencia where codigo = idFrequencia;
     
-    if descricaoFrequencia = 'Sim' then
+    if descricaoFrequencia = 'PRESENCA' then
 		insert into Presenca value(id, new.codigo, 1);
 	
     else
@@ -130,4 +133,5 @@ begin
   end loop;
 
   close usuarioCursor;
-end:)
+end :)
+delimiter ;

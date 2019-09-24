@@ -69,7 +69,36 @@ function gerarCartao($nomeArquivoCartao, $nomeArquivoItem, $registros) {
 }
 
 // Cartão frequência
-$cartao_freq = gerarCartao('cartao_frequencia.html', 'cartao_frequencia_item.html', FrequenciaDao::SelectTodas());
+/**
+ * OBS: a frequência no BD só tem 2 valores, AUSENCIA ou PRESENCA
+ * o BD irá, a partir delas, marcar automaticamente a semana de um aluno com presença
+ * ou ela toda com ausência.
+ * O aluno, no entanto, precisa ter mais opções no formulário
+ * ("Sempre", "Geralmente", "Poucas vezes", "Nunca")
+ * mesmo que algumas delas sejam registradas no BD do mesmo jeito
+ */
+for ($i=0; $i < 4; $i++) { 
+	$freq[$i] = new Frequencia;
+	switch ($i) {
+		case 0:
+			$freq[$i]->setDescricao("Sempre");	
+			$freq[$i]->setCodigo(1); // PRESENCA
+			break;		
+		case 1:
+			$freq[$i]->setDescricao("Geralmente");
+			$freq[$i]->setCodigo(1); // PRESENCA
+			break;
+		case 2:
+			$freq[$i]->setDescricao("Poucas vezes");
+			$freq[$i]->setCodigo(0); // AUSENCIA
+			break;
+		case 3:
+			$freq[$i]->setDescricao("Nunca");
+			$freq[$i]->setCodigo(0); // AUSENCIA
+			break;
+	}
+}
+$cartao_freq = gerarCartao('cartao_frequencia.html', 'cartao_frequencia_item.html', $freq);
 $perfil = str_replace("{{cartao_frequencia}}", $cartao_freq, $perfil);
 
 // Cartão intolerância

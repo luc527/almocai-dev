@@ -124,12 +124,11 @@ begin
     select frequencia into idFrequencia from Usuario where matricula = id;
     select tipo into tipoUsuario from Usuario where matricula = id;
     if tipoUsuario = 'Aluno' then
-    if idFrequencia = 1 or idFrequencia = 2 then
-		insert into Presenca value(id, new.codigo, 1);
-	
-    else
-		insert into Presenca value(id, new.codigo, 0);
-	end if;
+		if idFrequencia = 1 or idFrequencia = 2 then
+			insert into Presenca value(id, new.codigo, 1);
+		else
+			insert into Presenca value(id, new.codigo, 0);
+		end if;
     end if;
   end loop;
 

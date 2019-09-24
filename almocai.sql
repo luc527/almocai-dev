@@ -45,7 +45,7 @@ create table if not exists Frequencia (
     codigo int primary key,
     descricao varchar(100)
 );
-insert into Frequencia (codigo, descricao) values (0, 'AUSENCIA'), (1, 'PRESENCA');
+insert into Frequencia (codigo, descricao) values (1, 'Sempre'), (2, 'Geralmente'), (3, 'Pouca vezes'), (4, 'Nunca');
 
 create table if not exists Alimentacao (
 	codigo int primary key auto_increment,
@@ -70,7 +70,7 @@ create table if not exists Carne (
 	codigo int primary key auto_increment,
     descricao varchar(45)
 );
-insert into Carne (descricao) values ('Frango'), ('Porco'), ('Boi');
+insert into Carne (codigo, descricao) values (1, 'Frango'), (2, 'Porco'), (3, 'Boi');
 
 create table if not exists Carne_usuario (
 	usuario_matricula int,

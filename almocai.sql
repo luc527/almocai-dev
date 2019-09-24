@@ -45,16 +45,16 @@ create table if not exists Frequencia (
     codigo int primary key auto_increment,
     descricao varchar(100)
 );
-insert into Frequencia (descricao) values ('Sempre'), ('Geralmente'), ('Poucas vezes'), ('Nunca');
+insert into Frequencia (codigo, descricao) values (1, 'PRESENCA'), (2, 'AUSENCIA');
 
 create table if not exists Alimentacao (
 	codigo int primary key auto_increment,
     descricao varchar(45)
 );
-insert into Alimentacao (descricao) values ('Carnívoro'), ('Vegetariano'), ('Vegano');
+insert into Alimentacao (codigo, descricao) values (1, 'Carnívoro'), (2, 'Vegetariano'), (3, 'Vegano');
 
 create table if not exists Usuario (
-	matricula int primary key auto_increment,
+	matricula int primary key,
 	senha varchar(255),
 	nome varchar(100),
 	tipo varchar(50),
@@ -99,6 +99,7 @@ create table if not exists Presenca (
 		on delete cascade
 		on update cascade
 );
+
 delimiter :)
 create trigger AdicionaPresença
 after insert on DiaAlmoco 
@@ -121,7 +122,7 @@ begin
     select frequencia into idFrequencia from Usuario where matricula = id;
     select descricao into descricaoFrequencia from Frequencia where codigo = idFrequencia;
     
-    if descricaoFrequencia = 'Sim' then
+    if descricaoFrequencia = 'PRESENCA' then
 		insert into Presenca value(id, new.codigo, 1);
 	
     else
@@ -130,4 +131,5 @@ begin
   end loop;
 
   close usuarioCursor;
-end:)
+end :)
+delimiter ;

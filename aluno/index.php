@@ -31,19 +31,23 @@ $main = file_get_contents("main.html");
 // Nome do usuário
 $nome = $usuario->getNome();
 $main = str_replace("{nome}", $nome, $main);
-// Data de hoje
-$datahj = date("d/m");
-$main = str_replace("{data_hoje}", $datahj, $main);
-// Data para o cadastro da presença
-$data_bd = date("Y-m-d");
-$main = str_replace("{data_bd}", $data_bd, $main);
 
 /**
- * Cartão do dia + cardápio indisponível
+ * Cartão do dia + cartão de confirmação + cardápio indisponível
  */
 $dia = DiaAlmocoDao::SelectPorData( date("Y-m-d") );
 if ($dia->getData() !== null) {
-  // Já deixa vazio o {{cardapio_indisponivel}}
+  // Cria o cartão de confirmação de presença
+  $cartao_presenca = file_get_contents("cartao_presenca.html");
+  $datahj = date("d/m");
+  $cartao_presenca = str_replace("{data_hoje}", $datahj, $cartao_presenca);
+  // Data para o cadastro da presença
+  $data_bd = date("Y-m-d");
+  $cartao_presenca = str_replace("{data_bd}", $data_bd, $cartao_presenca);
+  // Carrega o cartão de cofirmação de presença em main
+  $main = str_replace("{{cartao_presenca}}", $cartao_presenca, $main);
+
+  // Deixa vazio o {{cardapio_indisponivel}}
   $main = str_replace("{{cardapio_indisponivel}}", '', $main);
   // Alimentos do dia
   $alimentos = AlimentoDao::SelectPorDia($dia->getCodigo());
@@ -82,6 +86,8 @@ if ($dia->getData() !== null) {
   $cartao_dia = "";
   $cardapio_ind = file_get_contents("cardapio_indisponivel.html");
   $main = str_replace("{{cardapio_indisponivel}}", $cardapio_ind, $main);
+  // Deixa vazio a confirmação de presença (dará erro se o usuário tentar marcar presença num dia que não existe)
+  $main = str_replace("{{cartao_presenca}}", "", $main);
 }
 $main = str_replace("{{cartao_dia}}", $cartao_dia, $main);
 /**

@@ -1,4 +1,9 @@
 <?php
+
+if (!isset($_POST['acao'])) {
+  header("location:index.php");
+}
+
 $root_path = "../";
 include($root_path . "valida_secao.php");
 valida_secao_tipo($root_path, 'ALUNO');
@@ -11,6 +16,8 @@ $user->setCodigo($_SESSION['matricula']);
 
 $presenca = new AlunoPresenca;
 $presenca->setAluno($user);
+
+$acao = $_POST['acao'];
 
 switch ($acao) {
   case 'PresencaSim':

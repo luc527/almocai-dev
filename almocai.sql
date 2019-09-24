@@ -62,7 +62,7 @@ create table if not exists Usuario (
     alimentacao int default 1,
     foreign key (alimentacao) references Alimentacao(codigo),
     
-    frequencia int,
+    frequencia int default 1,
     foreign key (frequencia) references Frequencia(codigo)
 );
 

@@ -108,7 +108,7 @@ after insert on DiaAlmoco
 for each row
 begin
 	declare idFrequencia int;
-    declare descricaoFrequencia varchar(40);
+    declare tipoUsuario varchar(40);
     declare finished int default 0;
 	declare id int;
 	declare usuarioCursor cursor for select matricula from Usuario;
@@ -122,14 +122,15 @@ begin
     end if;
 
     select frequencia into idFrequencia from Usuario where matricula = id;
-    select descricao into descricaoFrequencia from Frequencia where codigo = idFrequencia;
-    
-    if descricaoFrequencia = 'PRESENCA' then
+    select tipo into tipoUsuario from Usuario where matricula = id;
+    if tipoUsuario = 'Aluno' then
+    if idFrequencia = 1 or idFrequencia = 2 then
 		insert into Presenca value(id, new.codigo, 1);
 	
     else
 		insert into Presenca value(id, new.codigo, 0);
 	end if;
+    end if;
   end loop;
 
   close usuarioCursor;

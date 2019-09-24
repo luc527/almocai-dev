@@ -42,10 +42,10 @@ create table if not exists Alimento (
 create table if not exists Frequencia (
 	# se o usuário geralmente almoça no IF ou nunca almoça
     # usado para determinar, automaticamente, a presença do aluno 
-    codigo int primary key auto_increment,
+    codigo int primary key,
     descricao varchar(100)
 );
-insert into Frequencia (codigo, descricao) values (1, 'PRESENCA'), (2, 'AUSENCIA');
+insert into Frequencia (codigo, descricao) values (0, 'AUSENCIA'), (1, 'PRESENCA');
 
 create table if not exists Alimentacao (
 	codigo int primary key auto_increment,

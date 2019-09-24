@@ -60,5 +60,9 @@ class Usuario extends AbsCodigo {
             $this->frequencia = $f;
         }
     }
+
+    public function getFrequencia () {
+        return $this->frequencia;
+    }
 }
 ?>

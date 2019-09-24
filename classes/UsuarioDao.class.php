@@ -120,6 +120,62 @@
 		}
 
 		/**
+		 * Recebe um objeto Usuario e coloca a frequencia do BD nele
+		 */
+		public static function SelectFrequencia(Usuario $usuario) {
+			$matricula = $usuario->getCodigo();
+			$sql = "SELECT frequencia FROM Usuario where matricula = $matricula";
+			try {
+				$bd = Conexao::conexao();
+				$query = $bd->query($sql);
+				$row = $query->fetch(PDO::FETCH_ASSOC);
+			} catch (PDOException $e) {
+				echo "<b>Erro (UsuarioDao::SelectFrequencia): </b>".$e->getMessage();
+			}
+			$frequencia = new Frequencia;
+			$frequencia->setCodigo($row['frequencia']);
+			$usuario->setFrequencia($frequencia);
+			return $usuario;
+		}
+		/**
+		 * Recebe um objeto Usuario e coloca a alimentação do BD nele
+		 */
+		public static function SelectAlimentacao(Usuario $usuario) {
+			$matricula = $usuario->getCodigo();
+			$sql = "SELECT alimentacao FROM Usuario where matricula = $matricula";
+			try {
+				$bd = Conexao::conexao();
+				$query = $bd->query($sql);
+				$row = $query->fetch(PDO::FETCH_ASSOC);
+			} catch (PDOException $e) {
+				echo "<b>Erro (UsuarioDao::SelectAlimentacao): </b>" . $e->getMessage();
+			}
+			$al = new Alimentacao;
+			$al->setCodigo($row['alimentacao']);
+			$usuario->setAlimentacao($al);
+			return $usuario;
+		}
+		/**
+		 * Recebe um objeto Usuario e coloca as carnes do BD dele
+		 */
+		public static function SelectCarnes (Usuario $usuario) {
+			$matricula = $usuario->getCodigo();
+			$sql = "SELECT carne_cod FROM Carne_usuario WHERE usuario_matricula = $matricula";
+			try {
+				$bd = Conexao::conexao();
+				$query = $bd->query($sql);
+				while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+					$carne = new Carne;
+					$carne->setCodigo($row['carne_cod']);
+					$usuario->setCarne($carne);
+				}
+			} catch (PDOException $e) {
+				echo "<b>Erro (UsuarioDao::SelectCarnes): </b>" . $e->getMessage();
+			}
+			return $usuario;
+		}
+
+		/**
 		 * UPDATE
 		 */
 

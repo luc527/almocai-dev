@@ -94,6 +94,19 @@ $main = str_replace("{{cartao_dia}}", $cartao_dia, $main);
  * Fim cartão do dia
  */
  
+// Cartão em que o aluno vê o que selecionou em relação a presença
+$pres = UsuarioDao::SelectPresenca($dia->getCodigo() ,$usuario->getCodigo());
+if ($pres == 0) {
+  $cor = ' vermelho ';
+  $txt = 'Não virei';
+} else {
+  $cor = ''; // por padrão verde
+  $txt = 'Virei';
+}
+$Cpres_selec = file_get_contents("cartao_presenca_selecionada.html");
+$Cpres_selec = str_replace("{cor}", $cor, $Cpres_selec);
+$Cpres_selec = str_replace("{presenca_selecionada}", $txt, $Cpres_selec);
+$main = str_replace("{{cartao_presenca_selecionada}}", $Cpres_selec, $main);
 
 $aluno = str_replace("{{main}}", $main, $aluno);
 $aluno = str_replace("{root_path}", $root_path, $aluno);

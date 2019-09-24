@@ -107,16 +107,19 @@
 			return $usuarios[0];
 		}
 
+		/**
+		 * Recebe o código de um dia e de um usuário e retorna 0 ou 1 (coluna 'presenca' da tabela Presenca), não o objeto AlunoPresenca
+		 */
 		public static function SelectPresenca($dia_cod, $user_mat) {
 			$sql = "SELECT * FROM Presenca WHERE diaAlmoco_codigo = $dia_cod
 			AND usuario_matricula = $user_mat";
 			try {
 				$query = Conexao::conexao()->query($sql);
 				$row = $query->fetch(PDO::FETCH_ASSOC);
-				return $row['presenca'];
 			} catch (PDOException $e) {
 				echo $e->getMessage();
 			}
+			return $row['presenca'];
 		}
 
 		/**

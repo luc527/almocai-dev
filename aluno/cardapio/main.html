@@ -8,6 +8,20 @@
 </div>
 
 <div class="section container cardapio">
+  <div class="row" style="margin-bottom: 1rem;">
+    <form class="col s12 center-align" action="{root_path}aluno/acao.php" method="post">
+      <button type="submit" name="acao" id="acao" value="PresencaTodosSim"
+      class="almocai btn waves-effect waves-light">
+        Preseça em todos
+      </button>
+      <button type="submit" name="acao" id="acao" value="PresencaTodosNao"
+      class="almocai btn vermelho waves-effect waves-light">
+        Ausência em todos
+      </button>
+      <input type="hidden" name="semana_cod" id="semana_cod" value="{semana_cod}">
+      <input type="hidden" name="redir" id="redir" value="cardapio">
+    </form>
+  </div>
   <div class="row">
     {{dias_cartoes}}
   </div>

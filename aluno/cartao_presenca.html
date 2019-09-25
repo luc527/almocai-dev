@@ -4,17 +4,19 @@
 			<h4 class="confirmacao-aluno__titulo">Você irá almoçar no IFC hoje?</h4>
 			<h6 class="confirmacao-aluno__data">{data_hoje}</h6>
 			<div class="col s6 center">
-				<button type="submit" name="acao" id="acao" value="PresencaSim" class="waves-effect btn login-section__button">
+				<button type="submit" name="acao" id="acao" value="PresencaSim"
+				class="btn almocai waves-effect waves-light login-section__button">
 					Sim
 				</button>
 			</div>
 			<div class="col s6 center">
 				<button type="submit" name="acao" id="acao" value="PresencaNao"
-					class="waves-effect btn login-section__button almocai vermelho">
+					class="waves-effect btn almocai vermelho waves-effect waves-light login-section__button">
 					Não
 				</button>
 			</div>
-			<input type="hidden" name="data" id="data" value="{data_bd}">
+			<input type="hidden" name="dia_cod" id="dia_cod" value="{dia_cod}">
+			<input type="hidden" name="redir" id="redit" value="index">
 		</div>
 	</form>
 </div>

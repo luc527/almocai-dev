@@ -41,9 +41,8 @@ if ($dia->getData() !== null) {
   $cartao_presenca = file_get_contents("cartao_presenca.html");
   $datahj = date("d/m");
   $cartao_presenca = str_replace("{data_hoje}", $datahj, $cartao_presenca);
-  // Data para o cadastro da presença
-  $data_bd = date("Y-m-d");
-  $cartao_presenca = str_replace("{data_bd}", $data_bd, $cartao_presenca);
+  // Código do dia para o cadastro da presença
+  $cartao_presenca = str_replace("{dia_cod}", $dia->getCodigo(), $cartao_presenca);
   // Carrega o cartão de cofirmação de presença em main
   $main = str_replace("{{cartao_presenca}}", $cartao_presenca, $main);
 

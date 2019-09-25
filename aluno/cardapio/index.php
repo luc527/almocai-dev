@@ -1,6 +1,9 @@
 <?php
 $root_path = "../../";
-require_once($root_path."classes/SemanaCardapioDao.class.php");
+include($root_path."valida_secao.php");
+valida_secao_tipo($root_path, 'ALUNO');
+require_once($root_path . "classes/UsuarioDao.class.php");
+require_once($root_path . "classes/SemanaCardapioDao.class.php");
 
 date_default_timezone_set("America/Sao_Paulo");
 
@@ -31,22 +34,34 @@ $cardapio = str_replace("{{scripts}}", $scripts, $cardapio);
 $cardapio = str_replace("{peso_fonte}", "", $cardapio);
 
 
-
-
-
 /**
  * Carrega a semana/cardápio / os cartões de cada dia / os alimentos
  */
-$semanahj = SemanaCardapioDao::SelectPorDia( date("Y-m-d") );
-$codigo = isset($_GET['cod']) ? $_GET['cod'] : $semanahj->getCodigo();
-// (se não receber um código por get, o código é o da última semana cadastrada)
 
-if ($codigo === null) {
-  header("location:".$root_path."aluno");
+/** 1ª parte: determina data
+ * O código a seguir determina com qual data deve-se consultar a semana.
+ * O sistema só tem 4 dias cadastrados por semana (seg, ter, qua, qui),
+ * de forma que não seria possível acessar o cardápio num dia que não fosse esses.
+ * O código a seguir corrige esse problema.
+ */
+$dias_com_almoco = array(1, 2, 3, 4); // date("w") => seg, ter, qua, qui
+if (in_array(date("w"), $dias_com_almoco)) { // se o dia da semana atual é um desses 4
+  $data = date("Y-m-d"); // a data é determinada normalmente
+} else { // senão: a data é ou quinta da semana mais recente ou segunda da próxima
+  switch (date("w")) {
+    case 5: // sexta
+      $data = date("Y-m-d", strtotime("-1 day")); // quinta
+      break;    
+    case 6: // sábado
+      $data = date("Y-m-d", strtotime("-2 day")); // quinta
+      break;
+    case 0: // domingo
+      $data = date("Y-m-d", strtotime("+1 day")); // próx. segunda
+      break;
+  }
 }
-
-// Pega a semana do BD
-$semana = SemanaCardapioDao::SelectPorCodigo($codigo);
+// Pega a semana do BD a partir da data
+$semana = SemanaCardapioDao::SelectPorDia( $data );
 
 // Pega os dias da semana do BD
 $semana = SemanaCardapioDao::SelectDias($semana);
@@ -89,7 +104,23 @@ for ($i=0; $i < count($alimentos); $i++) {
 for ($i=0; $i < count($dias); $i++) { 
   $data = $dias[$i]->getData();
   $diaSemana = $dias[$i]->getDiaSemana();
-  $dias[$i] = file_get_contents("dia_cartao.html"); // Variável que tinha objeto Dia agora tem string
+
+  // Presença do aluno no dia
+  $pres = UsuarioDao::SelectPresenca($dias[$i]->getCodigo(), $_SESSION['matricula']);
+  if ($pres == 1) {
+    $cor = ''; // verde por padrão
+    $txt = "SIM";
+  } else {
+    $cor = ' vermelho ';
+    $txt = "NÃO";
+  }
+  
+  $dia[$i] = file_get_contents("dia_cartao.html");
+  $dia[$i] = str_replace("{dia_cod}", $dias[$i]->getCodigo(), $dia[$i]);
+  $dia[$i] = str_replace("{cor}", $cor, $dia[$i]);
+  $dia[$i] = str_replace("{txt}", $txt, $dia[$i]);
+   
+
   $alimentosHTML = "";
 
   // Concatena os <li>alimento</li> em um $alimentosHTML para cada dia
@@ -98,15 +129,15 @@ for ($i=0; $i < count($dias); $i++) {
   }
 
   // Carrega os valores e a lista de alimentos ao template dia_cartao.html
-  $dias[$i] = str_replace("{{alimentos}}", $alimentosHTML, $dias[$i]);
-  $dias[$i] = str_replace("{dia_semana}", $diaSemana, $dias[$i]);
-  $dias[$i] = str_replace("{num_dia}", $i+1, $dias[$i]);
+  $dia[$i] = str_replace("{{alimentos}}", $alimentosHTML, $dia[$i]);
+  $dia[$i] = str_replace("{dia_semana}", $diaSemana, $dia[$i]);
+  $dia[$i] = str_replace("{num_dia}", $i+1, $dia[$i]);
 }
 
 // Cria o conjunto de cartões (concatena para {{dias_cartoes}} do main.html)
 $dias_cartoes = "";
-for ($i=0; $i < count($dias); $i++) { 
-  $dias_cartoes .= $dias[$i];
+for ($i=0; $i < count($dia); $i++) { 
+  $dias_cartoes .= $dia[$i];
 }
 
 // Carrega $dias_cartoes em {{dias_cartoes}} no main.html
@@ -115,9 +146,8 @@ $cardapio = str_replace("{{dias_cartoes}}", $dias_cartoes, $cardapio);
  * Fim do carregamento do cardápio
  */
 
-
-
-
+// Carrega o código da semana para o formulário de marcar presença em todos os dias
+$cardapio = str_replace("{semana_cod}", $semana->getCodigo(), $cardapio);
 
 // Carrega período da semana
 $data_inic = date("d/m", strtotime($semana->getData_inicio()) );

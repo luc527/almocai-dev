@@ -31,8 +31,15 @@
             </label>
           </p>
         </div>
-        
-        {{erro}}
+
+        <!-- Erro no login. Script do erro em scripts.js-->
+        <div id="modal-erro" class="modal login-section__modal">
+          <div class="modal-content transparent">
+            <h4 class="login-section__modal--title">Falha ao conectar</h4>
+            <p class="login-section__modal--text" id="texto-erro"></p>
+            <a href="./" class="login-section__modal--btn modal-close">Fechar e continuar</a>
+          </div>
+        </div>
 
         <div class="row center col s12 l6 offset-l2 login-section__padding-zero">
           <button type="submit" class="waves-effect waves-light btn login-section__button"
@@ -43,3 +50,5 @@
     </div>
   </div>
 </div>
+
+{erro_trigger}

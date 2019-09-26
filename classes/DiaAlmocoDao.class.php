@@ -148,6 +148,7 @@ class DiaAlmocoDao {
 		} catch (PDOException $e) {
 			echo "<b>Erro (DiaAlmocoDao::SelectContagem): </b>" . $e->getMessage();
 		}
+		$contagem['Total'] = array_sum($contagem);
 		return $contagem;
 	}
 

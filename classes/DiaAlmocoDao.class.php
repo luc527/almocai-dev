@@ -130,8 +130,9 @@ class DiaAlmocoDao {
 	 * @param mixed $dia_id id do dia cujas presenças serão contadas
 	 * @return array de contagens
 	 */
-	public static function ContagemPresenca ($dia_id) {
-		$sql = "select A.descricao as 'alimentacao', count(*) as 'contagem'
+	public static function ContagemPresencas($dia_id)
+	{
+		$sql = "select A.codigo as 'alimentacao_id', count(*) as 'contagem'
 		from Presenca P, Usuario U, Alimentacao A
 		where diaAlmoco_codigo = $dia_id
 		and P.usuario_matricula = U.matricula
@@ -139,16 +140,16 @@ class DiaAlmocoDao {
 		and P.presenca = 1
 		group by U.alimentacao";
 		try {
-			$bd = Conexao::getInstance();
+			$bd = Conexao::conexao();
 			$query = $bd->query($sql);
-			$contagem = array();
+			$contagem = array(0 => 0, 1 => 0, 2 => 0, 3 => 0);
 			while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-				$contagem[$row['alimentacao']] = $row['contagem'];
+				$contagem[$row['alimentacao_id']] = $row['contagem'];
 			}
 		} catch (PDOException $e) {
 			echo "<b>Erro (DiaAlmocoDao::SelectContagem): </b>" . $e->getMessage();
 		}
-		$contagem['Total'] = array_sum($contagem);
+		$contagem[0] = array_sum($contagem);
 		return $contagem;
 	}
 

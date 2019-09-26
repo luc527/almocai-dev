@@ -125,6 +125,31 @@ class DiaAlmocoDao {
 		}
 	}
 
+	/**
+	 * Retorna array com contagem de presenças, de vegetarianos e veganos etc.
+	 * @param mixed $dia_id id do dia cujas presenças serão contadas
+	 * @return array de contagens
+	 */
+	public static function ContagemPresenca ($dia_id) {
+		$sql = "select A.descricao as 'alimentacao', count(*) as 'contagem'
+		from Presenca P, Usuario U, Alimentacao A
+		where diaAlmoco_codigo = $dia_id
+		and P.usuario_matricula = U.matricula
+		and A.codigo = U.alimentacao
+		group by U.alimentacao";
+		try {
+			$bd = Conexao::getInstance();
+			$query = $bd->query($sql);
+			$contagem = array();
+			while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+				$contagem[$row['alimentacao']] = $row['contagem'];
+			}
+		} catch (PDOException $e) {
+			echo "<b>Erro (DiaAlmocoDao::SelectContagem): </b>" . $e->getMessage();
+		}
+		return $contagem;
+	}
+
 
 	////////////////////////
 	// FUNÇÕES DE DELETAR //

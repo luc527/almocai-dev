@@ -1,6 +1,7 @@
 <div class="col s12 m6 l7 xl8">
-	<form class="row" action="acao.php" method="post">
-		<div class="card col s12 l8 offset-l2" style="padding: 2rem">
+	<div class="card col s12 l8 offset-l2" style="padding: 2rem">
+
+		<form class="row" action="acao.php" method="post">
 			<h4 class="confirmacao-aluno__titulo">Você irá almoçar no IFC hoje?</h4>
 			<h6 class="confirmacao-aluno__data">{data_hoje}</h6>
 			<div class="col s6 center">
@@ -17,6 +18,8 @@
 			</div>
 			<input type="hidden" name="dia_cod" id="dia_cod" value="{dia_cod}">
 			<input type="hidden" name="redir" id="redit" value="index">
-		</div>
-	</form>
+		</form>
+		
+		{{cartao_presenca_selecionada}}
+	</div>
 </div>

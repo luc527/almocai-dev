@@ -136,6 +136,7 @@ class DiaAlmocoDao {
 		where diaAlmoco_codigo = $dia_id
 		and P.usuario_matricula = U.matricula
 		and A.codigo = U.alimentacao
+		and P.presenca = 1
 		group by U.alimentacao";
 		try {
 			$bd = Conexao::getInstance();

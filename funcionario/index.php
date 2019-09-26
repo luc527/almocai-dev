@@ -3,10 +3,9 @@ $root_path = "../";
 include($root_path."valida_secao.php");
 valida_secao_tipo($root_path, 'FUNCIONARIO');
 require_once($root_path."classes/DiaAlmocoDao.class.php");
+require_once($root_path."classes/SemanaCardapioDao.class.php");
 
 date_default_timezone_set("America/Sao_Paulo");
-
-$dia = DiaAlmocoDao::SelectPorData(date("Y-m-d"));
 
 $func = file_get_contents($root_path."template.html");
 
@@ -22,25 +21,33 @@ $func = str_replace("{{nav}}", $nav, $func);
 $func = str_replace("{{footer}}", $footer, $func);
 $func = str_replace("{{scripts}}", $title, $func);
 
+$data = date("Y-m-d");
 /**
  * MAIN
  */
 $main = file_get_contents("main.html");
-// Valores e componentes
-$data = date("d/m");
-if (true) $erro_qtd_indef = "";
-if (true) $erro_card_indisp = "";
-// Cartão de contagem de presenças
-$contagem = DiaAlmocoDao::ContagemPresencas($dia->getCodigo());
+// Cartões de presença
+if (SemanaCardapioDao::SemanaExiste($data)) {
+  // Não mostra o erro de cardápio indisponível
+  $erro_card_indisp = "";
+  $dia = DiaAlmocoDao::SelectPorData(date("Y-m-d"));
+  // Cartão de contagem de presenças
+  $contagem = DiaAlmocoDao::ContagemPresencas($dia->getCodigo());
+  // Carrega as contagens de presenças
+  $cartoes_presenca = file_get_contents("cartoes_presenca.html");
+  $cartoes_presenca = str_replace("{qtd_almocos}", $contagem[0], $cartoes_presenca);
+  $cartoes_presenca = str_replace("{qtd_carnivoros}", $contagem[1], $cartoes_presenca);
+  $cartoes_presenca = str_replace("{qtd_vegetarianos}", $contagem[2], $cartoes_presenca);
+  $cartoes_presenca = str_replace("{qtd_veganos}", $contagem[3], $cartoes_presenca);
+} else {
+  $erro_card_indisp = file_get_contents("erro_cardapio_indisponivel.html");
+  $cartoes_presenca = "";
+}
 // Carrega valores e componentes no template
-$main = str_replace("{data}", $data, $main);
-$main = str_replace("{{erro_qtd_indefinida}}", $erro_qtd_indef, $main);
+$main = str_replace("{data}", date("d/m"), $main);
+$main = str_replace("{{erro_qtd_indefinida}}", "", $main);
 $main = str_replace("{{erro_cardapio_indisponivel}}", $erro_card_indisp, $main);
-// Carrega as contagens de presenças
-$main = str_replace("{qtd_almocos}", $contagem[0], $main);
-$main = str_replace("{qtd_carnivoros}", $contagem[1], $main);
-$main = str_replace("{qtd_vegetarianos}", $contagem[2], $main);
-$main = str_replace("{qtd_veganos}", $contagem[3], $main);
+$main = str_replace("{{cartoes_presenca}}", $cartoes_presenca, $main);
 // Carrega main na página
 $func = str_replace("{{main}}", $main, $func);
 

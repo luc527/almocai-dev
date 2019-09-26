@@ -4,6 +4,7 @@ include($root_path."valida_secao.php");
 valida_secao_tipo($root_path, 'ALUNO');
 require_once($root_path . "classes/UsuarioDao.class.php");
 require_once($root_path . "classes/SemanaCardapioDao.class.php");
+require_once($root_path . "classes/Funcoes.class.php");
 
 date_default_timezone_set("America/Sao_Paulo");
 
@@ -37,29 +38,7 @@ $cardapio = str_replace("{peso_fonte}", "", $cardapio);
 /**
  * Carrega a semana/cardápio / os cartões de cada dia / os alimentos
  */
-
-/** 1ª parte: determina data
- * O código a seguir determina com qual data deve-se consultar a semana.
- * O sistema só tem 4 dias cadastrados por semana (seg, ter, qua, qui),
- * de forma que não seria possível acessar o cardápio num dia que não fosse esses.
- * O código a seguir corrige esse problema.
- */
-$dias_com_almoco = array(1, 2, 3, 4); // date("w") => seg, ter, qua, qui
-if (in_array(date("w"), $dias_com_almoco)) { // se o dia da semana atual é um desses 4
-  $data = date("Y-m-d"); // a data é determinada normalmente
-} else { // senão: a data é ou quinta da semana mais recente ou segunda da próxima
-  switch (date("w")) {
-    case 5: // sexta
-      $data = date("Y-m-d", strtotime("-1 day")); // quinta
-      break;    
-    case 6: // sábado
-      $data = date("Y-m-d", strtotime("-2 day")); // quinta
-      break;
-    case 0: // domingo
-      $data = date("Y-m-d", strtotime("+1 day")); // próx. segunda
-      break;
-  }
-}
+$data = Funcoes::CorrigeData(date("Y-m-d"));
 // Pega a semana do BD a partir da data
 $semana = SemanaCardapioDao::SelectPorDia( $data );
 

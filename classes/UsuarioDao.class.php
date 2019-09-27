@@ -33,6 +33,36 @@
 			}
 		}
 
+		public static function SalvarCarnes (Usuario $usuario) {
+			// Gera array com código de todas as carnes
+			$todas = CarneDao::SelectTodas();
+			for ($i=0; $i < count($todas); $i++) { 
+				$todas[$i] = $todas[$i]->getCodigo();
+			}
+
+			$carnes = $usuario->getCarnes();
+
+			// Verifica se cada uma das carnes está no array de carnes selecionadas pelo usuário
+			// Se está, faz um insert na tabela Carne_usuario (pode ocorrer um erro se o valor já estiver registrado, mas não tem problema?)
+			// Se não está, faz um delete na tabela Carne_usuario. Nesse caso, não ocorre erro quando deleta um registro que não existe
+			for ($i=0; $i < count($todas); $i++) { 
+				if (in_array($todas[$i], $carnes)) { 
+					$sql = "INSERT INTO Carne_usuario (usuario_matricula, carne_cod) VALUES (:matricula, :carne)";
+				} else {
+					$sql = "DELETE FROM Carne_usuario WHERE usuario_matricula = :matricula and carne_cod = :carne";
+				}
+				try {
+					$stmt = Conexao::conexao()->prepare($sql);
+					$matricula = $usuario->getCodigo();
+					$carne_cod = $todas[$i]->getCodigo();
+					$stmt->bindParam(":matricula", $matricula);
+					$stmt->bindParam(":carne", $carne_cod);
+				} catch (PDOException $e) { echo "<b>Erro (UsuarioDao::InsertCarnes): </b>".$e->getMessage(); }
+			}
+		}
+
+
+
 
 		/**
 		 * SELECT

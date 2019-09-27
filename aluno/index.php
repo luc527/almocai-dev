@@ -44,6 +44,19 @@ if (SemanaCardapioDao::SemanaExiste($data)) {
   $cartao_presenca = str_replace("{data_hoje}", $datahj, $cartao_presenca);
   $cartao_presenca = str_replace("{dia_cod}", $dia->getCodigo(), $cartao_presenca);
 
+  $pres = UsuarioDao::SelectPresenca($dia->getCodigo(), $usuario->getCodigo());
+  if ($pres == 0) {
+    $cor = ' vermelho ';
+    $txt = 'Não almoçarei';
+  } else {
+    $cor = ''; // por padrão verde
+    $txt = 'Almoçarei';
+  }
+  $Cpres_selec = file_get_contents("cartao_presenca_selecionada.html");
+  $Cpres_selec = str_replace("{cor}", $cor, $Cpres_selec);
+  $Cpres_selec = str_replace("{presenca_selecionada}", $txt, $Cpres_selec);
+  $cartao_presenca = str_replace("{{cartao_presenca_selecionada}}", $Cpres_selec, $cartao_presenca);
+
   $alimentos = AlimentoDao::SelectPorDia($dia->getCodigo());
   $itens = "";
   foreach ($alimentos as $alimento) {
@@ -71,27 +84,14 @@ if (SemanaCardapioDao::SemanaExiste($data)) {
   $num_dia = $NUM_DIA[$dia->getDiaSemana()]; // array $NUM_DIA[] em config.php
   $cartao_dia = str_replace("{num_dia}", $num_dia, $cartao_dia);
 
-  $pres = UsuarioDao::SelectPresenca($dia->getCodigo(), $usuario->getCodigo());
-  if ($pres == 0) {
-    $cor = ' vermelho ';
-    $txt = 'Não almoçarei';
-  } else {
-    $cor = ''; // por padrão verde
-    $txt = 'Almoçarei';
-  }
-  $Cpres_selec = file_get_contents("cartao_presenca_selecionada.html");
-  $Cpres_selec = str_replace("{cor}", $cor, $Cpres_selec);
-  $Cpres_selec = str_replace("{presenca_selecionada}", $txt, $Cpres_selec);
 } else { // caso não exista a semana
   $cartao_dia = "";
   $cardapio_ind = file_get_contents("cardapio_indisponivel.html");
   $cartao_presenca = "";
-  $Cpres_selec = "";
 }
 $main = str_replace("{{cartao_dia}}", $cartao_dia, $main);
 $main = str_replace("{{cardapio_indisponivel}}", $cardapio_ind, $main);
 $main = str_replace("{{cartao_presenca}}", $cartao_presenca, $main);
-$main = str_replace("{{cartao_presenca_selecionada}}", $Cpres_selec, $main);
 
 $aluno = str_replace("{{main}}", $main, $aluno);
 $aluno = str_replace("{root_path}", $root_path, $aluno);

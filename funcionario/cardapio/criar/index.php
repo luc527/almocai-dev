@@ -1,9 +1,9 @@
 <?php
 $root_path = "../../../";
 
-//include($root_path."valida_secao.php");
-//valida_secao($root_path);
-$_SESSION['matricula'] = 2019;
+include($root_path."valida_secao.php");
+valida_secao_tipo($root_path, 'FUNCIONARIO');
+
 
 // Template geral
 $criar_card = file_get_contents($root_path."template.html");

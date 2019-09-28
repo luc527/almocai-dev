@@ -86,7 +86,7 @@ $intolerancia = file_get_contents("cartao_intolerancia.html");
 $perfil = str_replace("{{cartao_intolerancia}}", $intolerancia, $perfil);
 
 // Cartão carne
-$id_carnes = array(-1);
+$id_carnes = array();
 $carnes = $usuario->getCarnes();
 foreach ($carnes as $carne) {
 	array_push($id_carnes, $carne->getCodigo());

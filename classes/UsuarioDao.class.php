@@ -1,6 +1,7 @@
 <?php
 	require_once("Conexao.class.php");
 	require_once("Usuario.class.php");
+	require_once("CarneDao.class.php");
 
 	class UsuarioDao {
 
@@ -33,32 +34,64 @@
 			}
 		}
 
-		public static function SalvarCarnes (Usuario $usuario) {
-			// Gera array com código de todas as carnes
-			$todas = CarneDao::SelectTodas();
-			for ($i=0; $i < count($todas); $i++) { 
-				$todas[$i] = $todas[$i]->getCodigo();
+		public static function UpdateAlimentacao (Usuario $usuario) {
+			$sql = "UPDATE Usuario SET alimentacao = :alimentacao WHERE matricula = :matricula";
+			try {
+				$stmt = Conexao::conexao()->prepare($sql);
+				$alimentacao = $usuario->getAlimentacao()->getCodigo();
+				$matricula = $usuario->getCodigo();
+				$stmt->bindParam(":matricula", $matricula);
+				$stmt->bindParam(":alimentacao", $alimentacao);
+			} catch (PDOException $e) {
+				echo "<b>Erro (UsuarioDao::UpdateAlimentacao): </b>".$e->getMessage();
 			}
+			return $stmt->execute();
+		}
 
+		public static function UpdateFrequencia (Usuario $usuario) {
+			$sql = "UPDATE Usuario SET frequencia = :frequencia WHERE matricula = :matricula";
+			try {
+				$stmt = Conexao::conexao()->prepare($sql);
+				$frequencia = $usuario->getfrequencia()->getCodigo();
+				$matricula = $usuario->getCodigo();
+				$stmt->bindParam(":matricula", $matricula);
+				$stmt->bindParam(":frequencia", $frequencia);
+			} catch (PDOException $e) {
+				echo "<b>Erro (UsuarioDao::UpdateFrequencia): </b>".$e->getMessage();
+			}
+			return $stmt->execute();
+		}
+		
+		public static function SalvarCarnes (Usuario $usuario) {
+			// Deleta todos os registros da tabela Carne_usuario de um usuário para evitar erros no INSERT (registro duplicado)
+			self::CarnesReset($usuario->getCodigo());
+			
+			// Consulta todas as carnes do BD, transforma objetos em código
+			$todas = CarneDao::SelectTodas();
+			
+			// Transforma array de objetos carne em array de códigos de cada carne para verificação in_array() -- não funcionou com objetos
 			$carnes = $usuario->getCarnes();
+			for ($i=0; $i < count($carnes); $i++) { 
+				$carnes[$i] = $carnes[$i]->getCodigo();
+			}
 
 			// Verifica se cada uma das carnes está no array de carnes selecionadas pelo usuário
 			// Se está, faz um insert na tabela Carne_usuario (pode ocorrer um erro se o valor já estiver registrado, mas não tem problema?)
-			// Se não está, faz um delete na tabela Carne_usuario. Nesse caso, não ocorre erro quando deleta um registro que não existe
-			for ($i=0; $i < count($todas); $i++) { 
-				if (in_array($todas[$i], $carnes)) { 
+			// Se não está, não insere nada
+			for ($i=0; $i < count($todas); $i++) {
+				if (in_array($todas[$i]->getCodigo(), $carnes)) { 
 					$sql = "INSERT INTO Carne_usuario (usuario_matricula, carne_cod) VALUES (:matricula, :carne)";
-				} else {
-					$sql = "DELETE FROM Carne_usuario WHERE usuario_matricula = :matricula and carne_cod = :carne";
+					try {
+						$stmt = Conexao::conexao()->prepare($sql);
+						$matricula = $usuario->getCodigo();
+						$carne_cod = $todas[$i]->getCodigo();
+						$stmt->bindParam(":matricula", $matricula);
+						$stmt->bindParam(":carne", $carne_cod);
+					} catch (PDOException $e) { echo "<b>Erro (UsuarioDao::InsertCarnes): </b>".$e->getMessage(); }
+					$stmt->execute();
 				}
-				try {
-					$stmt = Conexao::conexao()->prepare($sql);
-					$matricula = $usuario->getCodigo();
-					$carne_cod = $todas[$i]->getCodigo();
-					$stmt->bindParam(":matricula", $matricula);
-					$stmt->bindParam(":carne", $carne_cod);
-				} catch (PDOException $e) { echo "<b>Erro (UsuarioDao::InsertCarnes): </b>".$e->getMessage(); }
 			}
+
 		}
 
 
@@ -108,8 +141,7 @@
 			}
 		}
 
-		public static function Select2($tipo, $pesquisa)
-		{
+		public static function Select2($tipo, $pesquisa) {
 			// feita especificamente para a página de gerenciamento do administrador
 			// seleciona por um tipo específico + uma pesquisa que pode ser tanto o nome qto a matrícula do aluno
 			$sql = "SELECT * FROM Usuario WHERE tipo = '$tipo' ";
@@ -269,6 +301,18 @@
 			} catch (PDOException $e) {
 				echo "Erro (UsuarioDao::Delete): ".$e->getMessage();
 			}
+		}
+
+		/**
+		 * Deleta todos os registros da tabela 'Carne_usuario' de um determinado usuário
+		 */
+		public static function CarnesReset ($matricula) {
+			$sql = "DELETE FROM Carne_usuario WHERE usuario_matricula = :matricula";
+			try {
+				$stmt = Conexao::conexao()->prepare($sql);
+				$stmt->bindParam(":matricula", $matricula);
+			} catch (PDOException $e) { echo "<b>Erro (UsuarioDao::CarnesReset): </b>".$e->getMessage(); }
+			return $stmt->execute();
 		}
 
 

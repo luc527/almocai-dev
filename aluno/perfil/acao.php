@@ -34,12 +34,12 @@ if ($acao == 'AlterarSenha') {
   $frequencia = new Frequencia;
   $frequencia->setCodigo($_POST['frequencia']);
   $usuario->setFrequencia($frequencia);
-  UsuarioDao::InsertFrequencias($usuario);
+  UsuarioDao::UpdateFrequencia($usuario);
   header("location:".$root_path."aluno/perfil/");
 
 } else if ($acao == 'SalvarCarnes') {
   $carnes_cod = $_POST['carnes'];
-  for ($i=0; $i < count($carnes); $i++) { 
+  for ($i=0; $i < count($carnes_cod); $i++) { 
     $carne[$i] = new Carne;
     $carne[$i]->setCodigo($carnes_cod[$i]);
     $usuario->setCarne($carne[$i]);
@@ -51,7 +51,7 @@ if ($acao == 'AlterarSenha') {
   $alimentacao = new Alimentacao;
   $alimentacao->setCodigo($_POST['alimentacao']);
   $usuario->setAlimentacao($alimentacao);
-  UsuarioDao::InsertAlimentacoes($usuario);
+  UsuarioDao::UpdateAlimentacao($usuario);
   header("location:".$root_path."aluno/perfil/");
 
 } else if ($acao == 'CadastrarIntolerancia') {

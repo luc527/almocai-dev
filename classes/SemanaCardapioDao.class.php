@@ -1,17 +1,7 @@
 <?php
-
-require_once "autoload.php";
+require_once("autoload.php");
 
 class SemanaCardapioDao {
-	private $instance;
-
-	public static function getInstance () {
-		if (!isset(self::$instance)) {
-			self::$instance = new SemanaCardapioDao;
-		}
-		return $instance;
-	}
-
 
 	/////////////////////////
 	// FUNÇÕES DE INSERÇÃO //
@@ -111,17 +101,18 @@ class SemanaCardapioDao {
 		return $row['codigo'];
 	}
 
-	public static function SelectPorDia($data) {
+	public static function SelectPorDia ($data) {
 		$sql = "SELECT semanaCardapio_codigo FROM diaAlmoco WHERE `data` = '$data'";
 		try {
 			$bd = Conexao::conexao();
 			$query = $bd->query($sql);
 			$row = $query->fetch(PDO::FETCH_ASSOC);
 		} catch (PDOException $e) {
-			echo "Erro (SemanaCardapioDao::SelectPorDia): " . $e->getMessage();
+			echo "Erro (SemanaCardapioDao::SelectPorDia): ".$e->getMessage();
 		}
-		return self::SelectPorCodigo($row['semanaCardapio_codigo']);
+		return self::SelectPorCodigo( $row['semanaCardapio_codigo'] );
 	}
+
 
 	public static function GerarSelectHTML () {
 		return Funcoes::GerarSelectHTML("SemanaCardapio", "semanaCardapio_codigo", 0, "codigo", "codigo");
@@ -145,6 +136,32 @@ class SemanaCardapioDao {
 		return $p_sql->execute();
 	}
 
+
+	// //////////////////// //
+	// OUTROS MÉTODOS ÚTEIS //
+	// //////////////////// //
+
+	/**
+	 * Verifica se uma semana está cadastrada no BD a partir da data informada
+	 * @param string $data data
+	 * @return bool true se existe, false se não
+	 */
+	public static function SemanaExiste($data) {
+		$data = Funcoes::CorrigeData($data);
+		$sql = "SELECT * FROM DiaAlmoco WHERE `data` = '$data'";
+		try {
+			$bd = Conexao::conexao();
+			$query = $bd->query($sql);
+			$row = $query->fetch(PDO::FETCH_ASSOC);
+		} catch (PDOException $e) {
+			echo "<b>Erro (Funcoes::SemanaExiste): </b>" . $e->getMessage();
+		}
+		if ($row != false) { // qdo a consulta não tem resultados $row = false
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
 
 ?>

@@ -1,13 +1,13 @@
 <?php
-
-require_once "autoload.php";
+require_once("autoload.php");
 
 class Usuario extends AbsCodigo {
     private $nome;
     private $senha;
     private $tipo;
-    private $alimentacao;
-    private $carnes_come = array();
+    private $alimentacao; // vegetariano, vegano ou nenhum dos dois
+    private $carnes_come = array(); // quais carnes come
+    private $frequencia; // se almoça sempre no if, nunca, as vezes etc.
 
     public function setSenha ($senha) {
         $this->senha = $senha;
@@ -33,7 +33,7 @@ class Usuario extends AbsCodigo {
     }
 
     public function setAlimentacao ($a) {
-        if ($a instanceof Alimentacao) {
+        if ($a instanceof Alimentacao) { 
             $this->alimentacao = $a;
         }
     }
@@ -44,11 +44,11 @@ class Usuario extends AbsCodigo {
 
     public function setCarne ($c) {
         if ($c instanceof Carne) {
-            $this->carnes_come = $c;
+            array_push($this->carnes_come, $c);
         }
     }
 
-    public function getCarne () {
+    public function getCarnes () {
         return $this->carnes_come;
     }
 

@@ -18,14 +18,28 @@ class AlimentoDao {
 
 		$stmt = $pdo->prepare($sql);
 
+		$descricao = $alimento->getDescricao();
+		$tipo = $alimento->getTipo();
+		
 		$stmt->bindParam(":descricao", $descricao);
 		$stmt->bindParam(":diaAlmoco_codigo", $diaAlmoco_codigo);
 		$stmt->bindParam(":tipo", $tipo);
 
-		$descricao = $alimento->getDescricao();
-		$tipo = $alimento->getTipo();
-
 		return $stmt->execute();
+	}
+
+	/**
+	 * Insere um alimento em todos os dias em uma semana
+	 */
+	public static function InserirEmSemana (Alimento $alimento, $semana_codigo) {
+		$sql = "SELECT codigo FROM DiaAlmoco WHERE semanaCardapio_codigo = $semana_codigo";
+		try {
+			$query = Conexao::conexao()->query($sql);
+			while ($row = $query->fetch(PDO::FETCH_ASSOC))
+			{
+				self::Inserir($alimento, $row['codigo']);
+			}
+		} catch (PDOException $e) { echo "<b>Erro (AlimentoDao::InserirEmSemana): </b>".$e->getMessage(); }
 	}
 
 	///////////////////////
@@ -42,7 +56,6 @@ class AlimentoDao {
 
 	public static function SelectPorDia ($dia_codigo) {
 		$sql = "SELECT * FROM Alimento WHERE diaAlmoco_codigo = ".$dia_codigo;
-		//echo $sql;
 
 		$query = Conexao::conexao()->query($sql);
 
@@ -58,13 +71,40 @@ class AlimentoDao {
 	////////////////////////
 	// FUNÇÕES DE DELETAR //
 
-	public static function Deletar (Alimento $alimento) {
-		$sql = "DELETE FROM Alimento WHERE codigo = :codigo";
-		$p_sql = Conexao::conexao()->prepare($sql);
-		$p_sql->bindParam(":codigo", $codigo);
-		$codigo = $alimento->getCodigo();
+	public static function Deletar ($alimento_cod) {
+		$sql = "DELETE FROM Alimento WHERE codigo = :alimento_cod";
+		try {
+			$stmt = Conexao::conexao()->prepare($sql);
+			$stmt->bindParam(":codigo", $alimento_cod);
+		} catch (PDOException $e) { echo "<b>Erro (AlimentoDao::Deletar): </b>".$e->getMessages(); }
 
-		return $p_sql->execute();
+		return $stmt->execute();
+	}
+
+	/**
+	 * Deleta todos os alimentos de um dia
+	 */
+	public static function DeletarPorDia ($dia_cod) {
+		$sql = "DELETE FROM Alimento WHERE diaAlmoco_codigo = :dia_cod";
+		try {
+			$stmt = Conexao::conexao()->prepare($sql);
+			$stmt->bindParam(":dia_cod", $dia_cod);
+		} catch (PDOException $e) { echo "<b>Erro (AlimentoDao::DeletarPorDia): </b>".$e->getMessages(); }
+		return $stmt->execute();
+	}
+
+	/**
+	 * Deleta todos os alimentos de todos os dias de uma semana
+	 */
+	public static function DeletarPorSemana ($semana_cod) {
+		$sql = "SELECT codigo FROM DiaAlmoco WHERE semanaCardapio_codigo = $semana_cod";
+		try {
+			$query = Conexao::conexao()->query($sql);
+			while ($row = $query->fetch(PDO::FETCH_ASSOC))
+			{
+				self::DeletarPorDia($row['codigo']);
+			}
+		} catch (PDOException $e) { echo "<b>Erro (AlimentoDao::DeletePorSemana): </b>".$e->getMessage(); }
 	}
 }
 

@@ -29,6 +29,20 @@ class AlimentoDao {
 		return $stmt->execute();
 	}
 
+	/**
+	 * Insere um alimento em todos os dias em uma semana
+	 */
+	public static function InserirEmSemana (Alimento $alimento, $semana_codigo) {
+		$sql = "SELECT codigo FROM DiaAlmoco WHERE semanaCardapio_codigo = $semana_codigo";
+		try {
+			$query = Conexao::conexao()->query($sql);
+			while ($row = $query->fetch(PDO::FETCH_ASSOC))
+			{
+				self::Inserir($alimento, $row['codigo']);
+			}
+		} catch (PDOException $e) { echo "<b>Erro (AlimentoDao::InserirEmSemana): </b>".$e->getMessage(); }
+	}
+
 	///////////////////////
 	// FUNÇÕES DE SELECT //
 
@@ -66,6 +80,32 @@ class AlimentoDao {
 		$codigo = $alimento->getCodigo();
 
 		return $p_sql->execute();
+	}
+
+	/**
+	 * Deleta todos os alimentos de um dia
+	 */
+	public static function DeletarPorDia ($dia_cod) {
+		$sql = "DELETE FROM Alimento WHERE diaAlmoco_codigo = :dia_cod";
+		try {
+			$stmt = Conexao::conexao()->prepare($sql);
+			$stmt->bindParam(":dia_cod", $dia_cod);
+		} catch (PDOException $e) { echo "<b>Erro (AlimentoDao::DeletarPorDia): </b>".$e->getMessages(); }
+		return $stmt->execute();
+	}
+
+	/**
+	 * Deleta todos os alimentos de todos os dias de uma semana
+	 */
+	public static function DeletarPorSemana ($semana_cod) {
+		$sql = "SELECT codigo FROM DiaAlmoco WHERE semanaCardapio_codigo = $semana_cod";
+		try {
+			$query = Conexao::conexao()->query($sql);
+			while ($row = $query->fetch(PDO::FETCH_ASSOC))
+			{
+				self::DeletarPorDia($row['codigo']);
+			}
+		} catch (PDOException $e) { echo "<b>Erro (AlimentoDao::DeletePorSemana): </b>".$e->getMessage(); }
 	}
 }
 

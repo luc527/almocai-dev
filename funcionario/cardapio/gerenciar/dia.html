@@ -1,0 +1,28 @@
+<div class="col s12 m6 l3">
+  
+  <h4>{dia}</h4>
+  
+  <ul>
+    {{itens}}
+  </ul>
+
+  <div class="divider" style="margin: 1.5rem 0 2rem 0;"></div>
+
+  <!-- Formulário para adicionar alimentos -->
+  <form action="acao.php" method="POST">
+    <h6>Add alimento</h6>
+    
+    <input type="hidden" name="dia_cod" id="dia_cod" value="{dia_codigo}">
+    
+    <label for="nome">Nome</label>
+    <input type="text" name="nome" id="nome"/>
+
+    {{select_tipo}}
+    
+    <button type="submit" name="acao" id="acao" value="AddAlimento">
+      Adicionar
+    </button>
+
+  </form>
+
+</div>

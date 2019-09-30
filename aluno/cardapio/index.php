@@ -44,7 +44,7 @@ if (SemanaCardapioDao::SemanaExiste($dataHj)) {
   $data = Funcoes::CorrigeData($dataHj);
 
   // Pega a semana do BD a partir da data
-  $semana = SemanaCardapioDao::SelectPorDia($data);
+  $semana = SemanaCardapioDao::SelectPorData($data);
 
   // Pega os dias da semana do BD
   $semana = SemanaCardapioDao::SelectDias($semana);

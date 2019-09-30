@@ -1,6 +1,6 @@
 <?php
 require_once("Conexao.class.php");
-require_once("SemanaCardapio.class.php");
+require_once("SemanaCardapioDao.class.php");
 require_once("Funcoes.class.php");
 require_once("DiaAlmocoDao.class.php");
 
@@ -79,9 +79,11 @@ class SemanaCardapioDao {
 		return $semanas;
 	}
 
-	public static function SelectDias ($semana) {
-		// Recebe um objeto semana sem dias
-		// Retorna um objeto semana com os dias devidos, conforme seu código
+	/**
+	 * Recebe um objeto semana sem dias
+	 * Retorna um objeto semana com os dias devidos, conforme seu código
+	 */
+	public static function SelectDias (SemanaCardapio $semana) {
 
 		$dias = DiaAlmocoDao::SelectPorSemana($semana->getCodigo());
 
@@ -104,14 +106,14 @@ class SemanaCardapioDao {
 		return $row['codigo'];
 	}
 
-	public static function SelectPorDia ($data) {
+	public static function SelectPorData ($data) {
 		$sql = "SELECT semanaCardapio_codigo FROM diaAlmoco WHERE `data` = '$data'";
 		try {
 			$bd = Conexao::conexao();
 			$query = $bd->query($sql);
 			$row = $query->fetch(PDO::FETCH_ASSOC);
 		} catch (PDOException $e) {
-			echo "Erro (SemanaCardapioDao::SelectPorDia): ".$e->getMessage();
+			echo "Erro (SemanaCardapioDao::SelectPorData): ".$e->getMessage();
 		}
 		return self::SelectPorCodigo( $row['semanaCardapio_codigo'] );
 	}

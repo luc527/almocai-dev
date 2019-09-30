@@ -57,7 +57,7 @@ if (SemanaCardapioDao::SemanaExiste($data)) {
   $Cpres_selec = str_replace("{presenca_selecionada}", $txt, $Cpres_selec);
   $cartao_presenca = str_replace("{{cartao_presenca_selecionada}}", $Cpres_selec, $cartao_presenca);
 
-  $alimentos = AlimentoDao::SelectPorDia($dia->getCodigo());
+  $alimentos = AlimentoDao::SelectPorData($dia->getCodigo());
   $itens = "";
   foreach ($alimentos as $alimento) {
     $icon = "";

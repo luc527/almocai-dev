@@ -29,6 +29,22 @@ if ($acao == 'AddAlimento') {
   AlimentoDao::Deletar($alimento);
   header("location:index.php");
 
+} else if ($acao == 'AddAlimentoSemana') {
+
+  $alimento = new Alimento;
+  $alimento->setDescricao($_POST['nome']);
+  $alimento->setTipo($_POST['tipo']);
+
+  $semana_cod = $_POST['semana_cod'];
+
+  AlimentoDao::InserirEmSemana($alimento, $semana_cod);
+  header("location:index.php");
+
+} else if ($acao == 'DeletarAlimentosDia') {
+
+  AlimentoDao::DeletarPorDia($_POST['dia_cod']);
+  header("location:index.php");
+
 }
 
 ?>

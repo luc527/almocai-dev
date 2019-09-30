@@ -1,14 +1,17 @@
-<div class="col s12 m6 l3">
+<div class="col s12 m6 l3 card-panel">
   
-  <h4>{dia}</h4>
-  
+  <!-- Dia da semana e data -->
+  <h4>{dia_semana}</h4>
+  <h5>{dia_data}</h5>
+
+  <!-- Alimentos do dia + link para deletar cada um -->
   <ul>
     {{itens}}
   </ul>
 
   <div class="divider" style="margin: 1.5rem 0 2rem 0;"></div>
-
-  <!-- Formulário para adicionar alimentos -->
+  
+  <!-- Formulário para adicionar alimento -->
   <form action="acao.php" method="POST">
     <h6>Add alimento</h6>
     

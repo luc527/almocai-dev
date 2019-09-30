@@ -1,0 +1,16 @@
+<form action="acao.php" method="POST" class="row card-panel">
+
+  <h6>Add alimento em todos os dias</h6>
+
+  <input type="hidden" name="semana_cod" id="semana_cod" value="{semana_cod}">
+
+  <label for="nome">Nome</label>
+  <input type="text" name="nome" id="nome"/>
+
+  {{select_tipo}}
+
+  <button type="submit" name="acao" id="acao" value="AddAlimentoSemana">
+    Adicionar
+  </button>
+
+</form>

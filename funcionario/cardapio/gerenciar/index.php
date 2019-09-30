@@ -65,14 +65,35 @@ function geraMain($main) {
   // Carrega semana pela data
   $semana = SemanaCardapioDao::SelectPorData(date("Y-m-d"));
 
+  // Formulário de cadastro de alimento em todos os dias
+  $add_alimento_semana = gerarAddAlimentosSemana($semana);
+
   // Gera cartões dos dias por objeto semana
   $dias = gerarDias($semana);
 
-  // Carrega cartões dos dias em <main>
+  // Carrega cartões e formulário em <main>
   $main = str_replace("{{dias}}", $dias, $main);
+  $main = str_replace("{{add_alimento_semana}}", $add_alimento_semana, $main);
 
   return $main;
 }
+
+
+
+function gerarAddAlimentosSemana(SemanaCardapio $semana) {
+  $semana_cod = $semana->getCodigo();
+
+  // Valores e componentes do formulário
+  $select_tipo = file_get_contents("select_tipo.html");
+  $form = file_get_contents("add_alimento_semana.html");
+  
+  // Carrega valores no template
+  $form = str_replace("{semana_cod}", $semana_cod, $form);
+  $form = str_replace("{{select_tipo}}", $select_tipo, $form);
+
+  return $form;
+}
+
 
 
 
@@ -90,6 +111,7 @@ function gerarDias(SemanaCardapio $semana) {
 
     // Valores e componentes do cartão dia
     $dia_codigo = $dia->getCodigo();
+    $dia_semana = $dia->getDiaSemana();
     $dia_data = date("d/m", strtotime($dia->getData()));
     $select_tipo = file_get_contents("select_tipo.html");
     
@@ -98,7 +120,8 @@ function gerarDias(SemanaCardapio $semana) {
 
     // Carrega valores e alimentos no cartão do dia
     $cartao_dia = file_get_contents("dia.html");
-    $cartao_dia = str_replace("{dia}", $dia_data, $cartao_dia);
+    $cartao_dia = str_replace("{dia_data}", $dia_data, $cartao_dia);
+    $cartao_dia = str_replace("{dia_semana}", $dia_semana, $cartao_dia);
     $cartao_dia = str_replace("{dia_codigo}", $dia_codigo, $cartao_dia);
     $cartao_dia = str_replace("{{select_tipo}}", $select_tipo, $cartao_dia);
     $cartao_dia = str_replace("{{itens}}", $alimentos, $cartao_dia);

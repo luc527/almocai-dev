@@ -1,28 +1,28 @@
 <?php
 $root_path = "../";
-include($root_path."valida_secao.php");
+include($root_path . "valida_secao.php");
 valida_secao($root_path);
 
-require_once($root_path."classes/UsuarioDao.class.php");
-require_once($root_path."classes/SemanaCardapioDao.class.php");
-require_once($root_path."classes/DiaAlmocoDao.class.php");
-require_once($root_path."classes/AlimentoDao.class.php");
+require_once($root_path . "classes/UsuarioDao.class.php");
+require_once($root_path . "classes/SemanaCardapioDao.class.php");
+require_once($root_path . "classes/DiaAlmocoDao.class.php");
+require_once($root_path . "classes/AlimentoDao.class.php");
 require_once($root_path . "classes/Funcoes.class.php");
-include($root_path.'config.php');
+include($root_path . 'config.php');
 
 date_default_timezone_set("America/Sao_Paulo");
 
 $usuario = UsuarioDao::SelectPorMatricula($_SESSION['matricula']);
 
 // Carregando template
-$aluno = file_get_contents($root_path."template.html");
+$aluno = file_get_contents($root_path . "template.html");
 $title = "Aluno";
 $aluno = str_replace("{title}", $title, $aluno);
 $peso_fonte = '';
 $aluno = str_replace("{peso_fonte}", $peso_fonte, $aluno);
-$nav = file_get_contents($root_path."componentes/nav-transparent.html");
+$nav = file_get_contents($root_path . "componentes/nav-transparent.html");
 $aluno = str_replace("{{nav}}", $nav, $aluno);
-$footer = file_get_contents($root_path."componentes/footer.html");
+$footer = file_get_contents($root_path . "componentes/footer.html");
 $aluno = str_replace("{{footer}}", $footer, $aluno);
 $scripts = '';
 $aluno = str_replace("{{scripts}}", $scripts, $aluno);
@@ -37,7 +37,7 @@ $datahj = date("d/m");
 $data = date("Y-m-d");
 if (SemanaCardapioDao::SemanaExiste($data)) {
   $cardapio_ind = ""; // não mostra erro de cardápio indisponível
-  
+
   $dia = DiaAlmocoDao::SelectPorData(date("Y-m-d"));
 
   $cartao_presenca = file_get_contents("cartao_presenca.html");
@@ -83,7 +83,6 @@ if (SemanaCardapioDao::SemanaExiste($data)) {
   $cartao_dia = str_replace("{dia_semana}", $dia_semana, $cartao_dia);
   $num_dia = $NUM_DIA[$dia->getDiaSemana()]; // array $NUM_DIA[] em config.php
   $cartao_dia = str_replace("{num_dia}", $num_dia, $cartao_dia);
-
 } else { // caso não exista a semana
   $cartao_dia = "";
   $cardapio_ind = file_get_contents("cardapio_indisponivel.html");

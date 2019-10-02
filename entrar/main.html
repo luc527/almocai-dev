@@ -5,26 +5,29 @@
     <div class="hide-on-med-and-down col l6 login-section__imagem"></div>
 
     <div class="col s12 l6 almocai branco login-section__valign valign-wrapper">
-      <form class="login-section__form container" action="acao.php" method="post">
-
+      <form
+        class="login-section__form container"
+        action="acao.php"
+        method="post"
+      >
         <div class="row col s12 l6 offset-l2">
-          <img class="no-select" src="{root_path}assets/img/logo-verde.svg">
+          <img class="no-select" src="{root_path}assets/img/logo-verde.svg" />
         </div>
 
         <div class="row">
           <div class="input-field col s12 l6 offset-l2">
-            <input id="matricula" type="text" name="matricula">
+            <input id="matricula" type="text" name="matricula" />
             <label for="matricula">Matricula</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12 l6 offset-l2">
-            <input id="senha" type="password" name="senha">
+            <input id="senha" type="password" name="senha" />
             <label for="senha">Senha</label>
           </div>
         </div>
         <div class="row">
-          <p class="col s12 l6 offset-l2" >
+          <p class="col s12 l6 offset-l2">
             <label>
               <input type="checkbox" class="filled-in" checked="checked" />
               <span>Mantenha-me conectado</span>
@@ -37,15 +40,27 @@
           <div class="modal-content transparent">
             <h4 class="login-section__modal--title">Falha ao conectar</h4>
             <p class="login-section__modal--text" id="texto-erro"></p>
-            <a href="./" class="login-section__modal--btn modal-close">Fechar e continuar</a>
+            <a href="./" class="login-section__modal--btn modal-close"
+              >Fechar e continuar</a
+            >
           </div>
         </div>
 
-        <div class="row center col s12 l6 offset-l2 login-section__padding-zero">
-          <button type="submit" class="waves-effect waves-light btn login-section__button"
-          name="acao" value="Login">Entrar</button>
+        <div
+          class="row center col s12 l6 offset-l2 login-section__padding-zero"
+        >
+          <button
+            type="submit"
+            class="waves-effect waves-light btn login-section__button"
+            name="acao"
+            value="Login"
+          >
+            Entrar
+          </button>
         </div>
 
+        <!-- Retorno de senha alterada com sucesso -->
+        {{ senha_alterada_sucesso }}
       </form>
     </div>
   </div>

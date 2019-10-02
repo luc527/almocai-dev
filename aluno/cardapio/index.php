@@ -1,6 +1,6 @@
 <?php
 $root_path = "../../";
-include($root_path."valida_secao.php");
+include($root_path . "valida_secao.php");
 valida_secao_tipo($root_path, 'ALUNO');
 require_once($root_path . "classes/UsuarioDao.class.php");
 require_once($root_path . "classes/SemanaCardapio.class.php");
@@ -10,7 +10,7 @@ require_once($root_path . "classes/Funcoes.class.php");
 date_default_timezone_set("America/Sao_Paulo");
 
 // Carrega template geral
-$cardapio = file_get_contents($root_path."template.html");
+$cardapio = file_get_contents($root_path . "template.html");
 
 // Carrega main.html
 $main = file_get_contents("main.html");
@@ -21,11 +21,11 @@ $title = "Cardápio";
 $cardapio = str_replace("{title}", $title, $cardapio);
 
 // Carrega componentes/nav-transparent.html 
-$nav = file_get_contents($root_path."componentes/nav-transparent.html");
+$nav = file_get_contents($root_path . "componentes/nav-transparent.html");
 $cardapio = str_replace("{{nav}}", $nav, $cardapio);
 
 // Carrega componentes/footer.html 
-$footer = file_get_contents($root_path."componentes/footer.html");
+$footer = file_get_contents($root_path . "componentes/footer.html");
 $cardapio = str_replace("{{footer}}", $footer, $cardapio);
 
 // Carrega scripts.js
@@ -141,7 +141,6 @@ if (SemanaCardapioDao::SemanaExiste($dataHj)) {
   $data_inic = date("d/m", strtotime($semana->getData_inicio()));
   $data_fim = date("d/m", strtotime($semana->getData_inicio() . ' + 3 days'));
   $periodo = $data_inic . " a " . $data_fim;
-
 } else {
 
   $dias_cartoes = "";

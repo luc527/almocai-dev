@@ -105,6 +105,15 @@ $perfil = str_replace("{{cartao_alimentacao}}", $cartao_alim, $perfil);
 
 // Cartão alt_senha
 $alt_senha = file_get_contents("cartao_alt_senha.html");
+// Erro de senha antiga incorreta
+$senha_antiga_incorreta = "";
+if (isset($_GET['erro'])) {
+	$senha_antiga_incorreta = $_GET['erro'] == 'senha_antiga_incorreta' ?
+		file_get_contents('senha_antiga_incorreta.html')
+		: "";
+}
+$alt_senha = str_replace("{{senha_antiga_incorreta}}", $senha_antiga_incorreta, $alt_senha);
+
 $perfil = str_replace("{{cartao_alt_senha}}", $alt_senha, $perfil);
 
 

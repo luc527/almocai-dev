@@ -11,8 +11,9 @@ create table if not exists DiaAlmoco (
 	`data` date,
 	semanaCardapio_codigo int,
 	diaSemana varchar(45),
-
-	foreign key (semanaCardapio_codigo) references SemanaCardapio(codigo)
+	foreign key (semanaCardapio_codigo) references SemanaCardapio(codigo) 
+    on delete cascade
+    on update cascade
 );
 
 delimiter :)
@@ -34,7 +35,7 @@ create table if not exists Alimento (
 	diaAlmoco_codigo int,
 	tipo varchar(45),
 
-	foreign key (diaAlmoco_codigo) references DiaAlmoco(codigo)
+	foreign key (diaAlmoco_codigo) references DiaAlmoco(codigo) 
 		on delete cascade
 		on update cascade
 );
@@ -62,10 +63,14 @@ create table if not exists Usuario (
 	tipo varchar(50),
     
     alimentacao int default 1,
-    foreign key (alimentacao) references Alimentacao(codigo),
+    foreign key (alimentacao) references Alimentacao(codigo) 
+    on delete set null
+    on update set null,
     
     frequencia int default 1,
-    foreign key (frequencia) references Frequencia(codigo)
+    foreign key (frequencia) references Frequencia(codigo)  
+    on delete set null
+    on update set null
 );
 
 create table if not exists Carne (
@@ -80,8 +85,8 @@ create table if not exists Carne_usuario (
     
     primary key (usuario_matricula, carne_cod),
     
-    foreign key (usuario_matricula) references Usuario(matricula),
-    foreign key (carne_cod) references Carne(codigo)
+    foreign key (usuario_matricula) references Usuario(matricula) on delete cascade,
+    foreign key (carne_cod) references Carne(codigo) on delete cascade
 );
 
 insert into Usuario (matricula, senha, nome, tipo) values

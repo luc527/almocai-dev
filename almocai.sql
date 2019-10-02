@@ -107,6 +107,21 @@ create table if not exists Presenca (
 		on update cascade
 );
 
+create table if not exists Intolerancia (
+	codigo int primary key auto_increment,
+	descricao varchar(150)
+);
+create table if not exists Usuario_intolerancia (
+	usuario_matricula int,
+	intolerancia_codigo int,
+	primary key (usuario_matricula, intolerancia_codigo),
+	foreign key (usuario_matricula) references Usuario(matricula)
+		on delete cascade,
+	foreign key (intolerancia_codigo) references Intolerancia(codigo)
+		on delete cascade
+);
+
+
 delimiter :)
 create trigger AdicionaPresença
 after insert on DiaAlmoco 

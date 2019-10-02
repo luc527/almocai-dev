@@ -57,7 +57,7 @@ if (SemanaCardapioDao::SemanaExiste($data)) {
   $Cpres_selec = str_replace("{presenca_selecionada}", $txt, $Cpres_selec);
   $cartao_presenca = str_replace("{{cartao_presenca_selecionada}}", $Cpres_selec, $cartao_presenca);
 
-  $alimentos = AlimentoDao::SelectPorData($dia->getCodigo());
+  $alimentos = AlimentoDao::SelectPorDia($dia->getCodigo());
   $itens = "";
   foreach ($alimentos as $alimento) {
     $icon = "";
@@ -98,4 +98,3 @@ $aluno = str_replace("{root_path}", $root_path, $aluno);
 print($aluno);
 
 //var_dump($dia);
-?>

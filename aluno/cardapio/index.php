@@ -3,6 +3,7 @@ $root_path = "../../";
 include($root_path."valida_secao.php");
 valida_secao_tipo($root_path, 'ALUNO');
 require_once($root_path . "classes/UsuarioDao.class.php");
+require_once($root_path . "classes/SemanaCardapio.class.php");
 require_once($root_path . "classes/SemanaCardapioDao.class.php");
 require_once($root_path . "classes/Funcoes.class.php");
 
@@ -158,4 +159,3 @@ $cardapio = str_replace("{{cardapio_indisponivel}}", $cardapio_indisponivel, $ca
 // Carrega caminho à raiz (root_path) SEMPRE NO FINAL, ANTES DO PRINT
 $cardapio = str_replace("{root_path}", $root_path, $cardapio);
 print($cardapio);
-?>

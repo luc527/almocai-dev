@@ -1,21 +1,21 @@
 <?php
 $root_path = "../../";
-require_once($root_path."classes/UsuarioDao.class.php");
-require_once($root_path."classes/CarneDao.class.php");
-require_once($root_path."classes/AlimentacaoDao.class.php");
-require_once($root_path."classes/FrequenciaDao.class.php");
+require_once($root_path . "classes/UsuarioDao.class.php");
+require_once($root_path . "classes/CarneDao.class.php");
+require_once($root_path . "classes/AlimentacaoDao.class.php");
+require_once($root_path . "classes/FrequenciaDao.class.php");
 
-include($root_path.'valida_secao.php');
+include($root_path . 'valida_secao.php');
 valida_secao_tipo($root_path, 'ALUNO');
 $usuario = UsuarioDao::SelectPorMatricula($_SESSION['matricula']);
 $usuario = UsuarioDao::SelectFrequencia($usuario);
 $usuario = UsuarioDao::SelectCarnes($usuario);
 $usuario = UsuarioDao::SelectAlimentacao($usuario);
 
-require_once($root_path."classes/UsuarioDao.class.php");
+require_once($root_path . "classes/UsuarioDao.class.php");
 
 // Carrega o template geral
-$perfil = file_get_contents($root_path."template.html");
+$perfil = file_get_contents($root_path . "template.html");
 
 // Título da página
 $title = "Perfil";
@@ -25,11 +25,11 @@ $perfil = str_replace("{title}", $title, $perfil);
 $perfil = str_replace("{peso_fonte}", "", $perfil);
 
 // <NAV>
-$nav = file_get_contents($root_path."componentes/nav-transparent.html");
+$nav = file_get_contents($root_path . "componentes/nav-transparent.html");
 $perfil = str_replace("{{nav}}", $nav, $perfil);
 
 // <FOOTER>
-$footer = file_get_contents($root_path."componentes/footer.html");
+$footer = file_get_contents($root_path . "componentes/footer.html");
 $perfil = str_replace("{{footer}}", $footer, $perfil);
 
 // Scripts
@@ -48,18 +48,21 @@ $perfil = str_replace("{{main}}", $main, $perfil);
 
 /**
  * function gerarCartao(): gera os cartões com checkboxes ou radios cujos itens
+ * 
  * vêm de uma tabela específica do BD
  * @param string $nomeArquivoCartao nome do arquivo HTML do cartão 
  * @param string @nomeArquivoItem nome do arquivo HTML do item do cartão
  * @param array $registros os registros a ser colocados como itens
  * @param mixed $idItensSelecionados o(s) iten(s) a aparecerem selecionados (os que o usuário já marcou)
+ * 
  * @return string o componente cartão a ser carregado em main.html
  */
-function gerarCartao(string $nomeArquivoCartao, string $nomeArquivoItem, $registros, $idItensSelecionados) {
+function gerarCartao(string $nomeArquivoCartao, string $nomeArquivoItem, $registros, $idItensSelecionados)
+{
 	if (!is_array($idItensSelecionados))
-		$idItensSelecionados = array( $idItensSelecionados );
+		$idItensSelecionados = array($idItensSelecionados);
 	// Isso é feito para que esse cartão possa ser universal, isto é, possível de ser usado tanto em cartões que usam radio (única opção) quanto em cartões que usam checkbox (múltiplas opções)
-	
+
 	$itens = '';
 	foreach ($registros as $registro) {
 		$item = file_get_contents($nomeArquivoItem);
@@ -116,5 +119,4 @@ $perfil = str_replace("{matricula}", $usuario->getCodigo(), $perfil); // Matricu
 // Caminho à raiz do projeto -- sempre por último, antes do print
 $perfil = str_replace("{root_path}", $root_path, $perfil);
 // Renderiza página ao usuário
-print ($perfil);
-?>
+print($perfil);

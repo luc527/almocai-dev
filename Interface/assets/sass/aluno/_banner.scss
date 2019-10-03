@@ -32,14 +32,14 @@
     background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/adm/fundo-nutricionista.jpg);
   }
 
-  // Funcionário
+  // Funcionário --> Página Inicial
   &--8 {
-    background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/funcionario/fundo-funcionario.jpg);
+    background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/funcionario/fundo-pagina-inicial.jpg);
   }
 
-  // Nutricionista
+  // Funcionário --> Gerenciar cardapio
   &--9 {
-    background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/nutricionista/fundo-nutricionista.jpg);
+    background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/funcionar/gerenciar-cardapio.jpg);
   }
 
   min-height: 30rem;

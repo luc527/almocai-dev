@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Gerenciar cardápio - Almoçaí</title>
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="../../../assets/img/icons/icon-128x128.png" />
+
+  <!-- Manifest -->
+  <link rel="manifest" href="../../../assets/pwa/manifest.json">
+
+  <!-- Fontes -->
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,200,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- CSS -->
+  <link href="../../../assets/css/almocai.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+
+<body>
+
+  <header>
+
+    <nav class="navbar-transparent">
+      <div class="nav-wrapper container">
+        <img class="no-select brand-logo" src="../../../assets/img/logo-branco.svg">
+        <a href="#" data-target="mobile-sidenav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li><a class="waves-effect" href="../../"><i class="material-icons left">home</i>Página Inicial</a></li> 
+          <li><a class="waves-effect active" href="cardapio/gerenciar/"><i class="material-icons left">menu_book</i>Gerenciar cardápio</a></li>
+          <li><a class="waves-effect" href="../../../entrar/"><i class="material-icons left">power_settings_new</i>Sair</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <ul class="sidenav" id="mobile-sidenav">
+      <li class="sidenav__logo"><img src="../../../assets/img/logo-verde.svg"></li>
+      <li><a class="waves-effect" href="../../"><i class="material-icons left">home</i>Página Inicial</a></li> 
+      <li><a class="waves-effect active" href="cardapio/gerenciar/"><i class="material-icons left">menu_book</i>Gerenciar cardápio</a></li>
+      <li><a class="waves-effect" href="../../../entrar/"><i class="material-icons left">power_settings_new</i>Sair</a></li>
+    </ul>
+  </header>
+
+  <main>
+
+    <div class="section banner valign-wrapper banner--8">
+      <div class="row">
+        <div class="col s12">
+          <h1 class="banner__titulo">Gerenciar cardápio</h1>
+          <h4 class="banner__subtitulo">30/09 - 03/10</h4>
+        </div>
+      </div>
+    </div>
+
+    <!-- Adicionar alimentos para todos os dias da semana -->
+    <div class="row container margin-top-small">
+      <div class="col s12">
+        <div class="funcionario__cardapio-add">
+          <h4 class="funcionario__cardapio-add--title">Adicionar um alimento em todos os dias</h4>
+          <div class="row">
+            <div class="input-field col s12 m12 l6">
+              <input id="alimento" type="text">
+              <label for="alimento">Alimento</label>
+            </div>
+            <div class="input-field col s12 m8 l4">
+              <select>
+                <option value="" disabled selected>Escolha uma opção</option>
+                <option value="1">Normal</option>
+                <option value="2">Carne</option>
+                <option value="3">Vegetariano</option>
+                <option value="4">Vegano</option>
+              </select>
+              <label>Tipo do alimento</label>
+            </div>
+            <div class="col s12 m4 l2 center">
+              <button class="waves-effect waves-light btn adm__inserir--btn almocai bold">Adicionar</button>              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row container margin-top-small">
+      
+      <!-- Segunda Feira -->
+      <div class="col s12 m6 l3">
+        <div class="funcionario__cardapio-add--card">
+          <h3 class="funcionario__cardapio-add--card--title">Segunda-Feira</h3>
+          <h5 class="funcionario__cardapio-add--card--data">30/09</h5>
+          <ul class="funcionario__cardapio-add--lista">
+            <li>Feijão<a href="#" class="right"><i class="material-icons adm__tabela--excluir">delete</i></a></li>
+            <li>Arroz<a href="#" class="right"><i class="material-icons adm__tabela--excluir">delete</i></a></li>
+            <li>Batata<a href="#" class="right"><i class="material-icons adm__tabela--excluir">delete</i></a></li>
+          </ul>
+          <div class="divider"></div>
+          <h6 class="funcionario__cardapio-add--card--subtitle">Adicionar um alimento</h6>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="alimento" type="text">
+              <label for="alimento">Alimento</label>
+            </div>
+            <div class="col s12 center">
+              <button class="waves-effect waves-light btn adm__inserir--btn almocai bold" style="margin: 0;">Adicionar</button>              
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Terça Feira -->
+      <div class="col s12 m6 l3">
+        <div class="funcionario__cardapio-add--card">
+          <h3 class="funcionario__cardapio-add--card--title almocai-text text-azul">Terça-Feira</h3>
+          <h5 class="funcionario__cardapio-add--card--data">01/10</h5>
+          <ul class="funcionario__cardapio-add--lista">
+            <li>Feijão<a href="#" class="right"><i class="material-icons adm__tabela--excluir">delete</i></a></li>
+            <li>Arroz<a href="#" class="right"><i class="material-icons adm__tabela--excluir">delete</i></a></li>
+            <li>Batata<a href="#" class="right"><i class="material-icons adm__tabela--excluir">delete</i></a></li>
+          </ul>
+          <div class="divider"></div>
+          <h6 class="funcionario__cardapio-add--card--subtitle">Adicionar um alimento</h6>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="alimento" type="text">
+              <label for="alimento">Alimento</label>
+            </div>
+            <div class="col s12 center">
+              <button class="waves-effect waves-light btn adm__inserir--btn almocai bold" style="margin: 0;">Adicionar</button>              
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Terça Feira -->
+      <div class="col s12 m6 l3">
+        <div class="funcionario__cardapio-add--card">
+          <h3 class="funcionario__cardapio-add--card--title almocai-text text-amarelo">Quarta-Feira</h3>
+          <h5 class="funcionario__cardapio-add--card--data">01/10</h5>
+          <ul class="funcionario__cardapio-add--lista">
+            <li>Feijão<a href="#" class="right"><i class="material-icons adm__tabela--excluir">delete</i></a></li>
+            <li>Arroz<a href="#" class="right"><i class="material-icons adm__tabela--excluir">delete</i></a></li>
+            <li>Batata<a href="#" class="right"><i class="material-icons adm__tabela--excluir">delete</i></a></li>
+          </ul>
+          <div class="divider"></div>
+          <h6 class="funcionario__cardapio-add--card--subtitle">Adicionar um alimento</h6>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="alimento" type="text">
+              <label for="alimento">Alimento</label>
+            </div>
+            <div class="col s12 center">
+              <button class="waves-effect waves-light btn adm__inserir--btn almocai bold" style="margin: 0;">Adicionar</button>              
+            </div>
+          </div>
+        </div>
+      </div>
+
+        <!-- Terça Feira -->
+      <div class="col s12 m6 l3">
+        <div class="funcionario__cardapio-add--card">
+          <h3 class="funcionario__cardapio-add--card--title almocai-text text-vermelho">Quinta-Feira</h3>
+          <h5 class="funcionario__cardapio-add--card--data">01/10</h5>
+          <ul class="funcionario__cardapio-add--lista">
+            <li>Feijão<a href="#" class="right"><i class="material-icons adm__tabela--excluir">delete</i></a></li>
+            <li>Arroz<a href="#" class="right"><i class="material-icons adm__tabela--excluir">delete</i></a></li>
+            <li>Batata<a href="#" class="right"><i class="material-icons adm__tabela--excluir">delete</i></a></li>
+          </ul>
+          <div class="divider"></div>
+          <h6 class="funcionario__cardapio-add--card--subtitle">Adicionar um alimento</h6>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="alimento" type="text">
+              <label for="alimento">Alimento</label>
+            </div>
+            <div class="col s12 center">
+              <button class="waves-effect waves-light btn adm__inserir--btn almocai bold" style="margin: 0;">Adicionar</button>              
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+  <footer class="page-footer">
+    <div class="footer-copyright">
+      <div class="container">
+      © 2019 Almoçaí
+      <a class="right" href="../../../sobre">Sobre</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.sidenav');
+      var instances = M.Sidenav.init(elems);
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('select');
+      var instances = M.FormSelect.init(elems);
+    });
+  </script>
+</body>
+
+</html>

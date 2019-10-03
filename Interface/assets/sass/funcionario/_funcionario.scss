@@ -27,4 +27,57 @@
 
   }
 
+  &__cardapio-add {
+    @extend .card;
+    @extend .hoverable;
+    padding: 1.5rem;
+
+    &--title {
+      padding: 1rem;
+      margin: 0;
+      @extend .center;
+      @extend .nunito;
+      @extend .almocai-text;
+    }
+
+    &--card {
+      @extend .card;
+      @extend .hoverable;
+      padding: 1.5rem;
+
+      &--title {
+        font-size: 2.5rem;
+        @extend .nunito;
+        @extend .almocai-text;
+      }
+
+      &--subtitle {
+        font-size: 1.75rem;
+        margin-top: 1.5rem;
+      }
+      
+      &--data {
+        font-size: 1.25rem;
+        font-weight: 200;
+      }
+
+    }
+
+    &--lista {
+      line-height: 3;
+      li {
+        font-size: 1rem;
+
+        i {
+          transform: translateY(.45rem);
+        }
+
+        &:not(:last-child) {
+          border-bottom: .1rem solid #C5C5C5;
+        }
+      }
+    }
+
+  }
+
 }

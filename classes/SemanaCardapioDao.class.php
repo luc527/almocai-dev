@@ -107,7 +107,7 @@ class SemanaCardapioDao {
 	}
 
 	public static function SelectPorData ($data) {
-		$sql = "SELECT semanaCardapio_codigo FROM diaAlmoco WHERE `data` = '$data'";
+		$sql = "SELECT semanaCardapio_codigo FROM DiaAlmoco WHERE `data` = '$data'";
 		try {
 			$bd = Conexao::conexao();
 			$query = $bd->query($sql);

@@ -1,1 +1,141 @@
-<!-- Faz um header location para voltar 1 pagina e fica na inicial caso acesse funcionario/cardapio -->
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Gerenciar cardápio - Almoçaí</title>
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="../../assets/img/icons/icon-128x128.png" />
+
+  <!-- Manifest -->
+  <link rel="manifest" href="../../assets/pwa/manifest.json">
+
+  <!-- Fontes -->
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,200,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- CSS -->
+  <link href="../../assets/css/almocai.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+
+<body>
+
+  <header>
+
+    <nav class="navbar-transparent">
+      <div class="nav-wrapper container">
+        <img class="no-select brand-logo" src="../../assets/img/logo-branco.svg">
+        <a href="#" data-target="mobile-sidenav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li><a class="waves-effect" href="../"><i class="material-icons left">home</i>Página Inicial</a></li> 
+          <li><a class="waves-effect active" href="./"><i class="material-icons left">menu_book</i>Cardápios</a></li>
+          <li><a class="waves-effect" href="../../entrar/"><i class="material-icons left">power_settings_new</i>Sair</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <ul class="sidenav" id="mobile-sidenav">
+      <li class="sidenav__logo"><img src="../../assets/img/logo-verde.svg"></li>
+      <li><a class="waves-effect" href="../"><i class="material-icons left">home</i>Página Inicial</a></li> 
+      <li><a class="waves-effect active" href="./"><i class="material-icons left">menu_book</i>Cardápios</a></li>
+      <li><a class="waves-effect" href="../../entrar/"><i class="material-icons left">power_settings_new</i>Sair</a></li>
+    </ul>
+  </header>
+
+  <main>
+
+    <div class="section banner valign-wrapper banner--8">
+      <div class="row">
+        <div class="col s12">
+          <h1 class="banner__titulo">Cardápios</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="row container margin-top-small">
+      
+      <!-- Adicionar um dia -->
+      <div class="col s12 m4 l4">
+        <div class="funcionario__semana">
+          <h5 class="funcionario__semana--title">Adicionar uma semana</h5>
+          <div class="row">
+            <div class="input-field col s12">
+              <input type="text" id="dataInicial" class="datepicker">
+              <label for="dataInicial">Data inicial</label>
+            </div>
+            <div class="col s12 center">
+              <button class="waves-effect waves-light btn adm__inserir--btn almocai bold" style="margin: 0;">Adicionar</button>              
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col s12 m4 l2">
+        <div class="funcionario__semana green-gradient">
+          <h5 class="funcionario__semana--data almocai-text text-branco">30/09</h5>
+          <h5 class="funcionario__semana--subdata almocai-text text-branco">até 03/10</h5>  
+          <div class="col s12 center">
+            <a href="gerenciar/" class="waves-effect waves-light btn adm__inserir--btn almocai branco almocai-text bold" style="margin: 0;">Acessar</a>              
+          </div>  
+        </div>
+      </div>
+      
+    </div>
+
+    <!-- Mensagem caso não haja semana -->
+    <div class="section container">
+      <div class="row">
+        <div class="cardapio__indisponivel card col s12 m6 offset-m3">
+          <h2 class="no-select">Nenhuma semana cadastrada</h2>
+        </div>
+      </div>
+    </div>
+
+  </main>
+  <footer class="page-footer">
+    <div class="footer-copyright">
+      <div class="container">
+      © 2019 Almoçaí
+      <a class="right" href="../../sobre">Sobre</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.sidenav');
+      var instances = M.Sidenav.init(elems);
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.datepicker');
+      var data = new Date();
+      var options = {
+          format: 'dd/mm/yyyy',
+          yearRange: [data.getFullYear(), data.getFullYear() + 1],
+          minDate: data,
+          disableWeekends: true,
+          disableDayFn: function(date) {
+            return date.getDay() == 1 ? false : true;
+          },
+          i18n: {
+          cancel: 'Cancelar',
+          clear: 'Limpar',
+          months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+          monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+          weekdays: ['Domingo', 'Segunda Feira', 'Terça Feira', 'Quarta Feira', 'Quinta Feira', 'Sexta Feira', 'Sábado'],
+          weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+          weekdaysAbbrev: ['D','S','T','Q','Q','S','S'] 
+          }
+      };
+      var instances = M.Datepicker.init(elems, options);
+    });
+  </script>
+</body>
+
+</html>

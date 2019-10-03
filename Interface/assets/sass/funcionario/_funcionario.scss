@@ -27,6 +27,41 @@
 
   }
 
+  &__semana {
+    @extend .card;
+    @extend .hoverable;
+    padding: 1.5rem;
+    min-height: 17.5rem;
+    display: grid;
+    align-content: center;
+
+    &--title {
+      margin: 0;
+      padding: 0;
+      padding-bottom: 1rem !important;
+      font-size: 2rem;
+      @extend .nunito;
+      @extend .almocai-text;
+    }
+
+    &--data {
+      margin: 0;
+      padding: 0;
+      padding-bottom: 1rem !important;
+      font-size: 2rem;
+      @extend .nunito;
+    }
+
+    &--subdata {
+      margin: 0;
+      padding: 0;
+      padding-bottom: 1rem !important;
+      font-size: 2rem;
+      font-weight: 200;
+    }
+
+  }
+
   &__cardapio-add {
     @extend .card;
     @extend .hoverable;

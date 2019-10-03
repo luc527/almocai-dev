@@ -396,4 +396,19 @@ class UsuarioDao
 		}
 		return $login_info;
 	}
+
+	// //////////////////// //
+
+	/**
+	 * Gera uma instância do usuário com todas as suas configurações
+	 */
+	public static function perfilCompleto(Usuario $usuario)
+	{
+		$usuario = self::SelectPorMatricula($usuario->getCodigo());
+		$usuario = self::SelectFrequencia($usuario);
+		$usuario = self::SelectCarnes($usuario);
+		$usuario = self::SelectAlimentacao($usuario);
+
+		return $usuario;
+	}
 }

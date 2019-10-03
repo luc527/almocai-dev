@@ -114,6 +114,7 @@ create table if not exists Intolerancia (
 create table if not exists Usuario_intolerancia (
 	usuario_matricula int,
 	intolerancia_codigo int,
+    arquivo varchar(2000),
 	primary key (usuario_matricula, intolerancia_codigo),
 	foreign key (usuario_matricula) references Usuario(matricula)
 		on delete cascade,

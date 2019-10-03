@@ -1,31 +1,39 @@
-<div class="col s12 m6 l3 card-panel">
-  
-  <!-- Dia da semana e data -->
-  <h4>{dia_semana}</h4>
-  <h5>{dia_data}</h5>
+<div class="col s12 m6 l3">
+  <div class="funcionario__cardapio-add--card">
+    <h3 class="funcionario__cardapio-add--card--title almocai-text {cor_texto}">
+      {dia_da_semana}
+    </h3>
 
-  <!-- Alimentos do dia + link para deletar cada um -->
-  <ul>
-    {{itens}}
-  </ul>
+    <h5 class="funcionario__cardapio-add--card--data">{data}</h5>
 
-  <div class="divider" style="margin: 1.5rem 0 2rem 0;"></div>
-  
-  <!-- Formulário para adicionar alimento -->
-  <form action="acao.php" method="POST">
-    <h6>Add alimento</h6>
-    
-    <input type="hidden" name="dia_cod" id="dia_cod" value="{dia_codigo}">
-    
-    <label for="nome">Nome</label>
-    <input type="text" name="nome" id="nome"/>
+    <ul class="funcionario__cardapio-add--lista">
+      {{ itens }}
+    </ul>
 
-    {{select_tipo}}
-    
-    <button type="submit" name="acao" id="acao" value="AddAlimento">
-      Adicionar
-    </button>
+    <div class="divider"></div>
 
-  </form>
+    <h6 class="funcionario__cardapio-add--card--subtitle">
+      Adicionar um alimento
+    </h6>
 
+    <form class="row" action="acao.php" method="POST">
+      <input type="hidden" name="dia_cod" id="dia_cod" value="{codigo}" />
+
+      <div class="input-field col s12">
+        <input id="alimento" name="alimento" type="text" />
+        <label for="alimento">Alimento</label>
+      </div>
+
+      <div class="input-field col s12">
+        {{ select_tipo }}
+      </div>
+
+      <div class="col s12 center">
+        <button type="submit" name="acao" id="acao" value="AddAlimento"
+          class="waves-effect waves-light btn adm__inserir--btn almocai bold" style="margin: 0;">
+          Adicionar
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

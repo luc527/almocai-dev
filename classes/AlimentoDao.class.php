@@ -5,13 +5,15 @@
 require_once("Conexao.class.php");
 require_once("Alimento.class.php");
 
-class AlimentoDao {
+class AlimentoDao
+{
 
 
 	////////////////////////
 	// FUNÇÕES DE INSERIR //
 
-	public static function Inserir (Alimento $alimento, $diaAlmoco_codigo)	{
+	public static function Inserir(Alimento $alimento, $diaAlmoco_codigo)
+	{
 		$sql = "INSERT INTO Alimento (descricao, diaAlmoco_codigo, tipo)
 		VALUES (:descricao, :diaAlmoco_codigo, :tipo)";
 
@@ -19,34 +21,37 @@ class AlimentoDao {
 
 		$stmt = $pdo->prepare($sql);
 
+		$descricao = $alimento->getDescricao();
+		$tipo = $alimento->getTipo();
+
 		$stmt->bindParam(":descricao", $descricao);
 		$stmt->bindParam(":diaAlmoco_codigo", $diaAlmoco_codigo);
 		$stmt->bindParam(":tipo", $tipo);
 
-		$descricao = $alimento->getDescricao();
-		$tipo = $alimento->getTipo();
-
-		return $stmt->execute();
+		$stmt->execute();
 	}
 
 	/**
 	 * Insere um alimento em todos os dias em uma semana
 	 */
-	public static function InserirEmSemana (Alimento $alimento, $semana_codigo) {
+	public static function InserirEmSemana(Alimento $alimento, $semana_codigo)
+	{
 		$sql = "SELECT codigo FROM DiaAlmoco WHERE semanaCardapio_codigo = $semana_codigo";
 		try {
 			$query = Conexao::conexao()->query($sql);
-			while ($row = $query->fetch(PDO::FETCH_ASSOC))
-			{
+			while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 				self::Inserir($alimento, $row['codigo']);
 			}
-		} catch (PDOException $e) { echo "<b>Erro (AlimentoDao::InserirEmSemana): </b>".$e->getMessage(); }
+		} catch (PDOException $e) {
+			echo "<b>Erro (AlimentoDao::InserirEmSemana): </b>" . $e->getMessage();
+		}
 	}
 
 	///////////////////////
 	// FUNÇÕES DE SELECT //
 
-	public static function Popula ($row) {
+	public static function Popula($row)
+	{
 		$alimento = new Alimento;
 		$alimento->setCodigo($row['codigo']);
 		$alimento->setDescricao($row['descricao']);
@@ -55,7 +60,8 @@ class AlimentoDao {
 		return $alimento;
 	}
 
-	public static function SelectPorDia ($dia_codigo) {
+	public static function SelectPorDia($dia_codigo)
+	{
 		$sql = "SELECT * FROM Alimento WHERE diaAlmoco_codigo = $dia_codigo";
 		//echo $sql;
 
@@ -73,41 +79,48 @@ class AlimentoDao {
 	////////////////////////
 	// FUNÇÕES DE DELETAR //
 
-	public static function Deletar (Alimento $alimento) {
+	public static function Deletar(Alimento $alimento)
+	{
 		$sql = "DELETE FROM Alimento WHERE codigo = :codigo";
-		$p_sql = Conexao::conexao()->prepare($sql);
-		$p_sql->bindParam(":codigo", $codigo);
-		$codigo = $alimento->getCodigo();
+		try {
+			$stmt = Conexao::conexao()->prepare($sql);
+			$codigo = $alimento->getCodigo();
+			$stmt->bindParam(":codigo", $codigo);
+		} catch (PDOException $e) {
+			echo "<b>Erro (AlimentoDao::Deletar): </b>" . $e->getMessage();
+		}
 
-		return $p_sql->execute();
+		return $stmt->execute();
 	}
 
 	/**
 	 * Deleta todos os alimentos de um dia
 	 */
-	public static function DeletarPorDia ($dia_cod) {
+	public static function DeletarPorDia($dia_cod)
+	{
 		$sql = "DELETE FROM Alimento WHERE diaAlmoco_codigo = :dia_cod";
 		try {
 			$stmt = Conexao::conexao()->prepare($sql);
 			$stmt->bindParam(":dia_cod", $dia_cod);
-		} catch (PDOException $e) { echo "<b>Erro (AlimentoDao::DeletarPorDia): </b>".$e->getMessages(); }
+		} catch (PDOException $e) {
+			echo "<b>Erro (AlimentoDao::DeletarPorDia): </b>" . $e->getMessages();
+		}
 		return $stmt->execute();
 	}
 
 	/**
 	 * Deleta todos os alimentos de todos os dias de uma semana
 	 */
-	public static function DeletarPorSemana ($semana_cod) {
+	public static function DeletarPorSemana($semana_cod)
+	{
 		$sql = "SELECT codigo FROM DiaAlmoco WHERE semanaCardapio_codigo = $semana_cod";
 		try {
 			$query = Conexao::conexao()->query($sql);
-			while ($row = $query->fetch(PDO::FETCH_ASSOC))
-			{
+			while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 				self::DeletarPorDia($row['codigo']);
 			}
-		} catch (PDOException $e) { echo "<b>Erro (AlimentoDao::DeletePorSemana): </b>".$e->getMessage(); }
+		} catch (PDOException $e) {
+			echo "<b>Erro (AlimentoDao::DeletePorSemana): </b>" . $e->getMessage();
+		}
 	}
 }
-
-
-?>

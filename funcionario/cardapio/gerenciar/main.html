@@ -1,10 +1,19 @@
-<div class="container">
-  
-  {{add_alimento_semana}}
-  
-  <div class="row">
-    {{dias}}
+<main>
+  <div class="section banner valign-wrapper banner--8">
+    <div class="row">
+      <div class="col s12">
+        <h1 class="banner__titulo">Gerenciar cardápio</h1>
+        <h4 class="banner__subtitulo">{intervalo_semana}</h4>
+      </div>
+    </div>
   </div>
 
-  {{cardapio_indisponivel}}
-</div>
+  <!-- Adicionar alimentos para todos os dias da semana -->
+  {{ add_alimento_semana }}
+
+  <div class="row container margin-top-small">
+    <!-- Dias da semana (listagem, exclusão e cadastro de alimentos) -->
+    {{ dias }}
+  </div>
+
+</main>

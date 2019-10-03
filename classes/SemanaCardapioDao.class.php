@@ -4,12 +4,14 @@ require_once("SemanaCardapioDao.class.php");
 require_once("Funcoes.class.php");
 require_once("DiaAlmocoDao.class.php");
 
-class SemanaCardapioDao {
+class SemanaCardapioDao
+{
 
 	/////////////////////////
 	// FUNÇÕES DE INSERÇÃO //
 
-	public static function Inserir (SemanaCardapio $semanaCardapio) {
+	public static function Inserir(SemanaCardapio $semanaCardapio)
+	{
 		$sql = "INSERT INTO SemanaCardapio (data_inicio) VALUES (:data_inicio)";
 
 		$pdo = Conexao::conexao();
@@ -37,7 +39,8 @@ class SemanaCardapioDao {
 	////////////////////////
 	// FUNÇÕES DE SELEÇÃO //
 
-	public static function Popula ($row) {
+	public static function Popula($row)
+	{
 		$semana = new SemanaCardapio;
 		$semana->setCodigo($row['codigo']);
 		$semana->setData_inicio($row['data_inicio']);
@@ -45,28 +48,31 @@ class SemanaCardapioDao {
 		return $semana;
 	}
 
-	public static function SelectPorCriterio ($pesquisa, $criterio) {
+	public static function SelectPorCriterio($pesquisa, $criterio)
+	{
 		if ($criterio == 'data_inicio') {
 			$pesquisa = Funcoes::DataUserParaBD($pesquisa);
 		}
 
-		$sql = "SELECT * FROM SemanaCardapio WHERE ".$criterio." = '".$pesquisa."'";
+		$sql = "SELECT * FROM SemanaCardapio WHERE " . $criterio . " = '" . $pesquisa . "'";
 		$query = Conexao::conexao()->query($sql);
 
 		$semanas = array();
 		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-			array_push ($semanas, self::Popula($row));
+			array_push($semanas, self::Popula($row));
 		}
 
 		return $semanas;
 	}
 
-	public static function SelectPorCodigo ($codigo) {
-		$semanas = self::SelectPorCriterio ($codigo, 'codigo');
+	public static function SelectPorCodigo($codigo)
+	{
+		$semanas = self::SelectPorCriterio($codigo, 'codigo');
 		return $semanas[0];
 	}
 
-	public static function SelectTodos () {
+	public static function SelectTodos()
+	{
 		$sql = "SELECT * FROM SemanaCardapio ORDER BY codigo";
 
 		$query = Conexao::conexao()->query($sql);
@@ -83,12 +89,13 @@ class SemanaCardapioDao {
 	 * Recebe um objeto semana sem dias
 	 * Retorna um objeto semana com os dias devidos, conforme seu código
 	 */
-	public static function SelectDias (SemanaCardapio $semana) {
+	public static function SelectDias(SemanaCardapio $semana)
+	{
 
 		$dias = DiaAlmocoDao::SelectPorSemana($semana->getCodigo());
 
 		if (isset($dias)) {
-			for ($i=0; $i < count($dias); $i++)	{
+			for ($i = 0; $i < count($dias); $i++) {
 				$semana->setDia($dias[$i]);
 			}
 		}
@@ -96,7 +103,8 @@ class SemanaCardapioDao {
 		return $semana;
 	}
 
-	public static function SelectUltimoCod () {
+	public static function SelectUltimoCod()
+	{
 		$sql = "SELECT codigo FROM SemanaCardapio ORDER BY codigo DESC LIMIT 1";
 
 		$query = Conexao::conexao()->query($sql);
@@ -106,20 +114,25 @@ class SemanaCardapioDao {
 		return $row['codigo'];
 	}
 
-	public static function SelectPorData ($data) {
+	public static function SelectPorData($data)
+	{
+
+		$data = Funcoes::CorrigeData($data);
+
 		$sql = "SELECT semanaCardapio_codigo FROM DiaAlmoco WHERE `data` = '$data'";
 		try {
 			$bd = Conexao::conexao();
 			$query = $bd->query($sql);
 			$row = $query->fetch(PDO::FETCH_ASSOC);
 		} catch (PDOException $e) {
-			echo "Erro (SemanaCardapioDao::SelectPorData): ".$e->getMessage();
+			echo "Erro (SemanaCardapioDao::SelectPorData): " . $e->getMessage();
 		}
-		return self::SelectPorCodigo( $row['semanaCardapio_codigo'] );
+		return self::SelectPorCodigo($row['semanaCardapio_codigo']);
 	}
 
 
-	public static function GerarSelectHTML () {
+	public static function GerarSelectHTML()
+	{
 		return Funcoes::GerarSelectHTML("SemanaCardapio", "semanaCardapio_codigo", 0, "codigo", "codigo");
 	}
 
@@ -127,9 +140,10 @@ class SemanaCardapioDao {
 	////////////////////////
 	// FUNÇÕES DE DELETAR //
 
-	public static function Deletar (SemanaCardapio $semana) {
+	public static function Deletar(SemanaCardapio $semana)
+	{
 		$dias = $semana->getDias();
-		for ($i=0; $i < count($dias); $i++) {
+		for ($i = 0; $i < count($dias); $i++) {
 			DiaAlmocoDao::Deletar($dias[$i]);
 		}
 
@@ -151,7 +165,8 @@ class SemanaCardapioDao {
 	 * @param string $data data
 	 * @return bool true se existe, false se não
 	 */
-	public static function SemanaExiste($data) {
+	public static function SemanaExiste($data)
+	{
 		$data = Funcoes::CorrigeData($data);
 		$sql = "SELECT * FROM DiaAlmoco WHERE `data` = '$data'";
 		try {
@@ -168,5 +183,3 @@ class SemanaCardapioDao {
 		}
 	}
 }
-
-?>

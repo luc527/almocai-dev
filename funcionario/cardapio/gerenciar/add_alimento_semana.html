@@ -1,16 +1,29 @@
-<form action="acao.php" method="POST" class="row card-panel">
+<div class="row container margin-top-small">
+  <div class="col s12">
+    <div class="funcionario__cardapio-add">
+      <h4 class="funcionario__cardapio-add--title">
+        Adicionar um alimento em todos os dias
+      </h4>
 
-  <h6>Add alimento em todos os dias</h6>
+      <form class="row" method="POST" action="acao.php">
+        <input type="hidden" name="semana_cod" id="semana_cod" value="{semana_cod}" />
 
-  <input type="hidden" name="semana_cod" id="semana_cod" value="{semana_cod}">
+        <div class="input-field col s12 m12 l6">
+          <input id="nome" name="nome" type="text" />
+          <label for="nome">Alimento</label>
+        </div>
 
-  <label for="nome">Nome</label>
-  <input type="text" name="nome" id="nome"/>
+        <div class="input-field col s12 m8 l4">
+          {{ select_tipo }}
+        </div>
 
-  {{select_tipo}}
-
-  <button type="submit" name="acao" id="acao" value="AddAlimentoSemana">
-    Adicionar
-  </button>
-
-</form>
+        <div class="col s12 m4 l2 center">
+          <button class="waves-effect waves-light btn adm__inserir--btn almocai bold" type="submit" name="acao"
+            id="acao" value="AddAlimentoSemana">
+            Adicionar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

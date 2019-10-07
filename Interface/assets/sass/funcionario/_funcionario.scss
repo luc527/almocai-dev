@@ -66,6 +66,7 @@
     @extend .card;
     @extend .hoverable;
     padding: 1.5rem;
+    margin: 0 !important;
 
     &--title {
       padding: 1rem;
@@ -78,7 +79,9 @@
     &--card {
       @extend .card;
       @extend .hoverable;
+      margin-top: 0 !important;
       padding: 1.5rem;
+      margin-bottom: 1rem !important;
 
       &--title {
         font-size: 2.5rem;
@@ -87,7 +90,7 @@
       }
 
       &--subtitle {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
         margin-top: 1.5rem;
       }
       

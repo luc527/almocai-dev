@@ -12,6 +12,7 @@ class Usuario extends AbsCodigo
     private $alimentacao; // vegetariano, vegano ou nenhum dos dois
     private $carnes_come = array(); // quais carnes come
     private $frequencia; // se almoça sempre no if, nunca, as vezes etc.
+    private $intolerancia_usuario = array();
 
     public function setSenha($senha)
     {

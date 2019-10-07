@@ -27,10 +27,46 @@
 
   }
 
+  &__semana {
+    @extend .card;
+    @extend .hoverable;
+    padding: 1.5rem;
+    min-height: 17.5rem;
+    display: grid;
+    align-content: center;
+
+    &--title {
+      margin: 0;
+      padding: 0;
+      padding-bottom: 1rem !important;
+      font-size: 2rem;
+      @extend .nunito;
+      @extend .almocai-text;
+    }
+
+    &--data {
+      margin: 0;
+      padding: 0;
+      padding-bottom: 1rem !important;
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+
+    &--subdata {
+      margin: 0;
+      padding: 0;
+      padding-bottom: 1rem !important;
+      font-size: 2rem;
+      font-weight: 200;
+    }
+
+  }
+
   &__cardapio-add {
     @extend .card;
     @extend .hoverable;
     padding: 1.5rem;
+    margin: 0 !important;
 
     &--title {
       padding: 1rem;
@@ -43,7 +79,9 @@
     &--card {
       @extend .card;
       @extend .hoverable;
+      margin-top: 0 !important;
       padding: 1.5rem;
+      margin-bottom: 1rem !important;
 
       &--title {
         font-size: 2.5rem;
@@ -52,7 +90,7 @@
       }
 
       &--subtitle {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
         margin-top: 1.5rem;
       }
       

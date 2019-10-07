@@ -37,8 +37,13 @@
     background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/funcionario/fundo-pagina-inicial.jpg);
   }
 
-  // Funcionário --> Gerenciar cardapio
+  // Funcionário --> Cardapios
   &--9 {
+    background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/funcionar/fundo-cardapios.jpg);
+  }
+  
+  // Funcionário --> Gerenciar cardapio
+  &--10 {
     background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/funcionar/gerenciar-cardapio.jpg);
   }
 

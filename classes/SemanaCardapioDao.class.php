@@ -73,7 +73,7 @@ class SemanaCardapioDao
 
 	public static function SelectTodos()
 	{
-		$sql = "SELECT * FROM SemanaCardapio ORDER BY codigo";
+		$sql = "SELECT * FROM SemanaCardapio ORDER BY data_inicio DESC";
 
 		$query = Conexao::conexao()->query($sql);
 

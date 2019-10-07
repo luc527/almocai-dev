@@ -1,16 +1,10 @@
 <div class="col s12 m6 l3">
   <div class="funcionario__cardapio-add--card">
-    <h3 class="funcionario__cardapio-add--card--title almocai-text {cor_texto}">
+    <h3 class="funcionario__cardapio-add--card--title almocai-text {cor_texto}" style="font-size: 2rem;">
       {dia_da_semana}
     </h3>
 
     <h5 class="funcionario__cardapio-add--card--data">{data}</h5>
-
-    <ul class="funcionario__cardapio-add--lista">
-      {{ itens }}
-    </ul>
-
-    <div class="divider"></div>
 
     <h6 class="funcionario__cardapio-add--card--subtitle">
       Adicionar um alimento
@@ -35,5 +29,15 @@
         </button>
       </div>
     </form>
+
+
+    <div class="divider" style="margin: 2rem 0 1rem 0;"></div>
+
+
+    <ul class="funcionario__cardapio-add--lista">
+      {{ itens }}
+    </ul>
+    
+
   </div>
 </div>

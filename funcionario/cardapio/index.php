@@ -1,6 +1,6 @@
 <?php
 
-$root_path = "../../../";
+$root_path = "../../";
 
 include $root_path . "valida_secao.php";
 valida_secao_tipo($root_path, "FUNCIONARIO");
@@ -10,8 +10,6 @@ require_once $root_path . "classes/SemanaCardapio.class.php";
 require_once $root_path . "classes/SemanaCardapioDao.class.php";
 require_once $root_path . "classes/DiaAlmoco.class.php";
 require_once $root_path . "classes/DiaAlmocoDao.class.php";
-
-// require_once "";
 
 $title = 'Gerenciar cardápio - Almoçaí';
 $peso_fonte = ",200,700";
@@ -25,8 +23,8 @@ $scripts = file_get_contents("scripts.js");
  * MAIN
  */
 // carrega semana conforme código ou data ou mostra erro de cardápio indisponível
-if (isset($_GET['codigo'])) {
-	$cardapio = SemanaCardapioDao::SelectPorCodigo($_GET['codigo']);
+if (isset($_GET['cod'])) {
+	$cardapio = SemanaCardapioDao::SelectPorCodigo($_GET['cod']);
 } else {
 	$cardapio_existe = SemanaCardapioDao::SemanaExiste(date("Y-m-d"));
 	$cardapio = $cardapio_existe ?
@@ -105,7 +103,8 @@ if (!$cardapio) {
 	}
 }
 
-$intervalo_semana = date("d/m") . " a " . date("d/m", strtotime("+ 3 days"));
+$intervalo_semana = date("d/m", strtotime($cardapio->getData_inicio())) . " a " . 
+date("d/m", strtotime($cardapio->getData_inicio() . " + 3 days"));
 
 $main = file_get_contents("main.html");
 

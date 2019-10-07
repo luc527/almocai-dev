@@ -1,5 +1,5 @@
 <?php
-$root_path = "../../../";
+$root_path = "../../";
 include($root_path . "valida_secao.php");
 valida_secao_tipo($root_path, 'FUNCIONARIO');
 

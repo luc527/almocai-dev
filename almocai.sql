@@ -128,6 +128,13 @@ create trigger AdicionaPresença
 after insert on DiaAlmoco 
 for each row
 begin
+	call ForPresenca();
+end :)
+delimiter ;
+
+delimiter :)
+create procedure ForPresenca ()
+begin
 	declare idFrequencia int;
     declare tipoUsuario varchar(40);
     declare finished int default 0;
@@ -155,4 +162,5 @@ begin
 
   close usuarioCursor;
 end :)
+
 delimiter ;

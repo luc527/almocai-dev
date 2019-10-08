@@ -5,7 +5,7 @@ require_once 'Conexao.class.php';
 /**
  * Classe com método estáticos de base para os métodos de acesso a dados dos DAOs
  */
-class QueryBuilder {
+class StatementBuilder {
 
 	/**
 	 * Executa PDOStatement para SELECT

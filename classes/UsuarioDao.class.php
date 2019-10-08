@@ -1,5 +1,6 @@
 <?php
 require_once("Conexao.class.php");
+require_once("StatementBuilder.class.php");
 require_once("Usuario.class.php");
 require_once("CarneDao.class.php");
 
@@ -11,29 +12,21 @@ class UsuarioDao
 	 * INSERT
 	 */
 
-	public static function Insert(Usuario $usuario)
+	public static function Insert (Usuario $usuario)
 	{
-		try {
-			$sql = "INSERT INTO Usuario (matricula, senha, nome, tipo)
-					VALUES(:matricula, :senha, :nome, :tipo)";
+		$sql = "INSERT INTO Usuario (matricula, senha, nome, tipo)
+		VALUES (:matricula, :senha, :nome, :tipo)";
 
-			$stmt = Conexao::conexao()->prepare($sql);
+		$params = [
+			'matricula' => $usuario->getCodigo(),
+			'nome' => $usuario->getNome(),
+			'senha' => $usuario->getSenha(),
+			'tipo' => $usuario->getTipo()
+		];
 
-			$stmt->bindParam(":matricula", $codigo);
-			$stmt->bindParam(":senha", $senha);
-			$stmt->bindParam(":nome", $nome);
-			$stmt->bindParam(":tipo", $tipo);
-
-			$codigo = $usuario->getCodigo();
-			$senha = $usuario->getSenha();
-			$nome = $usuario->getNome();
-			$tipo = $usuario->getTipo();
-
-			return $stmt->execute();
-		} catch (Exception $e) {
-			print "Erro " . $e->getCode() . " Mensagem: " . $e->getMessage();
-		}
+		return StatementBuilder::change($sql, $params);
 	}
+
 
 	public static function UpdateAlimentacao(Usuario $usuario)
 	{
@@ -117,6 +110,15 @@ class UsuarioDao
 		return $usuario;
 	}
 
+	public static function PopulaVarios ($usuarios)
+	{
+		$users = [];
+		foreach ($usuarios as $usuario) {
+			$users[] = self::Popula($usuario);
+		}
+		return $users;
+	}
+
 	public static function Select($criterio, $pesquisa)
 	{
 		try {
@@ -150,25 +152,18 @@ class UsuarioDao
 
 	public static function Select2($tipo, $pesquisa)
 	{
-		// feita especificamente para a página de gerenciamento do administrador
-		// seleciona por um tipo específico + uma pesquisa que pode ser tanto o nome qto a matrícula do aluno
-		$sql = "SELECT * FROM Usuario WHERE tipo = '$tipo' ";
+		$sql = "SELECT * FROM Usuario WHERE tipo = :tipo";
+		$params['tipo'] = "$tipo";
+
 		if ($pesquisa != 'TODOS') {
-			$sql .= " AND (nome like '%$pesquisa%' OR matricula like '%$pesquisa%')";
+			$sql .= " AND (nome like :nome OR matricula like :matricula)";
+			$params['nome'] = "%{$pesquisa}%";
+			$params['matricula'] = "$pesquisa";
 		}
 
-		try {
-			$bd = Conexao::conexao();
-			$query = $bd->query($sql);
-			$registros = array();
-			while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-				array_push($registros, self::Popula($row));
-			}
-		} catch (PDOException $e) {
-			echo "Erro (UsuarioDao::Select2): " . $e->getMessage();
-		}
-
-		return $registros;
+		return self::PopulaVarios(
+			StatementBuilder::select($sql, $params)
+		);
 	}
 
 	public static function SelectPorMatricula($matricula)
@@ -282,23 +277,15 @@ class UsuarioDao
 		return $stmt->execute();
 	}
 
-	public static function UpdateNome(Usuario $usuario)
+	public static function UpdateNome (Usuario $usuario)
 	{
-		// Só altera nome
 		$sql = "UPDATE Usuario SET nome = :nome WHERE matricula = :matricula";
-		try {
-			$bd = Conexao::conexao();
-			$stmt = $bd->prepare($sql);
+		$params = [
+			'nome' => $usuario->getNome(),
+			'matricula' => $usuario->getCodigo()
+		];
 
-			$nome = $usuario->getNome();
-			$stmt->bindParam(":nome", $nome);
-			$matricula = $usuario->getCodigo();
-			$stmt->bindParam(":matricula", $matricula);
-
-			return $stmt->execute();
-		} catch (PDOException $e) {
-			echo "Erro (UsuarioDao::UpdateNome): " . $e->getMessage();
-		}
+		return StatementBuilder::change($sql, $params);
 	}
 
 	/**
@@ -307,17 +294,12 @@ class UsuarioDao
 	public static function UpdateSenha(Usuario $usuario)
 	{
 		$sql = "UPDATE Usuario SET senha = :senha WHERE matricula = :matricula";
-		try {
-			$stmt = Conexao::conexao()->prepare($sql);
-			$senha = $usuario->getSenha();
-			$matricula = $usuario->getCodigo();
-			$stmt->bindParam(":senha", $senha);
-			$stmt->bindParam(":matricula", $matricula);
-		} catch (PDOException $e) {
-			echo "<b>Erro (UsuarioDao::UpdateSenha): </b>" . $e->getMessage();
-		}
-		$stmt->execute();
-		echo "row count: " . $stmt->rowCount() . " iii";
+		$params = [
+			'senha' => $usuario->getSenha(), // acao.php já coloca em sha1
+			'matricula' => $usuario->getCodigo()
+		];
+
+		return StatementBuilder::change($sql, $params);
 	}
 
 
@@ -325,17 +307,12 @@ class UsuarioDao
 	 * DELETE
 	 */
 
-	public static function Delete($matricula)
+	public static function Delete ($matricula)
 	{
 		$sql = "DELETE FROM Usuario WHERE matricula = :matricula";
-		try {
-			$bd = Conexao::conexao();
-			$stmt = $bd->prepare($sql);
-			$stmt->bindParam(":matricula", $matricula);
-			return $stmt->execute();
-		} catch (PDOException $e) {
-			echo "Erro (UsuarioDao::Delete): " . $e->getMessage();
-		}
+		$params = ['matricula' => $matricula];
+
+		return StatementBuilder::change($sql, $params);
 	}
 
 	/**

@@ -5,12 +5,12 @@ if (!isset($_POST['acao']) && !isset($_GET['acao'])) {
 }
 
 $root_path = "../";
-include($root_path . "valida_secao.php");
+include("{$root_path}valida_secao.php");
 valida_secao_tipo($root_path, 'ALUNO');
-require_once($root_path . "classes/UsuarioDao.class.php");
-require_once($root_path . "classes/DiaAlmoco.class.php");
-require_once($root_path . "classes/DiaAlmocoDao.class.php");
-require_once($root_path . "classes/AlunoPresenca.class.php");
+require_once("{$root_path}classes/UsuarioDao.class.php");
+require_once("{$root_path}classes/DiaAlmoco.class.php");
+require_once("{$root_path}classes/DiaAlmocoDao.class.php");
+require_once("{$root_path}classes/AlunoPresenca.class.php");
 
 $acao = $_POST['acao'];
 
@@ -21,14 +21,14 @@ $semana_cod = isset($_POST['semana_cod']) ? $_POST['semana_cod'] : '';
 // Para qual página o usuário deve ser redirecionado após cadastrar a ação
 $redir = $_POST['redir'];
 if ($redir == 'cardapio') {
-  $redir = $root_path . "aluno/cardapio/";
+  $redir = "{$root_path}aluno/cardapio/";
 } else if ($redir == 'index') {
-  $redir = $root_path . "aluno";
+  $redir = "{$root_path}aluno";
 }
 
 CadPresenca($acao, $dia_cod, $semana_cod);
 
-header("location:" . $redir);
+header("location:{$redit}");
 
 
 // FUNÇÕES

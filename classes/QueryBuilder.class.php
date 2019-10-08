@@ -1,6 +1,6 @@
 <?php
 
-require_once 'autoload.php';
+require_once 'Conexao.class.php';
 
 /**
  * Classe com método estáticos de base para os métodos de acesso a dados dos DAOs
@@ -8,14 +8,14 @@ require_once 'autoload.php';
 class QueryBuilder {
 
 	/**
-	 * Query base para SELECT
+	 * Executa PDOStatement para SELECT
 	 * 
 	 * @param string $sql o código sql a ser executado
 	 * @param array $paramBinds array com parâmetros a ser colocados em bindParam ['nome' => 'Fulano'] -> bindParam(':nome', 'Fulano')
 	 * 
 	 * @return array registros num array de arrays associativos (fetchAll(PDO::FETCH_ASSOC))
 	 */
-	public static function selectBase (string $sql, array $paramBinds = [])
+	public static function select (string $sql, array $paramBinds = [])
 	{
 		try {
 			$statement = Conexao::conexao()->prepare($sql);
@@ -25,28 +25,19 @@ class QueryBuilder {
 			$statement->execute();
 
 		} catch (PDOException $e) {
-			$txt = "<b> Não foi possível consultar o BD (QueryBuilder@selectBase) </b>";
-			$txt .= "<br> <b>SQL: </b> {$sql}";
-			$txt .= "<br> <b>Parâmetros: </b>";
-			foreach ($paramBinds as $bind => $param) {
-				$txt.= "<br> <b> > {$bind}</b> => {$param}";
-			}
-			$txt .= "<br> <b><i>Erro: </i></b>".$e->getMessage();
-			die($txt);
+			self::PDOExceptionMessage($e, 'select', $sql, $paramBinds);
 		}
 
 		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	}
 
-	
-
 	/**
-	 * Query base para update, delete e insert
+	 * Executa PDOStatement para insert, update ou delete
 	 * 
 	 * @param string $sql o código sql a ser executado
 	 * @param array $paramBinds array com parâmetros a ser colocados em bindParam ['nome' => 'Fulano'] -> bindParam(':nome', 'Fulano')
 	 */
-	public static function queryBase (string $sql, array $paramBinds = [])
+	public static function change (string $sql, array $paramBinds = [])
 	{
 		try {
 			$statement = Conexao::conexao()->prepare($sql);
@@ -56,14 +47,7 @@ class QueryBuilder {
 			$statement->execute();
 
 		} catch (PDOException $e) {
-			$txt = "<b> Não foi possível executar a query (QueryBuilder@queryBase) </b>";
-			$txt .= "<br> <b>SQL: </b> {$sql}";
-			$txt .= "<br> <b>Parâmetros: </b>";
-			foreach ($paramBinds as $bind => $param) {
-				$txt.= "<br> <b> > {$bind}</b> => {$param}";
-			}
-			$txt .= "<br> <b><i>Erro: </i></b>".$e->getMessage();
-			die($txt);
+			self::PDOExceptionMessage($e, 'change', $sql, $paramBinds);
 		}
 	}
 
@@ -82,5 +66,21 @@ class QueryBuilder {
 		}
 
 		return $stmt;
+	}
+
+	/**
+	 * Mostra mensagem de erro com código SQL que tentou-se executar e parâmetros passados
+	 */
+	public static function PDOExceptionMessage (
+		PDOException $e, string $metodo, string $sql, array $paramBinds)
+	{
+		$txt = "<b> Não foi possível executar a query (QueryBuilder@{$metodo}) </b>";
+		$txt .= "<br> <b>SQL: </b> {$sql}";
+		$txt .= "<br> <b>Parâmetros: </b>";
+		foreach ($paramBinds as $bind => $param) {
+			$txt.= "<br> <b> > {$bind}</b> => {$param}";
+		}
+		$txt .= "<br> <b><i>Erro: </i></b>".$e->getMessage();
+		die($txt);
 	}
 }

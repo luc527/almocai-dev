@@ -128,13 +128,6 @@ create trigger AdicionaPresença
 after insert on DiaAlmoco 
 for each row
 begin
-	call ForPresenca();
-end :)
-delimiter ;
-
-delimiter :)
-create procedure ForPresenca ()
-begin
 	declare idFrequencia int;
     declare tipoUsuario varchar(40);
     declare finished int default 0;
@@ -162,7 +155,6 @@ begin
 
   close usuarioCursor;
 end :)
-
 delimiter ;
 create view Semana as Select s.data_inicio, d.diaSemana, a.descricao, a.tipo from SemanaCardapio s, DiaAlmoco d, Alimento a where s.codigo = d.semanaCardapio_codigo and d.codigo = a.diaAlmoco_codigo;
 

@@ -14,7 +14,7 @@ else $acao = '';
 if ($acao == 'Insert') {
   $usuario = new Usuario;
   $usuario->setCodigo($_POST['matricula']);
-  $usuario->setNome($_POST['nome']);
+  $usuario->setNome(htmlspecialchars($_POST['nome']));
   $usuario->setSenha(sha1($_POST['senha']));
   $usuario->setTipo($_POST['tipo']);
 
@@ -27,7 +27,7 @@ if ($acao == 'Insert') {
 
   $usuario = new Usuario;
   $usuario->setCodigo($_POST['matricula']);
-  $usuario->setNome($_POST['nome']);
+  $usuario->setNome(htmlspecialchars($_POST['nome']));
 
   UsuarioDao::UpdateNome($usuario);
 

@@ -21,7 +21,8 @@ $func = str_replace("{{nav}}", $nav, $func);
 $func = str_replace("{{footer}}", $footer, $func);
 $func = str_replace("{{scripts}}", $title, $func);
 
-$data = date("Y-m-d");
+// $data = date("Y-m-d");
+$data = Funcoes::CorrigeData(date("Y-m-d"));
 /**
  * MAIN
  */
@@ -30,7 +31,7 @@ $main = file_get_contents("main.html");
 if (SemanaCardapioDao::SemanaExiste($data)) {
   // Não mostra o erro de cardápio indisponível
   $erro_card_indisp = "";
-  $dia = DiaAlmocoDao::SelectPorData(date("Y-m-d"));
+  $dia = DiaAlmocoDao::SelectPorData($data);
   // Cartão de contagem de presenças
   $contagem = DiaAlmocoDao::ContagemPresencas($dia->getCodigo());
   // Carrega as contagens de presenças

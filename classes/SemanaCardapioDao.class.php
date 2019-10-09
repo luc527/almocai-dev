@@ -1,6 +1,7 @@
 <?php
 require_once("Conexao.class.php");
-require_once("SemanaCardapioDao.class.php");
+require_once("StatementBuilder.class.php");
+require_once("SemanaCardapio.class.php");
 require_once("Funcoes.class.php");
 require_once("DiaAlmocoDao.class.php");
 
@@ -165,21 +166,17 @@ class SemanaCardapioDao
 	 * @param string $data data
 	 * @return bool true se existe, false se não
 	 */
-	public static function SemanaExiste($data)
+	public static function SemanaExiste ($data)
 	{
 		$data = Funcoes::CorrigeData($data);
-		$sql = "SELECT * FROM DiaAlmoco WHERE `data` = '$data'";
-		try {
-			$bd = Conexao::conexao();
-			$query = $bd->query($sql);
-			$row = $query->fetch(PDO::FETCH_ASSOC);
-		} catch (PDOException $e) {
-			echo "<b>Erro (Funcoes::SemanaExiste): </b>" . $e->getMessage();
-		}
-		if ($row != false) { // qdo a consulta não tem resultados $row = false
-			return true;
-		} else {
+		
+		$sql = "SELECT * FROM DiaAlmoco WHERE `data` = :data";
+		$params = ['data' => $data];
+
+		if (StatementBuilder::select($sql, $params) == []) {
 			return false;
+		} else {
+			return true;
 		}
 	}
 }

@@ -74,7 +74,7 @@ class StatementBuilder {
 	public static function PDOExceptionMessage (
 		PDOException $e, string $metodo, string $sql, array $paramBinds)
 	{
-		$txt = "<b> Não foi possível executar a query (QueryBuilder@{$metodo}) </b>";
+		$txt = "<b> Não foi possível executar a query ({$metodo}) </b>";
 		$txt .= "<br> <b>SQL: </b> {$sql}";
 		$txt .= "<br> <b>Parâmetros: </b>";
 		foreach ($paramBinds as $bind => $param) {

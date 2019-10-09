@@ -10,7 +10,7 @@ class UsuarioDao
 
 	/**
 	 * INSERT
-	 */
+	 */ 
 
 	public static function Insert (Usuario $usuario)
 	{

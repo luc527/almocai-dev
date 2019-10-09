@@ -17,6 +17,7 @@ create table if not exists DiaAlmoco (
 );
 
 delimiter :)
+
 create trigger cria_dias_semana
 after insert on SemanaCardapio
 for each row
@@ -111,6 +112,7 @@ create table if not exists Intolerancia (
 	codigo int primary key auto_increment,
 	descricao varchar(150)
 );
+
 create table if not exists Usuario_intolerancia (
 	usuario_matricula int,
 	intolerancia_codigo int,
@@ -122,9 +124,8 @@ create table if not exists Usuario_intolerancia (
 		on delete cascade
 );
 
-
 delimiter :)
-create trigger AdicionaPresença
+create trigger AdicionaPresenca
 after insert on DiaAlmoco 
 for each row
 begin
@@ -156,10 +157,4 @@ begin
   close usuarioCursor;
 end :)
 delimiter ;
-create view Semana as Select s.data_inicio, d.diaSemana, a.descricao, a.tipo from SemanaCardapio s, DiaAlmoco d, Alimento a where s.codigo = d.semanaCardapio_codigo and d.codigo = a.diaAlmoco_codigo;
-
-select * from DiaAlmoco;
-
-select * from Presenca;
-
--- insert into SemanaCardapio value (null, '2019-10-14');
+# create view Semana as Select s.data_inicio, d.diaSemana, a.descricao, a.tipo from SemanaCardapio s, DiaAlmoco d, Alimento a where s.codigo = d.semanaCardapio_codigo and d.codigo = a.diaAlmoco_codigo;

@@ -2,6 +2,7 @@
 .banner {
   
   background-size: cover;
+  
   // Cardápio
   &--1 {
     background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/aluno/fundo-cardapio.jpg);
@@ -39,12 +40,18 @@
 
   // Funcionário --> Cardapios
   &--9 {
-    background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/funcionar/fundo-cardapios.jpg);
+    background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/funcionario/fundo-cardapios.jpg);
   }
   
   // Funcionário --> Gerenciar cardapio
   &--10 {
-    background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/funcionar/gerenciar-cardapio.jpg);
+    background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/funcionario/gerenciar-cardapio.jpg);
+  }
+
+
+  // Sobre
+  &--11 {
+    background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/sobre/fundo.jpg);
   }
 
   min-height: 30rem;

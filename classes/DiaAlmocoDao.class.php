@@ -23,27 +23,22 @@ class DiaAlmocoDao {
 		$presencas = $diaAlmoco->getPresencas();
 
 		for ($i=0; $i < count($presencas); $i++) {
-			self::DeletarPresenca($presencas[$i]->getAluno()->getCodigo(), $diaAlmoco->getCodigo());
+			
+			self::DeletarPresenca(
+				$presencas[$i]->getAluno()->getCodigo(), 
+				$diaAlmoco->getCodigo()
+			);
 			// Se já existe uma presença marcada pra esse dia, o sistema a deleta e insere uma nova
 			// Se não existe, ele tenta deletar, mas não deleta nada (porque não existe), e simplesmente insere uma nova
 
-			try {
-				$sql = "INSERT INTO Presenca (usuario_matricula, diaAlmoco_codigo, presenca) VALUES (:usuario, :dia, :presenca)";
-
-				$stmt = Conexao::conexao()->prepare($sql);
-
-				$stmt->bindParam(":usuario", $usuario_mat);
-				$stmt->bindParam(":dia", $dia_cod);
-				$stmt->bindParam(":presenca", $pres);
-
-				$usuario_mat = $presencas[$i]->getAluno()->getCodigo();
-				$dia_cod = $diaAlmoco->getCodigo();
-				$pres = $presencas[$i]->getPresenca();
-
-				return $stmt->execute();
-			} catch (Exception $e) {
-				echo $e->getMessage();
-			}
+			StatementBuilder::change(
+				"INSERT INTO Presenca (usuario_matricula, diaAlmoco_codigo, presenca) VALUES (:usuario, :dia, :presenca)",
+				[
+					'usuario' => $presencas[$i]->getAluno()->getCodigo(),
+					'dia' => $diaAlmoco->getCodigo(),
+					'presenca' => $presencas[$i]->getPresenca()
+				]
+			);
 		}
 	}
 
@@ -72,6 +67,15 @@ class DiaAlmocoDao {
 		return $dia;
 	}
 
+	public static function PopulaVarios ($rows) {
+		$dias = [];
+		foreach ($rows as $row) {
+			$dias[] = self::Popula($row);
+		}
+		return $dias;
+	}
+
+
 	public static function SelectTodos () {
 		$sql = "SELECT * FROM DiaAlmoco ORDER BY codigo";
 		$query = Conexao::conexao()->query($sql);
@@ -85,16 +89,12 @@ class DiaAlmocoDao {
 	}
 
 	public static function SelectPorSemana ($semana_codigo) {
-		$sql = "SELECT * FROM DiaAlmoco WHERE semanaCardapio_codigo = ".$semana_codigo." ORDER BY `data`";
-		$query = Conexao::conexao()->query($sql);
-
-		$dias = array();
-
-		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-			array_push($dias, self::Popula($row));
-		}
-
-		return $dias;
+		return self::PopulaVarios(
+			StatementBuilder::select(
+				"SELECT * FROM DiaAlmoco WHERE semanaCardapio_codigo = :codigo ORDER BY `data`",
+				['codigo' => $semana_codigo]
+			)
+		);
 	}
 
 	public static function SelectUltimoCod () {
@@ -119,15 +119,12 @@ class DiaAlmocoDao {
 	}
 
 	public static function SelectPorData ($data) {
-		$sql = "SELECT * FROM DiaAlmoco WHERE `data` = '$data'";
-		try {
-			$bd = Conexao::conexao();
-			$query = $bd->query($sql);
-			$row = $query->fetch(PDO::FETCH_ASSOC);
-			return self::Popula($row);
-		} catch (PDOException $e) {
-			echo "<b>Erro (DiaAlmocoDao::SelectPorData): </b>".$e->getMessage();
-		}
+		return self::Popula(
+			StatementBuilder::select(
+				"SELECT * FROM DiaAlmoco WHERE `data` = :data",
+				['data' => $data]
+			)[0]
+		);
 	}
 
 	/**
@@ -136,44 +133,50 @@ class DiaAlmocoDao {
 	 * @return array de contagens
 	 */
 	public static function ContagemPresencas ($dia_id) {
-		$sql = "select A.codigo as 'alimentacao_id', count(*) as 'contagem'
-		from Presenca P, Usuario U, Alimentacao A
-		where diaAlmoco_codigo = $dia_id
-		and P.usuario_matricula = U.matricula
-		and A.codigo = U.alimentacao
-		and P.presenca = 1
-		group by U.alimentacao";
-		try {
-			$bd = Conexao::conexao();
-			$query = $bd->query($sql);
-			$contagem = array(0 => 0, 1 => 0, 2 => 0, 3 => 0);
-			while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-				$contagem[$row['alimentacao_id']] = $row['contagem'];
-			}
-		} catch (PDOException $e) {
-			echo "<b>Erro (DiaAlmocoDao::SelectContagem): </b>".$e->getMessage();
+		$sql = "SELECT A.Codigo as 'alimentacao_id', count(*) as 'contagem'
+		FROM Presenca P, Usuario U, Alimentacao A
+		WHERE diaAlmoco_codigo = :diaAlmoco_codigo
+		AND P.usuario_matricula = U.matricula
+		AND A.codigo = U.alimentacao
+		AND P.presenca = :presenca
+		GROUP BY U.alimentacao";
+
+		$params = [
+			'diaAlmoco_codigo' => $dia_id,
+			'presenca' => 1
+		];
+
+		$contagens = StatementBuilder::select($sql, $params);
+
+		$contagem = array(0=>0, 1=>0, 2=>0, 3=>0);
+		foreach ($contagens as $row) {
+			$contagem[$row['alimentacao_id']] = $row['contagem'];
 		}
+
 		$contagem[0] = array_sum($contagem);
+
 		return $contagem;
 	}
 
 
-	////////////////////////
-	// FUNÇÕES DE DELETAR //
+	
+	// Comentado pois não será permitido ao usuário deletar dias
+	// ////////////////////////
+	// // FUNÇÕES DE DELETAR //
 
-	public static function Deletar (DiaAlmoco $dia) {
-		$alimentos = $dia->getAlimentos();
-		for ($i=0; $i < count($alimentos); $i++) {
-			AlimentoDao::Deletar($alimentos[$i]);
-		}
+	// public static function Deletar (DiaAlmoco $dia) {
+	// 	$alimentos = $dia->getAlimentos();
+	// 	for ($i=0; $i < count($alimentos); $i++) {
+	// 		AlimentoDao::Deletar($alimentos[$i]);
+	// 	}
 
-		$sql = "DELETE FROM DiaAlmoco WHERE codigo = :codigo";
-		$stmt = Conexao::conexao()->prepare($sql);
-		$stmt->bindParam(":codigo", $codigo);
-		$codigo = $dia->getCodigo();
+	// 	$sql = "DELETE FROM DiaAlmoco WHERE codigo = :codigo";
+	// 	$stmt = Conexao::conexao()->prepare($sql);
+	// 	$stmt->bindParam(":codigo", $codigo);
+	// 	$codigo = $dia->getCodigo();
 
-		return $stmt->execute();
-	}
+	// 	return $stmt->execute();
+	// }
 }
 
 ?>

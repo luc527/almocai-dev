@@ -30,32 +30,24 @@ class UsuarioDao
 
 	public static function UpdateAlimentacao(Usuario $usuario)
 	{
-		$sql = "UPDATE Usuario SET alimentacao = :alimentacao WHERE matricula = :matricula";
-		try {
-			$stmt = Conexao::conexao()->prepare($sql);
-			$alimentacao = $usuario->getAlimentacao()->getCodigo();
-			$matricula = $usuario->getCodigo();
-			$stmt->bindParam(":matricula", $matricula);
-			$stmt->bindParam(":alimentacao", $alimentacao);
-		} catch (PDOException $e) {
-			echo "<b>Erro (UsuarioDao::UpdateAlimentacao): </b>" . $e->getMessage();
-		}
-		return $stmt->execute();
+		return StatementBuilder::change(
+			"UPDATE Usuario SET alimentacao = :alimentacao WHERE matricula = :matricula",
+			[
+				'matricula' => $usuario->getCodigo(),
+				'alimentacao' => $usuario->getAlimentacao()->getCodigo()
+			]
+		);
 	}
 
 	public static function UpdateFrequencia(Usuario $usuario)
 	{
-		$sql = "UPDATE Usuario SET frequencia = :frequencia WHERE matricula = :matricula";
-		try {
-			$stmt = Conexao::conexao()->prepare($sql);
-			$frequencia = $usuario->getfrequencia()->getCodigo();
-			$matricula = $usuario->getCodigo();
-			$stmt->bindParam(":matricula", $matricula);
-			$stmt->bindParam(":frequencia", $frequencia);
-		} catch (PDOException $e) {
-			echo "<b>Erro (UsuarioDao::UpdateFrequencia): </b>" . $e->getMessage();
-		}
-		return $stmt->execute();
+		return StatementBuilder::change(
+			"UPDATE Usuario SET frequencia = :frequencia WHERE matricula = :matricula",
+			[
+				'matricula' => $usuario->getCodigo(),
+				'frequencia' => $usuario->getFrequencia()->getCodigo()
+			]
+		);
 	}
 
 	public static function SalvarCarnes(Usuario $usuario)
@@ -77,17 +69,13 @@ class UsuarioDao
 		// Se não está, não insere nada
 		for ($i = 0; $i < count($todas); $i++) {
 			if (in_array($todas[$i]->getCodigo(), $carnes)) {
-				$sql = "INSERT INTO Carne_usuario (usuario_matricula, carne_cod) VALUES (:matricula, :carne)";
-				try {
-					$stmt = Conexao::conexao()->prepare($sql);
-					$matricula = $usuario->getCodigo();
-					$carne_cod = $todas[$i]->getCodigo();
-					$stmt->bindParam(":matricula", $matricula);
-					$stmt->bindParam(":carne", $carne_cod);
-				} catch (PDOException $e) {
-					echo "<b>Erro (UsuarioDao::InsertCarnes): </b>" . $e->getMessage();
-				}
-				$stmt->execute();
+				StatementBuilder::change(
+					"INSERT INTO Carne_usuario (usuario_matricula, carne_cod) VALUES (:matricula, :carne)",
+					[
+						'matricula' => $usuario->getCodigo(),
+						'carne' => $todas[$i]->getCodigo()
+					]
+				);
 			}
 		}
 	}
@@ -168,9 +156,12 @@ class UsuarioDao
 
 	public static function SelectPorMatricula($matricula)
 	{
-		// Retorna o objeto aluno em vez de um array com um só objeto, que seria o resultado do Select ()
-		$usuarios = self::Select('matricula', $matricula);
-		return $usuarios[0];
+		return self::Popula(
+			StatementBuilder::select(
+				"SELECT * FROM Usuario WHERE matricula = :matricula",
+				['matricula' => $matricula]
+			)[0]
+		);
 	}
 
 	/**
@@ -178,15 +169,10 @@ class UsuarioDao
 	 */
 	public static function SelectPresenca($dia_cod, $user_mat)
 	{
-		$sql = "SELECT * FROM Presenca WHERE diaAlmoco_codigo = $dia_cod
-			AND usuario_matricula = $user_mat";
-		try {
-			$query = Conexao::conexao()->query($sql);
-			$row = $query->fetch(PDO::FETCH_ASSOC);
-		} catch (PDOException $e) {
-			echo $e->getMessage();
-		}
-		return $row['presenca'];
+		return StatementBuilder::select(
+			"SELECT * FROM Presenca WHERE diaAlmoco_codigo = :dia_cod AND usuario_matricula = :user_mat",
+			['dia_cod'=>$dia_cod, 'user_mat'=>$user_mat]
+		)[0]['presenca'];
 	}
 
 	/**
@@ -194,57 +180,52 @@ class UsuarioDao
 	 */
 	public static function SelectFrequencia(Usuario $usuario)
 	{
-		$matricula = $usuario->getCodigo();
-		$sql = "SELECT frequencia FROM Usuario where matricula = $matricula";
-		try {
-			$bd = Conexao::conexao();
-			$query = $bd->query($sql);
-			$row = $query->fetch(PDO::FETCH_ASSOC);
-		} catch (PDOException $e) {
-			echo "<b>Erro (UsuarioDao::SelectFrequencia): </b>" . $e->getMessage();
-		}
 		$frequencia = new Frequencia;
-		$frequencia->setCodigo($row['frequencia']);
+		$frequencia->setCodigo(
+			StatementBuilder::select(
+				"SELECT frequencia FROM Usuario WHERE matricula = :matricula",
+				['matricula' => $usuario->getCodigo()]
+			)[0]['frequencia']
+		); 
+		
 		$usuario->setFrequencia($frequencia);
+
 		return $usuario;
 	}
 	/**
 	 * Recebe um objeto Usuario e coloca a alimentação do BD nele
 	 */
 	public static function SelectAlimentacao(Usuario $usuario)
-	{
-		$matricula = $usuario->getCodigo();
-		$sql = "SELECT alimentacao FROM Usuario where matricula = $matricula";
-		try {
-			$bd = Conexao::conexao();
-			$query = $bd->query($sql);
-			$row = $query->fetch(PDO::FETCH_ASSOC);
-		} catch (PDOException $e) {
-			echo "<b>Erro (UsuarioDao::SelectAlimentacao): </b>" . $e->getMessage();
-		}
+	{		
 		$al = new Alimentacao;
-		$al->setCodigo($row['alimentacao']);
+		$al->setCodigo(
+			StatementBuilder::select(
+				"SELECT alimentacao FROM Usuario WHERE matricula = :matricula",
+				['matricula' => $usuario->getCodigo()]
+			)[0]['alimentacao']
+		);
+		
 		$usuario->setAlimentacao($al);
+		
 		return $usuario;
 	}
+
 	/**
 	 * Recebe um objeto Usuario e coloca as carnes do BD dele
 	 */
 	public static function SelectCarnes(Usuario $usuario)
 	{
-		$matricula = $usuario->getCodigo();
-		$sql = "SELECT carne_cod FROM Carne_usuario WHERE usuario_matricula = $matricula";
-		try {
-			$bd = Conexao::conexao();
-			$query = $bd->query($sql);
-			while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-				$carne = new Carne;
-				$carne->setCodigo($row['carne_cod']);
-				$usuario->setCarne($carne);
-			}
-		} catch (PDOException $e) {
-			echo "<b>Erro (UsuarioDao::SelectCarnes): </b>" . $e->getMessage();
+		$carne_cods = StatementBuilder::select(
+			"SELECT carne_cod FROM carne_usuario WHERE usuario_matricula = :matricula",
+			['matricula' => $usuario->getCodigo()]
+		);
+
+		foreach ($carne_cods as $cod) {
+			$carne = new Carne;
+			$carne->setCodigo($cod['carne_cod']);
+			$usuario->setCarne($carne);
 		}
+
 		return $usuario;
 	}
 
@@ -254,27 +235,16 @@ class UsuarioDao
 
 	public static function Update(Usuario $usuario)
 	{
-		$sql = "UPDATE Usuario SET nome = :nome, tipo = :tipo, senha = :senha,
-			alimentacao = :alimentacao WHERE matricula = :matricula";
-		try {
-			$bd = Conexao::conexao();
-			$stmt = $bd->prepare($sql);
-
-			$nome = $usuario->getNome();
-			$stmt->bindParam(":nome", $nome);
-			$tipo = $usuario->getTipo();
-			$stmt->bindParam(":tipo", $tipo);
-			$senha = $usuario->getSenha();
-			$stmt->bindParam(":senha", $senha);
-			$alimentacao = $usuario->getAlimentacao();
-			$stmt->bindParam(":alimentacao", $alimentacao);
-			$matricula = $usuario->getCodigo();
-			$stmt->bindParam(":matricula", $matricula);
-		} catch (PDOException $e) {
-			echo "<b>Erro no preparo (UsuarioDao::Update): </b>" . $e->getMessage();
-		}
-
-		return $stmt->execute();
+		return StatementBuilder::change(
+			"UPDATE Usuario SET nome = :nome, tipo = :tipo, senha = :senha, alimentacao = :alimentacao WHERE matricula = :matricula",
+			[
+				'nome' => $usuario->getNome(),
+				'tipo' => $usuario->getTipo(),
+				'senha' => $usuario->getSenha(),
+				'alimentacao' => $usuario->getAlimentacao(),
+				'matricula' => $usuario->getCodigo()
+			]
+		);
 	}
 
 	public static function UpdateNome (Usuario $usuario)

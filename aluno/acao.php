@@ -28,7 +28,7 @@ if ($redir == 'cardapio') {
 
 CadPresenca($acao, $dia_cod, $semana_cod);
 
-header("location:{$redit}");
+header("location:{$redir}");
 
 
 // FUNÇÕES

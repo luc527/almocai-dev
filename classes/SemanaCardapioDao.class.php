@@ -13,29 +13,11 @@ class SemanaCardapioDao
 
 	public static function Inserir(SemanaCardapio $semanaCardapio)
 	{
-		$sql = "INSERT INTO SemanaCardapio (data_inicio) VALUES (:data_inicio)";
-
-		$pdo = Conexao::conexao();
-
-		$p_sql = $pdo->prepare($sql);
-
-		$p_sql->bindParam(":data_inicio", $data_inicio);
-		$data_inicio = $semanaCardapio->getData_inicio();
-
-		return $p_sql->execute();
+		return StatementBuilder::change(
+			"INSERT INTO SemanaCardapio (data_inicio) VALUES (:data_inicio)",
+			['data_inicio' => $semanaCardapio->getData_inicio()]
+		);
 	}
-
-	/* O usuário nunca irá inserir dias no banco de dados. O banco de dados tem um gatilho 'cria_dias_semana' que, após uma semana ser criada (INSERT INTO SemanaCardapio), são criados automaticamente 5 dias (Segunda, Terça, ...) para a semana. Ver no almocai.sql para entender como funciona
-
-	public function InserirDias (SemanaCardapio $semanaCardapio) {
-		$dias = $semanaCardapio->getDias();
-		for ($i=0; $i < count($dias); $i++)	{
-			$diaAlmocoDao = new DiaAlmocoDao;
-			$diaAlmocoDao->Inserir($dias[$i], $semanaCardapio->getCodigo());
-		}
-	}
-	*/
-
 
 	////////////////////////
 	// FUNÇÕES DE SELEÇÃO //
@@ -47,6 +29,15 @@ class SemanaCardapioDao
 		$semana->setData_inicio($row['data_inicio']);
 
 		return $semana;
+	}
+
+	public static function PopulaVarias ($rows)
+	{
+		$semanas = [];
+		foreach ($rows as $row) {
+			$semanas[] = self::Popula($row);
+		}
+		return $semanas;
 	}
 
 	public static function SelectPorCriterio($pesquisa, $criterio)
@@ -68,22 +59,21 @@ class SemanaCardapioDao
 
 	public static function SelectPorCodigo($codigo)
 	{
-		$semanas = self::SelectPorCriterio($codigo, 'codigo');
-		return $semanas[0];
+		return self::Popula(
+			StatementBuilder::select(
+				"SELECT * FROM SemanaCardapio WHERE codigo = :codigo",
+				['codigo' => $codigo]
+			)[0]
+		);
 	}
 
 	public static function SelectTodos()
 	{
-		$sql = "SELECT * FROM SemanaCardapio ORDER BY data_inicio DESC";
-
-		$query = Conexao::conexao()->query($sql);
-
-		$semanas = array();
-		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-			array_push($semanas, self::Popula($row));
-		}
-
-		return $semanas;
+		return self::PopulaVarias(
+			StatementBuilder::select(
+				"SELECT * FROM SemanaCardapio ORDER BY data_inicio DESC"
+			)
+		);
 	}
 
 	/**
@@ -106,13 +96,9 @@ class SemanaCardapioDao
 
 	public static function SelectUltimoCod()
 	{
-		$sql = "SELECT codigo FROM SemanaCardapio ORDER BY codigo DESC LIMIT 1";
-
-		$query = Conexao::conexao()->query($sql);
-
-		$row = $query->fetch(PDO::FETCH_ASSOC);
-
-		return $row['codigo'];
+		return StatementBuilder::select(
+			"SELECT codigo FROM SemanaCardapio ORDER BY codigo DESC LIMIT 1",
+		)[0]['codigo'];
 	}
 
 	public static function SelectPorData($data)
@@ -120,15 +106,12 @@ class SemanaCardapioDao
 
 		$data = Funcoes::CorrigeData($data);
 
-		$sql = "SELECT semanaCardapio_codigo FROM DiaAlmoco WHERE `data` = '$data'";
-		try {
-			$bd = Conexao::conexao();
-			$query = $bd->query($sql);
-			$row = $query->fetch(PDO::FETCH_ASSOC);
-		} catch (PDOException $e) {
-			echo "Erro (SemanaCardapioDao::SelectPorData): " . $e->getMessage();
-		}
-		return self::SelectPorCodigo($row['semanaCardapio_codigo']);
+		return self::SelectPorCodigo(
+			StatementBuilder::select(
+				"SELECT semanaCardapio_codigo FROM DiaAlmoco WHERE `data` = :data",
+				['data' => $data]
+			)
+		)[0]['semanaCardapio_codigo'];
 	}
 
 
@@ -138,23 +121,24 @@ class SemanaCardapioDao
 	}
 
 
-	////////////////////////
-	// FUNÇÕES DE DELETAR //
+	// Comentado pois não será permitido ao usuário deletar uma semana
+	// ////////////////////////
+	// // FUNÇÕES DE DELETAR //
 
-	public static function Deletar(SemanaCardapio $semana)
-	{
-		$dias = $semana->getDias();
-		for ($i = 0; $i < count($dias); $i++) {
-			DiaAlmocoDao::Deletar($dias[$i]);
-		}
+	// public static function Deletar(SemanaCardapio $semana)
+	// {
+	// 	$dias = $semana->getDias();
+	// 	for ($i = 0; $i < count($dias); $i++) {
+	// 		DiaAlmocoDao::Deletar($dias[$i]);
+	// 	}
 
-		$sql = "DELETE FROM SemanaCardapio WHERE codigo = :codigo";
-		$p_sql = Conexao::conexao()->prepare($sql);
-		$p_sql->bindParam(":codigo", $codigo);
-		$codigo = $semana->getCodigo();
+	// 	$sql = "DELETE FROM SemanaCardapio WHERE codigo = :codigo";
+	// 	$p_sql = Conexao::conexao()->prepare($sql);
+	// 	$p_sql->bindParam(":codigo", $codigo);
+	// 	$codigo = $semana->getCodigo();
 
-		return $p_sql->execute();
-	}
+	// 	return $p_sql->execute();
+	// }
 
 
 	// //////////////////// //

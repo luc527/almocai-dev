@@ -8,6 +8,7 @@
 
     <form class="row" action="acao.php" method="POST">
       <input type="hidden" name="dia_cod" id="dia_cod" value="{codigo}" />
+      <input type="hidden" name="semana_cod" id="semana_cod" value="{semana_codigo}" />
 
       <div class="input-field col s12">
         <input id="alimento" name="alimento" type="text" />
@@ -26,11 +27,9 @@
       </div>
     </form>
 
+    <div class="divider" style="margin: 1.5rem 0 1.5rem 0;"></div>
 
-    <div class="divider" style="margin: 2rem 0 1rem 0;"></div>
-
-
-    <ul class="funcionario__cardapio-add--lista">
+    <ul class="collection">
       {{ itens }}
     </ul>
     

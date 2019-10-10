@@ -103,15 +103,15 @@ class SemanaCardapioDao
 
 	public static function SelectPorData($data)
 	{
-
-		$data = Funcoes::CorrigeData($data);
+		$sql = "SELECT semanaCardapio_codigo FROM diaAlmoco WHERE `data` = :data";
+		$params = ['data' => Funcoes::CorrigeData($data)];
 
 		return self::SelectPorCodigo(
 			StatementBuilder::select(
-				"SELECT semanaCardapio_codigo FROM DiaAlmoco WHERE `data` = :data",
+				"SELECT semanaCardapio_codigo FROM diaAlmoco WHERE `data` = :data",
 				['data' => $data]
-			)
-		)[0]['semanaCardapio_codigo'];
+			)[0]['semanaCardapio_codigo']
+		);
 	}
 
 
@@ -151,16 +151,32 @@ class SemanaCardapioDao
 	 * @return bool true se existe, false se não
 	 */
 	public static function SemanaExiste ($data)
-	{
-		$data = Funcoes::CorrigeData($data);
-		
+	{		
 		$sql = "SELECT * FROM DiaAlmoco WHERE `data` = :data";
-		$params = ['data' => $data];
+		$params = ['data' => Funcoes::CorrigeData($data)];
 
 		if (StatementBuilder::select($sql, $params) == []) {
 			return false;
 		} else {
 			return true;
 		}
+	}
+
+	/**
+	 * Retorna true se a data informada é da semana informada
+	 * 
+	 * @param string $data
+	 * @param $semana_cod
+	 * 
+	 * @return bool
+	 */
+	public static function diaEhDaSemana (string $data, $semana_cod)
+	{
+		$sql = "SELECT * FROM DiaAlmoco WHERE `data` = :data";
+		$params = ['data' => Funcoes::CorrigeData($data)];
+
+		$semana_cod_dia = StatementBuilder::select($sql, $params)[0]['semanaCardapio_codigo'];
+
+		return $semana_cod_dia == $semana_cod;
 	}
 }

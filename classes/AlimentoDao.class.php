@@ -15,15 +15,14 @@ class AlimentoDao
 
 	public static function Inserir(Alimento $alimento, $diaAlmoco_codigo)
 	{
-		return StatementBuilder::change(
-			"INSERT INTO Alimento (descricao, diaAlmoco_codigo, tipo)
-			VALUES (:descricao, :diaAlmoco_codigo, :tipo)",
-			[
-				'descricao' => $alimento->getDescricao(),
-				'diaAlmoco_codigo' => $diaAlmoco_codigo,
-				'tipo' => $alimento->getTipo()
-			]
-		);
+		$sql = "INSERT INTO Alimento (descricao, diaAlmoco_codigo, tipo) VALUES (:descricao, :diaAlmoco_codigo, :tipo)";
+		$params = [
+			'descricao' => $alimento->getDescricao(),
+			'diaAlmoco_codigo' => $diaAlmoco_codigo,
+			'tipo' => $alimento->getTipo()
+		];
+
+		return StatementBuilder::change($sql, $params);
 	}
 
 	/**

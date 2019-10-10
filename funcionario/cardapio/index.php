@@ -31,7 +31,6 @@ if (isset($_GET['cod'])) {
 		SemanaCardapioDao::SelectPorData(date("Y-m-d"))
 		: false;
 }
-
 if (!$cardapio) {
 
 	$cardapio_indisponivel = file_get_contents('cardapio_indisponivel.html');
@@ -85,6 +84,7 @@ if (!$cardapio) {
 			$item = file_get_contents("item.html");
 			$item = str_replace("{nome}", $nome, $item);
 			$item = str_replace("{codigo}", $codigo, $item);
+			$item = str_replace("{semana_codigo}", $semana_cod, $item);
 
 			// concatena
 			$itens .= $item;
@@ -96,6 +96,7 @@ if (!$cardapio) {
 		$dia = str_replace("{data}", $data, $dia);
 		$dia = str_replace("{cor_texto}", $cor_texto["$dia_da_semana"], $dia);
 		$dia = str_replace("{codigo}", $dia_codigo, $dia);
+		$dia = str_replace("{semana_codigo}", $semana_cod, $dia);
 		$dia = str_replace("{{ itens }}", $itens, $dia);
 		$dia = str_replace("{{ select_tipo }}", $select_tipo, $dia);
 

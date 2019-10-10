@@ -19,14 +19,11 @@ if ($acao == 'AddAlimento') {
 	$dia_cod = $_POST['dia_cod'];
 
 	AlimentoDao::Inserir($alimento, $dia_cod);
-	header("location:index.php");
-} else if ($acao == 'DeletarAlimento') {
 
-	$alimento = new Alimento;
-	$alimento->setCodigo($_GET['cod']);
+	$semana_cod = $_POST['semana_cod'];
 
-	AlimentoDao::Deletar($alimento);
-	header("location:index.php");
+	header("location:index.php?cod={$semana_cod}");
+
 } else if ($acao == 'AddAlimentoSemana') {
 
 	$alimento = new Alimento;
@@ -36,5 +33,17 @@ if ($acao == 'AddAlimento') {
 	$semana_cod = $_POST['semana_cod'];
 
 	AlimentoDao::InserirEmSemana($alimento, $semana_cod);
-	header("location:index.php");
+
+	header("location:index.php?cod={$semana_cod}");
+
+} else if ($acao == 'DeletarAlimento') {
+
+	$alimento = new Alimento;
+	$alimento->setCodigo($_GET['cod']);
+
+	AlimentoDao::Deletar($alimento);
+
+	$semana_cod = $_GET['semana_cod'];
+
+	header("location:index.php?cod={$semana_cod}");
 }

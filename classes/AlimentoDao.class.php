@@ -22,7 +22,7 @@ class AlimentoDao
 			'tipo' => $alimento->getTipo()
 		];
 
-		return StatementBuilder::change($sql, $params);
+		return StatementBuilder::insert($sql, $params);
 	}
 
 	/**
@@ -64,7 +64,7 @@ class AlimentoDao
 
 	public static function SelectPorDia($dia_codigo)
 	{
-		return self::PopulaVarios (
+		return self::PopulaVarios(
 			StatementBuilder::select(
 				"SELECT * FROM Alimento WHERE diaAlmoco_codigo = :dia_codigo",
 				['dia_codigo' => $dia_codigo]
@@ -78,7 +78,7 @@ class AlimentoDao
 
 	public static function Deletar(Alimento $alimento)
 	{
-		return StatementBuilder::change(
+		return StatementBuilder::delete(
 			"DELETE FROM Alimento WHERE codigo = :codigo",
 			['codigo' => $alimento->getCodigo()]
 		);

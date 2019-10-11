@@ -36,7 +36,6 @@ if (!$cardapio) {
 	$cardapio_indisponivel = file_get_contents('cardapio_indisponivel.html');
 	$add_alimento_semana = "";
 	$dias = "";
-	
 } else {
 
 	$cardapio_indisponivel = ""; // vazio pois cardápio está disponível
@@ -104,7 +103,7 @@ if (!$cardapio) {
 		$dias .= $dia;
 	}
 
-	$intervalo_semana = date("d/m", strtotime($cardapio->getData_inicio())) . " a " . 
+	$intervalo_semana = date("d/m", strtotime($cardapio->getData_inicio())) . " a " .
 		date("d/m", strtotime($cardapio->getData_inicio() . " + 3 days"));
 }
 

@@ -31,7 +31,7 @@ class DiaAlmocoDao {
 			// Se já existe uma presença marcada pra esse dia, o sistema a deleta e insere uma nova
 			// Se não existe, ele tenta deletar, mas não deleta nada (porque não existe), e simplesmente insere uma nova
 
-			StatementBuilder::change(
+			StatementBuilder::insert(
 				"INSERT INTO Presenca (usuario_matricula, diaAlmoco_codigo, presenca) VALUES (:usuario, :dia, :presenca)",
 				[
 					'usuario' => $presencas[$i]->getAluno()->getCodigo(),
@@ -178,5 +178,3 @@ class DiaAlmocoDao {
 	// 	return $stmt->execute();
 	// }
 }
-
-?>

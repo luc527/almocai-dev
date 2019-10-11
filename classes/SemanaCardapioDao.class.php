@@ -13,7 +13,7 @@ class SemanaCardapioDao
 
 	public static function Inserir(SemanaCardapio $semanaCardapio)
 	{
-		return StatementBuilder::change(
+		return StatementBuilder::insert(
 			"INSERT INTO SemanaCardapio (data_inicio) VALUES (:data_inicio)",
 			['data_inicio' => $semanaCardapio->getData_inicio()]
 		);
@@ -31,7 +31,7 @@ class SemanaCardapioDao
 		return $semana;
 	}
 
-	public static function PopulaVarias ($rows)
+	public static function PopulaVarias($rows)
 	{
 		$semanas = [];
 		foreach ($rows as $row) {
@@ -150,8 +150,8 @@ class SemanaCardapioDao
 	 * @param string $data data
 	 * @return bool true se existe, false se não
 	 */
-	public static function SemanaExiste ($data)
-	{		
+	public static function SemanaExiste($data)
+	{
 		$sql = "SELECT * FROM DiaAlmoco WHERE `data` = :data";
 		$params = ['data' => Funcoes::CorrigeData($data)];
 
@@ -170,7 +170,7 @@ class SemanaCardapioDao
 	 * 
 	 * @return bool
 	 */
-	public static function diaEhDaSemana (string $data, $semana_cod)
+	public static function diaEhDaSemana(string $data, $semana_cod)
 	{
 		$sql = "SELECT * FROM DiaAlmoco WHERE `data` = :data";
 		$params = ['data' => Funcoes::CorrigeData($data)];

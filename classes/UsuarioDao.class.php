@@ -10,9 +10,9 @@ class UsuarioDao
 
 	/**
 	 * INSERT
-	 */ 
+	 */
 
-	public static function Insert (Usuario $usuario)
+	public static function Insert(Usuario $usuario)
 	{
 		$sql = "INSERT INTO Usuario (matricula, senha, nome, tipo)
 		VALUES (:matricula, :senha, :nome, :tipo)";
@@ -24,13 +24,13 @@ class UsuarioDao
 			'tipo' => $usuario->getTipo()
 		];
 
-		return StatementBuilder::change($sql, $params);
+		return StatementBuilder::insert($sql, $params);
 	}
 
 
 	public static function UpdateAlimentacao(Usuario $usuario)
 	{
-		return StatementBuilder::change(
+		return StatementBuilder::update(
 			"UPDATE Usuario SET alimentacao = :alimentacao WHERE matricula = :matricula",
 			[
 				'matricula' => $usuario->getCodigo(),
@@ -41,7 +41,7 @@ class UsuarioDao
 
 	public static function UpdateFrequencia(Usuario $usuario)
 	{
-		return StatementBuilder::change(
+		return StatementBuilder::update(
 			"UPDATE Usuario SET frequencia = :frequencia WHERE matricula = :matricula",
 			[
 				'matricula' => $usuario->getCodigo(),
@@ -69,7 +69,7 @@ class UsuarioDao
 		// Se não está, não insere nada
 		for ($i = 0; $i < count($todas); $i++) {
 			if (in_array($todas[$i]->getCodigo(), $carnes)) {
-				StatementBuilder::change(
+				StatementBuilder::insert(
 					"INSERT INTO Carne_usuario (usuario_matricula, carne_cod) VALUES (:matricula, :carne)",
 					[
 						'matricula' => $usuario->getCodigo(),
@@ -98,7 +98,7 @@ class UsuarioDao
 		return $usuario;
 	}
 
-	public static function PopulaVarios ($usuarios)
+	public static function PopulaVarios($usuarios)
 	{
 		$users = [];
 		foreach ($usuarios as $usuario) {
@@ -171,7 +171,7 @@ class UsuarioDao
 	{
 		return StatementBuilder::select(
 			"SELECT * FROM Presenca WHERE diaAlmoco_codigo = :dia_cod AND usuario_matricula = :user_mat",
-			['dia_cod'=>$dia_cod, 'user_mat'=>$user_mat]
+			['dia_cod' => $dia_cod, 'user_mat' => $user_mat]
 		)[0]['presenca'];
 	}
 
@@ -186,8 +186,8 @@ class UsuarioDao
 				"SELECT frequencia FROM Usuario WHERE matricula = :matricula",
 				['matricula' => $usuario->getCodigo()]
 			)[0]['frequencia']
-		); 
-		
+		);
+
 		$usuario->setFrequencia($frequencia);
 
 		return $usuario;
@@ -196,7 +196,7 @@ class UsuarioDao
 	 * Recebe um objeto Usuario e coloca a alimentação do BD nele
 	 */
 	public static function SelectAlimentacao(Usuario $usuario)
-	{		
+	{
 		$al = new Alimentacao;
 		$al->setCodigo(
 			StatementBuilder::select(
@@ -204,9 +204,9 @@ class UsuarioDao
 				['matricula' => $usuario->getCodigo()]
 			)[0]['alimentacao']
 		);
-		
+
 		$usuario->setAlimentacao($al);
-		
+
 		return $usuario;
 	}
 
@@ -235,7 +235,7 @@ class UsuarioDao
 
 	public static function Update(Usuario $usuario)
 	{
-		return StatementBuilder::change(
+		return StatementBuilder::update(
 			"UPDATE Usuario SET nome = :nome, tipo = :tipo, senha = :senha, alimentacao = :alimentacao WHERE matricula = :matricula",
 			[
 				'nome' => $usuario->getNome(),
@@ -247,7 +247,7 @@ class UsuarioDao
 		);
 	}
 
-	public static function UpdateNome (Usuario $usuario)
+	public static function UpdateNome(Usuario $usuario)
 	{
 		$sql = "UPDATE Usuario SET nome = :nome WHERE matricula = :matricula";
 		$params = [
@@ -255,7 +255,7 @@ class UsuarioDao
 			'matricula' => $usuario->getCodigo()
 		];
 
-		return StatementBuilder::change($sql, $params);
+		return StatementBuilder::update($sql, $params);
 	}
 
 	/**
@@ -269,7 +269,7 @@ class UsuarioDao
 			'matricula' => $usuario->getCodigo()
 		];
 
-		return StatementBuilder::change($sql, $params);
+		return StatementBuilder::update($sql, $params);
 	}
 
 
@@ -277,12 +277,12 @@ class UsuarioDao
 	 * DELETE
 	 */
 
-	public static function Delete ($matricula)
+	public static function Delete($matricula)
 	{
 		$sql = "DELETE FROM Usuario WHERE matricula = :matricula";
 		$params = ['matricula' => $matricula];
 
-		return StatementBuilder::change($sql, $params);
+		return StatementBuilder::delete($sql, $params);
 	}
 
 	/**

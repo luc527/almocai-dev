@@ -45,13 +45,17 @@ if (SemanaCardapioDao::SemanaExiste($data)) {
   $cartao_presenca = str_replace("{dia_cod}", $dia->getCodigo(), $cartao_presenca);
 
   $pres = UsuarioDao::SelectPresenca($dia->getCodigo(), $usuario->getCodigo());
-  if ($pres == 0) {
-    $cor = ' vermelho ';
-    $txt = 'Não almoçarei';
-  } else {
+  if ($pres == 'nao-selecionada') {
+    $cor = ' amarelo ';
+    $txt = 'Ainda não selecionei';
+  } else if ($pres) {
     $cor = ''; // por padrão verde
     $txt = 'Almoçarei';
+  } else {
+    $cor = ' vermelho ';
+    $txt = 'Não almoçarei';
   }
+
   $Cpres_selec = file_get_contents("cartao_presenca_selecionada.html");
   $Cpres_selec = str_replace("{cor}", $cor, $Cpres_selec);
   $Cpres_selec = str_replace("{presenca_selecionada}", $txt, $Cpres_selec);

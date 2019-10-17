@@ -17,7 +17,7 @@ class StatementBuilder
 	 * 
 	 * @return array Conjunto de arrays associativos (cada unidade do conjunto sendo um registro do BD) -- resultado do SELECT 
 	 */
-	public static function select(string $sql, array $colvals)
+	public static function select(string $sql, array $colvals = [])
 	{
 		try {
 			$statement = Conexao::conexao()->prepare($sql);

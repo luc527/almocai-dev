@@ -71,7 +71,7 @@ class SemanaCardapioDao
 	{
 		return self::PopulaVarias(
 			StatementBuilder::select(
-				"SELECT * FROM SemanaCardapio ORDER BY data_inicio DESC"
+				"SELECT * FROM SemanaCardapio ORDER BY data_inicio"
 			)
 		);
 	}

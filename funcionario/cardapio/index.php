@@ -118,8 +118,6 @@ $main = str_replace("{{ dias }}", $dias, $main);
  * FIM MAIN
  */
 
-
-
 $gercard = file_get_contents($root_path . "template.html"); // gercard = gerenciar cardapio
 
 $gercard = str_replace("{title}", $title, $gercard);

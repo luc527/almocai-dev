@@ -5,10 +5,13 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('DOMContentLoaded', function() {
       var elems = document.querySelectorAll('.datepicker');
       var data = new Date();
+      var dateOffset = (24*60*60*1000) * 5; // 5 dias
+      var dataMin = new Date();
+      dataMin.setTime(dataMin.getTime() - dateOffset);
       var options = {
           format: 'dd/mm/yyyy',
           yearRange: [data.getFullYear(), data.getFullYear() + 1],
-          minDate: data,
+          minDate: dataMin,
           disableWeekends: true,
           disableDayFn: function(date) {
             return date.getDay() == 1 ? false : true;

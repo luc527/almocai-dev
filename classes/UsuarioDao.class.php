@@ -169,10 +169,22 @@ class UsuarioDao
 	 */
 	public static function SelectPresenca($dia_cod, $user_mat)
 	{
-		return StatementBuilder::select(
+		$result = StatementBuilder::select(
 			"SELECT * FROM Presenca WHERE diaAlmoco_codigo = :dia_cod AND usuario_matricula = :user_mat",
 			['dia_cod' => $dia_cod, 'user_mat' => $user_mat]
-		)[0]['presenca'];
+		);
+
+		if ($result == []) {
+			$presenca = "nao-selecionada";
+		} else {
+			$presenca = $result[0]['presenca'];			
+		}
+
+		if ($presenca == 'nao-selecionada') {
+			return 'nao-selecionada';
+		} else {
+			return $presenca;
+		}
 	}
 
 	/**

@@ -9,9 +9,10 @@
     <form class="row" action="acao.php" method="POST">
       <input type="hidden" name="dia_cod" id="dia_cod" value="{codigo}" />
       <input type="hidden" name="semana_cod" id="semana_cod" value="{semana_codigo}" />
-
+      
+      <h5>Adicionar alimento</h5>
       <div class="input-field col s12">
-        <input id="alimento" name="alimento" type="text" />
+        <input id="alimento" name="alimento" type="text" required />
         <label for="alimento">Alimento</label>
       </div>
 
@@ -21,7 +22,7 @@
 
       <div class="col s12 center">
         <button type="submit" name="acao" id="acao" value="AddAlimento"
-          class="waves-effect waves-light btn adm__inserir--btn almocai bold" style="margin: 0;">
+          class="waves-effect waves-light btn adm__inserir--btn almocai bold" style="margin: 0;"/>
           Adicionar
         </button>
       </div>

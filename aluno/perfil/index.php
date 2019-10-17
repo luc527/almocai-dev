@@ -18,6 +18,23 @@ $cartao_freq = gerarCartao(
 	FrequenciaDao::SelectTodas(),
 	$usuario->getFrequencia()->getCodigo()
 );
+
+// cartão de retorno sobre frequência selecionada
+$freq_msg = "";
+if (isset($_GET['freq_selecionada'])) {
+	if ($_GET['freq_selecionada'] == 1 || $_GET['freq_selecionada'] == 2) {
+		$mensagem = "Conforme a frequência que você selecionou, o sistema automaticamente marcará presença em todos os dias.
+		<b>Não se esqueça de marcar ausência nos dias que vier.</b>";
+	} else { // 3 ou 4
+		$mensagem = "Conforme a frequência que você selecionou, o sistema automaticamente marcará ausência em todos os dias.
+		<b>Não se esqueça de marcar presença nos dias que vier</b>";
+	}
+	$freq_msg = file_get_contents("frequencia_cartao.html");
+	$freq_msg = str_replace("{mensagem}", $mensagem, $freq_msg);
+}
+$cartao_freq = str_replace("{{frequencia_mensagem}}", $freq_msg, $cartao_freq);
+
+
 $cartao_alim = gerarCartao(
 	'cartao_alimentacao.html',
 	'cartao_alimentacao_item.html',
@@ -33,6 +50,8 @@ if (isset($_GET['erro']) && $_GET['erro'] == 'senha_antiga_incorreta') {
 	$senha_antiga_incorreta = file_get_contents('senha_antiga_incorreta.html');
 }
 $alt_senha = str_replace("{{senha_antiga_incorreta}}", $senha_antiga_incorreta, $alt_senha);
+
+
 
 // substituição dos valores/componentes nos templates
 $main = file_get_contents("main.html");

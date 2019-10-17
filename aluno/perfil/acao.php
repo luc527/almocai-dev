@@ -34,12 +34,15 @@ if ($acao == 'AlterarSenha') {
     header("location:{$root_path}aluno/perfil/?erro=senha_antiga_incorreta"); // retornar erro ao usuário
   }
 } else if ($acao == 'SalvarFrequencia') {
+
   $frequencia = new Frequencia;
   $frequencia->setCodigo($_POST['frequencia']);
   $usuario->setFrequencia($frequencia);
   UsuarioDao::UpdateFrequencia($usuario);
-  header("location:{$root_path}aluno/perfil/");
+  header("location:{$root_path}aluno/perfil/?freq_selecionada={$frequencia}");
+
 } else if ($acao == 'SalvarCarnes') {
+
   $carnes_cod = $_POST['carnes'];
   for ($i = 0; $i < count($carnes_cod); $i++) {
     $carne[$i] = new Carne;
@@ -48,7 +51,9 @@ if ($acao == 'AlterarSenha') {
   }
   UsuarioDao::SalvarCarnes($usuario);
   header("location:{$root_path}aluno/perfil/");
+
 } else if ($acao == 'SalvarAlimentacao') {
+
   $alimentacao = new Alimentacao;
   $alimentacao->setCodigo($_POST['alimentacao']);
   $usuario->setAlimentacao($alimentacao);

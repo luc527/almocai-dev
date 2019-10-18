@@ -48,10 +48,9 @@
     background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/funcionario/gerenciar-cardapio.jpg);
   }
 
-
   // Sobre
-  &--11 {
-    background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/sobre/fundo.jpg);
+    &--11 {
+      background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/sobre/fundo.jpg);
   }
 
   min-height: 30rem;

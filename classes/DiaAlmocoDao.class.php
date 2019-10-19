@@ -119,11 +119,13 @@ class DiaAlmocoDao {
 	}
 
 	public static function SelectPorData ($data) {
+		$result = StatementBuilder::select(
+			"SELECT * FROM DiaAlmoco WHERE `data` = :data",
+			['data' => $data]
+		);
+		
 		return self::Popula(
-			StatementBuilder::select(
-				"SELECT * FROM DiaAlmoco WHERE `data` = :data",
-				['data' => $data]
-			)[0]
+			$result[0]
 		);
 	}
 

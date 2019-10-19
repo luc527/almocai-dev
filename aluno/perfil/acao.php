@@ -39,7 +39,7 @@ if ($acao == 'AlterarSenha') {
   $frequencia->setCodigo($_POST['frequencia']);
   $usuario->setFrequencia($frequencia);
   UsuarioDao::UpdateFrequencia($usuario);
-  header("location:{$root_path}aluno/perfil/?freq_selecionada={$frequencia}");
+  header("location:{$root_path}aluno/perfil/?freq_selecionada={$frequencia->getCodigo()}");
 
 } else if ($acao == 'SalvarCarnes') {
 

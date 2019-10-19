@@ -27,7 +27,6 @@ $aluno = str_replace("{{footer}}", $footer, $aluno);
 $scripts = '';
 $aluno = str_replace("{{scripts}}", $scripts, $aluno);
 
-
 $main = file_get_contents("main.html");
 // Nome do usuário
 $nome = $usuario->getNome();
@@ -35,10 +34,13 @@ $main = str_replace("{nome}", $nome, $main);
 
 $datahj = date("d/m");
 $data = date("Y-m-d");
+
 if (SemanaCardapioDao::SemanaExiste($data)) {
   $cardapio_ind = ""; // não mostra erro de cardápio indisponível
 
-  $dia = DiaAlmocoDao::SelectPorData(date("Y-m-d"));
+  $dia = DiaAlmocoDao::SelectPorData(
+    Funcoes::CorrigeData($data)
+  );
 
   $cartao_presenca = file_get_contents("cartao_presenca.html");
   $cartao_presenca = str_replace("{data_hoje}", $datahj, $cartao_presenca);
@@ -99,5 +101,3 @@ $main = str_replace("{{cartao_presenca}}", $cartao_presenca, $main);
 $aluno = str_replace("{{main}}", $main, $aluno);
 $aluno = str_replace("{root_path}", $root_path, $aluno);
 print($aluno);
-
-//var_dump($dia);

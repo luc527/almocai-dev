@@ -24,10 +24,10 @@ $freq_msg = "";
 if (isset($_GET['freq_selecionada'])) {
 	if ($_GET['freq_selecionada'] == 1 || $_GET['freq_selecionada'] == 2) {
 		$mensagem = "Conforme a frequência que você selecionou, o sistema automaticamente marcará presença em todos os dias.
-		<b>Não se esqueça de marcar ausência nos dias que vier.</b>";
+		<br><b>Não se esqueça de marcar ausência nos dias que vier.</b>";
 	} else { // 3 ou 4
 		$mensagem = "Conforme a frequência que você selecionou, o sistema automaticamente marcará ausência em todos os dias.
-		<b>Não se esqueça de marcar presença nos dias que vier</b>";
+		<br><b>Não se esqueça de marcar presença nos dias que vier.</b>";
 	}
 	$freq_msg = file_get_contents("frequencia_cartao.html");
 	$freq_msg = str_replace("{mensagem}", $mensagem, $freq_msg);

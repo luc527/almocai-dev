@@ -1,52 +1,78 @@
 <?php
 
-$root_path = "../";
+/**
+ * Página de controle de ação geral para o administrador. Usada tanto no gerenciamento de funcionários quanto no de alunos porque essas páginas funcionam praticamente do mesmo jeito.
+ * As funções usadas nas ações (InsertUsuario(), Redir() etc.) estão declaradas neste arquivo, no seu fim
+ */
 
-include($root_path . "valida_secao.php");
-valida_secao_tipo($root_path, 'ADMINISTRADOR');
-
-require_once($root_path . "classes/UsuarioDao.class.php");
-
-if (isset($_POST['acao'])) $acao = $_POST['acao'];
-else if (isset($_GET['acao'])) $acao = $_GET['acao'];
-else $acao = '';
+// Página que verifica seção, carrega objetos que serão usados, determina ação, root path etc.
+require 'acao_init.php';
 
 if ($acao == 'Insert') {
+  InsertUsuario();
+  Redir();
+
+} else if ($acao == 'Update') {  
+  UpdateUsuario();
+  Redir();
+
+} else if ($acao == 'Delete') {  
+  UsuarioDao::Delete($_GET['matricula']);
+  Redir();
+
+}
+
+/**
+ * Insere um novo usuário no banco de dados. Primeiro o instancia e depois o insere no BD por um método do DAO
+ */
+function InsertUsuario()
+{
+  // Instancia novo usuário com as informações do formulário
   $usuario = new Usuario;
   $usuario->setCodigo($_POST['matricula']);
   $usuario->setNome(htmlspecialchars($_POST['nome']));
   $usuario->setSenha(sha1($_POST['senha']));
   $usuario->setTipo($_POST['tipo']);
 
+  // Insere esse usuário no BD pelo DAO
   UsuarioDao::Insert($usuario);
+}
 
-  if ($_POST['tipo'] == 'ALUNO') $redir = $root_path . "administrador/alunos/";
-  else if ($_POST['tipo'] == 'FUNCIONARIO') $redir = $root_path . "administrador/funcionarios/";
-  header("location:" . $redir);
-} else if ($acao == 'Update') {
-
+/**
+ * Atualiza o registro de um aluno. Altera seu nome e sua senha (se ela foi mudada no formulário)
+ */
+function UpdateUsuario()
+{
+  // Instancia um usuário com código e nome do formulário
   $usuario = new Usuario;
   $usuario->setCodigo($_POST['matricula']);
   $usuario->setNome(htmlspecialchars($_POST['nome']));
 
+  // Primeiro atualiza apenas o nome
   UsuarioDao::UpdateNome($usuario);
 
+  // Só atualiza a senha se uma senha veio do formulário
   if ($_POST['senha'] != '') {
 
-    $usuario->setSenha(
-      sha1($_POST['senha'])
-    );
+    $usuario->setSenha(sha1($_POST['senha']));
 
     UsuarioDao::UpdateSenha($usuario);
   }
+}
 
-  if ($_POST['tipo'] == 'ALUNO') $redir = $root_path . "administrador/alunos/";
-  else if ($_POST['tipo'] == 'FUNCIONARIO') $redir = $root_path . "administrador/funcionarios/";
-  header("location:" . $redir);
-} else if ($acao == 'Delete') {
-  UsuarioDao::Delete($_GET['matricula']);
+/**
+ * Redireciona o administrador para a página de onde veio conforme o tipo de usuário que inseriu, atualizou ou deletou
+ */
+function Redir()
+{
+  $tipo = isset($_POST['tipo']) ? 
+    $_POST['tipo'] 
+    : $_GET['tipo'];
 
-  if ($_GET['tipo'] == 'ALUNO') $redir = $root_path . "administrador/alunos/";
-  else if ($_GET['tipo'] == 'FUNCIONARIO') $redir = $root_path . "administrador/funcionarios/";
-  header("location:" . $redir);
+  if ($tipo == 'ALUNO')
+    $redir = $GLOBALS['root_path'] . "administrador/alunos/";
+  else if ($tipo == 'FUNCIONARIO')
+    $redir = $GLOBALS['root_path'] . "administrador/funcionarios/";
+    
+  header("location:{$redir}");
 }

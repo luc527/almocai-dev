@@ -138,15 +138,20 @@ class UsuarioDao
 		}
 	}
 
+	/**
+	 * Seleciona usuários conforme tipo e, se essas opções foram selecionadas, conforme nome e matrícula
+	 */
 	public static function Select2($tipo, $pesquisa)
 	{
+		// Por padrão pesquisará todos os usuários
 		$sql = "SELECT * FROM Usuario WHERE tipo = :tipo";
 		$params['tipo'] = "$tipo";
 
+		// Se a pesquisa não foi por todos os usuários do tipo, no entanto, pesquisa por nome e matrícula
 		if ($pesquisa != 'TODOS') {
 			$sql .= " AND (nome like :nome OR matricula like :matricula)";
 			$params['nome'] = "%{$pesquisa}%";
-			$params['matricula'] = "$pesquisa";
+			$params['matricula'] = "%{$pesquisa}%";
 		}
 
 		return self::PopulaVarios(

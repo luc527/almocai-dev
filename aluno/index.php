@@ -1,51 +1,57 @@
 <?php
-$root_path = "../";
-include($root_path . "valida_secao.php");
-valida_secao($root_path);
 
-require_once($root_path . "classes/UsuarioDao.class.php");
-require_once($root_path . "classes/SemanaCardapioDao.class.php");
-require_once($root_path . "classes/DiaAlmocoDao.class.php");
-require_once($root_path . "classes/AlimentoDao.class.php");
-require_once($root_path . "classes/Funcoes.class.php");
-include($root_path . 'config.php');
-
-date_default_timezone_set("America/Sao_Paulo");
+// Valida seção, inclui classes que serão usadas etc.
+require 'init.php';
 
 $usuario = UsuarioDao::SelectPorMatricula($_SESSION['matricula']);
 
-// Carregando template
-$aluno = file_get_contents($root_path . "template.html");
+/**
+ * Variáveis e componentes do template.html
+ */
+// Declaração das variáveis e componentes
 $title = "Aluno";
-$aluno = str_replace("{title}", $title, $aluno);
 $peso_fonte = '';
-$aluno = str_replace("{peso_fonte}", $peso_fonte, $aluno);
 $nav = file_get_contents($root_path . "componentes/nav-transparent.html");
-$aluno = str_replace("{{nav}}", $nav, $aluno);
 $footer = file_get_contents($root_path . "componentes/footer.html");
-$aluno = str_replace("{{footer}}", $footer, $aluno);
 $scripts = '';
+
+// Carregamento das variáveis e componentes no template
+$aluno = file_get_contents($root_path . "template.html");
+$aluno = str_replace("{title}", $title, $aluno);
+$aluno = str_replace("{peso_fonte}", $peso_fonte, $aluno);
+$aluno = str_replace("{{nav}}", $nav, $aluno);
+$aluno = str_replace("{{footer}}", $footer, $aluno);
 $aluno = str_replace("{{scripts}}", $scripts, $aluno);
 
+/**
+ * Conteúdo da página (main)
+ */
 $main = file_get_contents("main.html");
-// Nome do usuário
-$nome = $usuario->getNome();
-$main = str_replace("{nome}", $nome, $main);
 
+// Variáveis e componentes do main
+$nome = $usuario->getNome();
 $datahj = date("d/m");
 $data = date("Y-m-d");
 
+/**
+ * Mostra o dia e os botões de marcar presença ou ausência
+ */
 if (SemanaCardapioDao::SemanaExiste($data)) {
-  $cardapio_ind = ""; // não mostra erro de cardápio indisponível
+  
+  // Componentes que não serão mostrados
+  $cardapio_ind = ""; // Erro de cardápio indisponível (se a semana existe, está disponível)
 
+  // Carrega o dia do banco de dados com a data corrigida (o BD só guarda 4 dias da semana, mas o usuário precisa poder acessar do final de semana também)
   $dia = DiaAlmocoDao::SelectPorData(
     Funcoes::CorrigeData($data)
   );
 
+  // Cartão com os botões para marcar presença ou ausência no dia
   $cartao_presenca = file_get_contents("cartao_presenca.html");
   $cartao_presenca = str_replace("{data_hoje}", $datahj, $cartao_presenca);
   $cartao_presenca = str_replace("{dia_cod}", $dia->getCodigo(), $cartao_presenca);
 
+  // Variáveis do componente que mostra a presença marcada pelo usuário
   $pres = UsuarioDao::SelectPresenca($dia->getCodigo(), $usuario->getCodigo());
   if ($pres == 'nao-selecionada') {
     $cor = ' amarelo ';
@@ -58,14 +64,22 @@ if (SemanaCardapioDao::SemanaExiste($data)) {
     $txt = 'Não almoçarei';
   }
 
+  // Componente HTML que mostra a presença marcada pelo usuário
   $Cpres_selec = file_get_contents("cartao_presenca_selecionada.html");
   $Cpres_selec = str_replace("{cor}", $cor, $Cpres_selec);
   $Cpres_selec = str_replace("{presenca_selecionada}", $txt, $Cpres_selec);
+  // O cartão com a opção selecionada é mostrado dentro do cartão em que o usuário seleciona "Sim" ou "Não" (presença ou ausência)
   $cartao_presenca = str_replace("{{cartao_presenca_selecionada}}", $Cpres_selec, $cartao_presenca);
 
+  // Carrega os alimentos do dia do BD
   $alimentos = AlimentoDao::SelectPorDia($dia->getCodigo());
+  
+  // Itens: conjunto de alimentos do dia
   $itens = "";
+
   foreach ($alimentos as $alimento) {
+    
+    // Primeiro determina o ícone a acompanhar o alimento (nenhum, carne ou vegetariano/vegano)
     $icon = "";
     switch ($alimento->getTipo()) {
       case 'CARNE':
@@ -78,22 +92,33 @@ if (SemanaCardapioDao::SemanaExiste($data)) {
         $icon = str_replace("{icon}", 'folha', $icon);
         break;
     }
+
+    // Carrega o nome e o ícone do alimento no template da linha
     $item = file_get_contents("cartao_dia_item.html");
     $item = str_replace("{nome}", $alimento->getDescricao(), $item);
     $item = str_replace("{{icon}}", $icon, $item);
+
+    // Concatena
     $itens .= $item;
   }
-  $cartao_dia = file_get_contents("cartao_dia.html");
-  $cartao_dia = str_replace("{{itens}}", $itens, $cartao_dia);
+
+  // Carrega o dia do BD no template do dia 
   $dia_semana = $dia->getDiaSemana();
-  $cartao_dia = str_replace("{dia_semana}", $dia_semana, $cartao_dia);
   $num_dia = $NUM_DIA[$dia->getDiaSemana()]; // array $NUM_DIA[] em config.php
+
+  $cartao_dia = file_get_contents("cartao_dia.html");
+  $cartao_dia = str_replace("{{itens}}", $itens, $cartao_dia);  
+  $cartao_dia = str_replace("{dia_semana}", $dia_semana, $cartao_dia);  
   $cartao_dia = str_replace("{num_dia}", $num_dia, $cartao_dia);
+
 } else { // caso não exista a semana
-  $cartao_dia = "";
-  $cardapio_ind = file_get_contents("cardapio_indisponivel.html");
-  $cartao_presenca = "";
+  $cartao_dia = ""; // não será mostrado cartão do dia (não existe esse dia)
+  $cardapio_ind = file_get_contents("cardapio_indisponivel.html"); // mostra erro de cardápio indisponível
+  $cartao_presenca = ""; // não mostra opção de marcar presença ou não
 }
+
+// Carrega valores e componentes no template
+$main = str_replace("{nome}", $nome, $main);
 $main = str_replace("{{cartao_dia}}", $cartao_dia, $main);
 $main = str_replace("{{cardapio_indisponivel}}", $cardapio_ind, $main);
 $main = str_replace("{{cartao_presenca}}", $cartao_presenca, $main);

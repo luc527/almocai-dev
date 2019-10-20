@@ -2,7 +2,7 @@
 
 $root_path = "../../";
 
-require 'bootstrap.php';
+require 'init.php';
 
 // valores/componentes do template geral
 $title = "Perfil";
@@ -11,7 +11,11 @@ $nav = file_get_contents($root_path . "componentes/nav-transparent.html");
 $footer = file_get_contents($root_path . "componentes/footer.html");
 $scripts = file_get_contents("scripts.js");
 
-// cartões ( = configurações do usuário)
+/**
+ * Cartões (= configurações do usuário)
+ */
+
+// cartão de frequência (sempre almoça, poucas vezes almoça etc.)
 $cartao_freq = gerarCartao(
 	'cartao_frequencia.html',
 	'cartao_frequencia_item.html',
@@ -41,8 +45,12 @@ $cartao_alim = gerarCartao(
 	AlimentacaoDao::SelectTodas(),
 	$usuario->getAlimentacao()->getCodigo()
 );
+
 $cartao_carne = gerarCartaoCarne($usuario);
+
+// TODO
 $intolerancia = file_get_contents("cartao_intolerancia.html");
+
 // cartão de alterar senha + mostra erro caso senha antiga incorreta
 $alt_senha = file_get_contents("cartao_alt_senha.html");
 $senha_antiga_incorreta = "";

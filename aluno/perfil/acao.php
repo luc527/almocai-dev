@@ -10,7 +10,7 @@ require_once("{$root_path}classes/Carne.class.php");
 require_once("{$root_path}classes/Alimentacao.class.php");
 
 $usuario = new Usuario;
-$usuario->setCodigo($_SESSION['matricula']);
+$usuario->setCodigo($_SESSION['codigo']);
 
 if (isset($_POST['acao'])) $acao = $_POST['acao'];
 else if (isset($_GET['acao'])) $acao = $_GET['acao'];
@@ -24,7 +24,7 @@ if ($acao == 'AlterarSenha') {
   $senhaNova = sha1($_POST['senhaNova']);
   $_POST['senhaNova'] = '';
 
-  $usuario = UsuarioDao::SelectPorMatricula($usuario->getCodigo());
+  $usuario = UsuarioDao::SelectPorCodigo($usuario->getCodigo());
   if ($usuario->getSenha() == $senhaAntiga) {
     $usuario->setSenha($senhaNova);
     UsuarioDao::Update($usuario);

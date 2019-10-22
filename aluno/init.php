@@ -2,7 +2,7 @@
 
 $root_path = "../";
 include("{$root_path}valida_secao.php");
-valida_secao_tipo($root_path, "ALUNO'");
+valida_secao_tipo($root_path, "ALUNO");
 
 require_once("{$root_path}classes/UsuarioDao.class.php");
 require_once("{$root_path}classes/SemanaCardapioDao.class.php");

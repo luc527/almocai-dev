@@ -13,7 +13,7 @@ else $acao = '';
 if ($acao == 'AddAlimento') {
 
 	$alimento = new Alimento;
-	$alimento->setDescricao(ucwords(htmlspecialchars($_POST['alimento'])));
+	$alimento->setDescricao(ucfirst(htmlspecialchars($_POST['alimento'])));
 	$alimento->setTipo($_POST['tipo']);
 
 	$dia_cod = $_POST['dia_cod'];
@@ -27,7 +27,7 @@ if ($acao == 'AddAlimento') {
 } else if ($acao == 'AddAlimentoSemana') {
 
 	$alimento = new Alimento;
-	$alimento->setDescricao(ucwords(htmlspecialchars($_POST['nome'])));
+	$alimento->setDescricao(ucfirst(htmlspecialchars($_POST['nome'])));
 	$alimento->setTipo($_POST['tipo']);
 
 	$semana_cod = $_POST['semana_cod'];

@@ -17,7 +17,7 @@ if ($acao == 'Insert') {
   Redir();
 
 } else if ($acao == 'Delete') {  
-  UsuarioDao::Delete($_GET['matricula']);
+  UsuarioDao::Delete($_GET['codigo']);
   Redir();
 
 }
@@ -29,8 +29,9 @@ function InsertUsuario()
 {
   // Instancia novo usuário com as informações do formulário
   $usuario = new Usuario;
-  $usuario->setCodigo($_POST['matricula']);
+  $usuario->setCodigo($_POST['codigo']);
   $usuario->setNome(htmlspecialchars($_POST['nome']));
+  $usuario->setUsername(htmlspecialchars($_POST['username']));
   $usuario->setSenha(sha1($_POST['senha']));
   $usuario->setTipo($_POST['tipo']);
 
@@ -45,11 +46,12 @@ function UpdateUsuario()
 {
   // Instancia um usuário com código e nome do formulário
   $usuario = new Usuario;
-  $usuario->setCodigo($_POST['matricula']);
+  $usuario->setCodigo($_POST['codigo']);
+  $usuario->setUsername(htmlspecialchars($_POST['username']));
   $usuario->setNome(htmlspecialchars($_POST['nome']));
 
-  // Primeiro atualiza apenas o nome
-  UsuarioDao::UpdateNome($usuario);
+  // Primeiro atualiza apenas o nome e o username
+  UsuarioDao::Update2($usuario);
 
   // Só atualiza a senha se uma senha veio do formulário
   if ($_POST['senha'] != '') {

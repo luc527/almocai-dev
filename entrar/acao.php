@@ -9,13 +9,15 @@ else $acao = '';
 
 if ($acao == 'Login') {
   $usuario = new Usuario;
-  $usuario->setCodigo($_POST['matricula']);
-  $usuario->setSenha(sha1($_POST['senha']));;
+  $usuario->setUsername($_POST['username']);
+  $usuario->setSenha(sha1($_POST['senha']));
+
   $login_info = UsuarioDao::Login($usuario);
 
-  if($login_info['acao'] == 'fazer_login') {
+  if ($login_info['acao'] == 'fazer_login') {
     session_start();
-    $_SESSION['matricula'] = $login_info['matricula'];
+    $_SESSION['codigo'] = $login_info['codigo'];
+    $_SESSION['username'] = $login_info['username'];
     $_SESSION['nome'] = $login_info['nome'];
     $_SESSION['tipo'] = $login_info['tipo'];
     

@@ -65,7 +65,7 @@ $alt_senha = str_replace("{{senha_antiga_incorreta}}", $senha_antiga_incorreta, 
 $main = file_get_contents("main.html");
 
 $main = str_replace("{nome}", $usuario->getNome(), $main);
-$main = str_replace("{matricula}", $usuario->getCodigo(), $main);
+$main = str_replace("{username}", $usuario->getUsername(), $main);
 $main = str_replace("{{cartao_frequencia}}", $cartao_freq, $main);
 $main = str_replace("{{cartao_intolerancia}}", $intolerancia, $main);
 $main = str_replace("{{cartao_carne}}", $cartao_carne, $main);

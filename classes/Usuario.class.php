@@ -7,6 +7,7 @@ require_once("Frequencia.class.php");
 class Usuario extends AbsCodigo
 {
     private $nome;
+    private $username;
     private $senha;
     private $tipo;
     private $alimentacao; // vegetariano, vegano ou nenhum dos dois
@@ -14,6 +15,15 @@ class Usuario extends AbsCodigo
     private $frequencia; // se almoça sempre no if, nunca, as vezes etc.
     private $intolerancia_usuario = array();
 
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    }
+    public function getUsername()
+    {
+        return $this->username;
+    }
+    
     public function setSenha($senha)
     {
         $this->senha = $senha;

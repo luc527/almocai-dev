@@ -1,23 +1,27 @@
-<!-- {matricula {nome {tipo -->
-
 <tr>
-  <td>{matricula}</td>
+  <td>{codigo}</td>
+  <td>{username}</td>
   <td>{nome}</td>
 
   <!-- Alterar usuário -->
-  <td><a href="#alterar{matricula}" class="modal-trigger"><i class="material-icons adm__tabela--alterar">edit</i></a></td>
+  <td><a href="#alterar{codigo}" class="modal-trigger"><i class="material-icons adm__tabela--alterar">edit</i></a></td>
 
-  <div id="alterar{matricula}" class="modal adm__tabela--alterar-modal">
+  <div id="alterar{codigo}" class="modal adm__tabela--alterar-modal">
     <form action="{root_path}administrador/acao.php" method="post">
       <div class="modal-content">
         <h4 class="almocai-text {cor_texto}">Alterar informações</h4>
       
         <div class="row">
-          <input type="hidden" name="matricula" value="{matricula}"/>
+          <input type="hidden" name="codigo" value="{codigo}"/>
           <input type="hidden" name="tipo" value="{tipo}" />
+
           <div class="input-field col s12">
             <input id="nome" name="nome" type="text" value="{nome}">
             <label for="nome">Nome</label>
+          </div>
+          <div class="input-field col s12">
+            <input id="username" name="username" type="text" value="{username}">
+            <label for="username">Username</label>
           </div>
           <div class="input-field col s12">
             <input id="senha" name="senha" type="password" placeholder="Senha (deixe vazia para não alterar)">
@@ -41,10 +45,10 @@
   </div>
 
   <!-- Excluir usuário -->
-  <td><a href="#excluir{matricula}" class="modal-trigger"><i class="material-icons adm__tabela--excluir">delete</i></a>
+  <td><a href="#excluir{codigo}" class="modal-trigger"><i class="material-icons adm__tabela--excluir">delete</i></a>
   </td>
 
-  <div id="excluir{matricula}" class="modal adm__tabela--excluir-modal">
+  <div id="excluir{codigo}" class="modal adm__tabela--excluir-modal">
     <div class="modal-content">
       <h4 class="adm__tabela--excluir-modal-titulo">Você realmente deseja remover {nome}?</h4>
       <h4 class="adm__tabela--excluir-modal-text">- Lembre-se, esta operação não poderá ser desfeita -</h4>
@@ -53,7 +57,7 @@
       <a class="modal-close waves-effect waves-almocai btn-flat left almocai-text text-branco bold">Cancelar</a>
       <a
         class="waves-effect waves-light btn adm__inserir--btn almocai branco almocai-text text-vermelho right bold"
-        href="{root_path}administrador/acao.php?acao=Delete&matricula={matricula}&tipo={tipo}">
+        href="{root_path}administrador/acao.php?acao=Delete&codigo={codigo}&tipo={tipo}">
           Confirmar
         </a>
     </div>

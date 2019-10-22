@@ -3,7 +3,7 @@
 // Valida seção, inclui classes que serão usadas etc.
 require 'init.php';
 
-$usuario = UsuarioDao::SelectPorMatricula($_SESSION['matricula']);
+$usuario = UsuarioDao::SelectPorCodigo($_SESSION['codigo']);
 
 /**
  * Variáveis e componentes do template.html

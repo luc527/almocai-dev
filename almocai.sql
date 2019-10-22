@@ -58,7 +58,8 @@ insert into Alimentacao (descricao) values ('Come Carne'), ('Vegetariano'), ('Ve
 
 
 create table if not exists Usuario (
-	matricula int primary key,
+	codigo int auto_increment primary key,
+    username varchar(100) unique,
 	senha varchar(255),
 	nome varchar(100),
 	tipo varchar(50),
@@ -81,26 +82,26 @@ create table if not exists Carne (
 insert into Carne (codigo, descricao) values (1, 'Frango'), (2, 'Porco'), (3, 'Boi');
 
 create table if not exists Carne_usuario (
-	usuario_matricula int,
+	usuario_cod int,
     carne_cod int,
     
-    primary key (usuario_matricula, carne_cod),
+    primary key (usuario_cod, carne_cod),
     
-    foreign key (usuario_matricula) references Usuario(matricula) on delete cascade,
+    foreign key (usuario_cod) references Usuario(codigo) on delete cascade,
     foreign key (carne_cod) references Carne(codigo) on delete cascade
 );
 
-insert into Usuario (matricula, senha, nome, tipo) values
-('2019','d033e22ae348aeb5660fc2140aec35850c4da997','admin','ADMINISTRADOR');
+insert into Usuario (username, senha, nome, tipo) values
+('admin','d033e22ae348aeb5660fc2140aec35850c4da997','admin','ADMINISTRADOR');
 -- senha (provisória): admin
 
 create table if not exists Presenca (
-	usuario_matricula int,
+	usuario_cod int,
 	diaAlmoco_codigo int,
 	presenca tinyint,
-	primary key (usuario_matricula, diaAlmoco_codigo),
+	primary key (usuario_cod, diaAlmoco_codigo),
 
-	foreign key (usuario_matricula) references Usuario(matricula)
+	foreign key (usuario_cod) references Usuario(codigo)
 		on delete cascade
 		on update cascade,
   foreign key (diaAlmoco_codigo) references DiaAlmoco(codigo)
@@ -114,11 +115,11 @@ create table if not exists Intolerancia (
 );
 
 create table if not exists Usuario_intolerancia (
-	usuario_matricula int,
+	usuario_cod int,
 	intolerancia_codigo int,
     arquivo varchar(2000),
-	primary key (usuario_matricula, intolerancia_codigo),
-	foreign key (usuario_matricula) references Usuario(matricula)
+	primary key (usuario_cod, intolerancia_codigo),
+	foreign key (usuario_cod) references Usuario(codigo)
 		on delete cascade,
 	foreign key (intolerancia_codigo) references Intolerancia(codigo)
 		on delete cascade
@@ -133,7 +134,7 @@ begin
     declare tipoUsuario varchar(40);
     declare finished int default 0;
 	declare id int;
-	declare usuarioCursor cursor for select matricula from Usuario;
+	declare usuarioCursor cursor for select codigo from Usuario;
 	DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;
     
     open usuarioCursor;
@@ -143,8 +144,8 @@ begin
       leave add_presenca;
     end if;
 
-    select frequencia into idFrequencia from Usuario where matricula = id;
-    select tipo into tipoUsuario from Usuario where matricula = id;
+    select frequencia into idFrequencia from Usuario where codigo = id;
+    select tipo into tipoUsuario from Usuario where codigo = id;
     if tipoUsuario = 'Aluno' then
 		if idFrequencia = 1 or idFrequencia = 2 then
 			insert into Presenca value(id, new.codigo, 1);
@@ -157,4 +158,5 @@ begin
   close usuarioCursor;
 end :)
 delimiter ;
-# create view Semana as Select s.data_inicio, d.diaSemana, a.descricao, a.tipo from SemanaCardapio s, DiaAlmoco d, Alimento a where s.codigo = d.semanaCardapio_codigo and d.codigo = a.diaAlmoco_codigo;
+/* create view Semana as Select s.data_inicio, d.diaSemana, a.descricao, a.tipo from SemanaCardapio s, DiaAlmoco d,
+ Alimento a where s.codigo = d.semanaCardapio_codigo and d.codigo = a.diaAlmoco_codigo; */

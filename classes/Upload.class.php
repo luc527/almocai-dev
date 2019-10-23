@@ -36,7 +36,7 @@
                 }
 
                 // verifica se o nome não é vazio e se a entensão é permitida
-                if(!empty($nome) and in_array($this->name['type'],$this->permite)) { 
+                if(!empty($nome) and in_array($extensao,$this->permite)) { 
                     // verifica de o arquivo foi movido para pasta
                     if(move_uploaded_file($this->name['tmp_name'], $upload_arquivo)) {
                         return $upload_arquivo;

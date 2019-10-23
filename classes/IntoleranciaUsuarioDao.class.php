@@ -18,7 +18,7 @@
             $Upload = new Upload;
             // faz o upload do arquivo e coloca o caminho no atributo documento
             $intoleranciaUsuario->setDocumento($Upload->uploadImagem($nome_arquivo, $pasta_destino));
-
+            if(!is_array($intoleranciaUsuario->getDocumento()))
             return StatementBuilder::insert("INSERT INTO Usuario_Intolerancia value (:usuario_matricula, :intolerancia_id, :documento)", 
             [
                 'usuario_matricula' => $matricula,

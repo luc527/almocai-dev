@@ -63,6 +63,7 @@ create table if not exists Usuario (
 	senha varchar(255),
 	nome varchar(100),
 	tipo varchar(50),
+    email varchar(255),
     
     alimentacao int default 1,
     foreign key (alimentacao) references Alimentacao(codigo) 

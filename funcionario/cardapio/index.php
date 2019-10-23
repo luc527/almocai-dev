@@ -42,11 +42,9 @@ if (!$cardapio) {
 
 	// formulário para adicionar alimento em toda a semana
 	$semana_cod = $cardapio->getCodigo();
-	$select_tipo = file_get_contents("select_tipo.html");
 
 	$add_alimento_semana = file_get_contents("add_alimento_semana.html");
 
-	$add_alimento_semana = str_replace("{{ select_tipo }}", $select_tipo, $add_alimento_semana);
 	$add_alimento_semana = str_replace("{semana_cod}", $semana_cod, $add_alimento_semana);
 
 	// carrega dias 
@@ -69,24 +67,29 @@ if (!$cardapio) {
 
 		// carrega alimentos do dia
 		$dia = DiaAlmocoDao::SelectAlimentos($dia);
+		$alimentos = $dia->getAlimentos();
 
 		// mostra alimentos do dia / gera {itens}
-		$itens = ""; // valor em que todos os itens do dia estarão concatenados
+		$itens = "";
+		
+		if (count($alimentos) > 0) {
+			$itens .= "<ul class='collection'>";
+			foreach ($alimentos as $alimento) {
 
-		foreach ($dia->getAlimentos() as $alimento) {
+				$codigo = $alimento->getCodigo();
+				$nome = $alimento->getDescricao();
+				$tipo = $alimento->getTipo();
 
-			$codigo = $alimento->getCodigo();
-			$nome = $alimento->getDescricao();
-			$tipo = $alimento->getTipo();
+				// carrega valores do alimento em item.html
+				$item = file_get_contents("item.html");
+				$item = str_replace("{nome}", $nome, $item);
+				$item = str_replace("{codigo}", $codigo, $item);
+				$item = str_replace("{semana_codigo}", $semana_cod, $item);
 
-			// carrega valores do alimento em item.html
-			$item = file_get_contents("item.html");
-			$item = str_replace("{nome}", $nome, $item);
-			$item = str_replace("{codigo}", $codigo, $item);
-			$item = str_replace("{semana_codigo}", $semana_cod, $item);
-
-			// concatena
-			$itens .= $item;
+				// concatena
+				$itens .= $item;
+			}
+			$itens .= "</ul>";
 		}
 
 		// carrega valores e componentes em dia.html
@@ -97,7 +100,6 @@ if (!$cardapio) {
 		$dia = str_replace("{codigo}", $dia_codigo, $dia);
 		$dia = str_replace("{semana_codigo}", $semana_cod, $dia);
 		$dia = str_replace("{{ itens }}", $itens, $dia);
-		$dia = str_replace("{{ select_tipo }}", $select_tipo, $dia);
 
 		// concatena
 		$dias .= $dia;

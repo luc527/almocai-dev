@@ -59,27 +59,11 @@ if (SemanaCardapioDao::SemanaExiste($dataHj)) {
 
   // Cria cada <li> alimento </li>
   for ($i = 0; $i < count($alimentos); $i++) {
-    for ($j = 0; $j < count($alimentos[$i]); $j++) {
-
-      // Seleciona o ícone conforme o tipo de alimento
-      $icon_alimento = "";
-      switch ($alimentos[$i][$j]->getTipo()) {
-        case 'CARNE':
-          $icon_alimento = file_get_contents("icon_alimento.html");
-          $icon_alimento = str_replace("{icon_alimento}", 'carne.svg', $icon_alimento);
-          break;
-
-        case 'VEGETARIANA':
-        case 'VEGANA':
-          $icon_alimento = file_get_contents("icon_alimento.html");
-          $icon_alimento = str_replace("{icon_alimento}", 'folha.svg', $icon_alimento);
-          break;
-      }
+    for ($j = 0; $j < count($alimentos[$i]); $j++) {      
 
       // Carrega o template <li>alimento</li> e coloca o nome e ícone do alimento
       $li = file_get_contents("alimento_li.html");
-      $alimentos[$i][$j] = str_replace("{nome_alimento}", $alimentos[$i][$j]->getDescricao(), $li);
-      $alimentos[$i][$j] = str_replace("{{icon_alimento}}", $icon_alimento, $alimentos[$i][$j]);
+      $alimentos[$i][$j] = str_replace("{nome_alimento}", $alimentos[$i][$j]->getDescricao(), $li);      
       // As variáveis que antes eram objetos tornam-se strings aqui
     }
   }

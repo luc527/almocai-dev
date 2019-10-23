@@ -9,15 +9,30 @@
   </div>
 
   <div class="container margin-top-small">
-    <!-- Dias da semana (listagem, exclusão e cadastro de alimentos) -->
     <div class="row">
       {{ dias }}
     </div>
 
-    <!-- Adicionar alimentos para todos os dias da semana -->
     <div class="row">
       {{ add_alimento_semana }}
     </div>
+
+    <div style="height: 2rem;"></div>
+
+    <!-- por usabilidade -->
+    <div class="row center">
+      <div class="col s12">
+        <a
+          href="{root_path}funcionario/cardapios/"
+          class="btn btn-large almocai bold waves-effect"
+        >
+          <i class="material-icons left">check</i>
+          Salvar
+        </a>
+      </div>
+    </div>
+
+    <div style="height: 3rem;"></div>
   </div>
 
 </main>

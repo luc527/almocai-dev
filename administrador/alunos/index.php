@@ -14,6 +14,7 @@ $peso_fonte = ",200,700";
 $nav = file_get_contents($root_path."componentes/nav-administrador.html");
 $footer = file_get_contents($root_path."componentes/footer.html");
 $scripts = file_get_contents($root_path."administrador/componentes/scripts.js");
+$scripts.= file_get_contents($root_path."administrador/componentes/ajax.js");
 
 // Carregando valores e componentes no template
 $ger_alunos = str_replace("{title}", $title, $ger_alunos);

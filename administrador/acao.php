@@ -20,6 +20,9 @@ if ($acao == 'Insert') {
   UsuarioDao::Delete($_GET['codigo']);
   Redir();
 
+} else if($acao == 'ValidarUsuario'){
+  $NumeroUsuarios = count(UsuarioDao::Select('username-exato', $_GET['username']));
+  echo $NumeroUsuarios;
 }
 
 /**

@@ -3,7 +3,9 @@
         private $name; //name do input que o usuário colocará a imagem
         private $pasta; //nome da pasta que receberá a imagem
         private $nome_substituto; //nome que irá sobrescrever o nome da imagem atual
+
         private $permite; //Tipo de imagem permitida, ex:png,jpg,gif,pjpeg,jpeg
+
 
         /**
          * @param name_imagem é o nome do arquivo enviado

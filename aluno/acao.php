@@ -36,7 +36,7 @@ header("location:{$redir}");
 
 function CadPresenca ($acao, $dia_cod, $semana_cod) {
   $user = new Usuario;
-  $user->setCodigo($_SESSION['matricula']);
+  $user->setCodigo($_SESSION['codigo']);
 
   if ($dia_cod != '') {
     CadPresencaDia($acao, $dia_cod, $user);

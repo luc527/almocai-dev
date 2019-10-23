@@ -32,7 +32,7 @@ class DiaAlmocoDao {
 			// Se não existe, ele tenta deletar, mas não deleta nada (porque não existe), e simplesmente insere uma nova
 
 			StatementBuilder::insert(
-				"INSERT INTO Presenca (usuario_matricula, diaAlmoco_codigo, presenca) VALUES (:usuario, :dia, :presenca)",
+				"INSERT INTO Presenca (usuario_cod, diaAlmoco_codigo, presenca) VALUES (:usuario, :dia, :presenca)",
 				[
 					'usuario' => $presencas[$i]->getAluno()->getCodigo(),
 					'dia' => $diaAlmoco->getCodigo(),
@@ -44,7 +44,7 @@ class DiaAlmocoDao {
 
 	public static function DeletarPresenca($usuario, $dia) {
 		try {
-			$sql = "DELETE FROM Presenca WHERE usuario_matricula = :usuario AND diaAlmoco_codigo = :dia";
+			$sql = "DELETE FROM Presenca WHERE usuario_cod = :usuario AND diaAlmoco_codigo = :dia";
 			$stmt = Conexao::conexao()->prepare($sql);
 			$stmt->bindParam(":usuario", $usuario);
 			$stmt->bindParam(":dia", $dia);
@@ -138,7 +138,7 @@ class DiaAlmocoDao {
 		$sql = "SELECT A.Codigo as 'alimentacao_id', count(*) as 'contagem'
 		FROM Presenca P, Usuario U, Alimentacao A
 		WHERE diaAlmoco_codigo = :diaAlmoco_codigo
-		AND P.usuario_matricula = U.matricula
+		AND P.usuario_cod = U.codigo
 		AND A.codigo = U.alimentacao
 		AND P.presenca = :presenca
 		GROUP BY U.alimentacao";

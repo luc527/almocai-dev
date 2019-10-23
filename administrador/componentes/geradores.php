@@ -95,11 +95,13 @@ function gerarLinhas ($users) {
     foreach ($users as $user) {
       $linha = file_get_contents($GLOBALS['root_path']."administrador/componentes/linha_usuario.html");
       
-      $matricula = $user->getCodigo();
+      $codigo = $user->getCodigo();
+      $username = $user->getUsername();
       $nome = $user->getNome();
       $tipo = $user->getTipo();
 
-      $linha = str_replace("{matricula}", $matricula, $linha);
+      $linha = str_replace("{codigo}", $codigo, $linha);
+      $linha = str_replace("{username}", $username, $linha);
       $linha = str_replace("{nome}", $nome, $linha); 
       $linha = str_replace("{tipo}", $tipo, $linha);
       

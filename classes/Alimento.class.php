@@ -5,12 +5,6 @@ class Alimento extends AbsCodigo {
 	private $descricao;
 	private $tipo;
 
-	/*
-	public function __construct ($descricao) {
-		$this->descricao = $descricao;
-	}
-	*/
-
 	public function getDescricao ()	{
 		return $this->descricao;
 	}

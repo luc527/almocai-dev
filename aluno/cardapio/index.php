@@ -90,7 +90,7 @@ if (SemanaCardapioDao::SemanaExiste($dataHj)) {
     $diaSemana = $dias[$i]->getDiaSemana();
 
     // Presença do aluno no dia
-    $pres = UsuarioDao::SelectPresenca($dias[$i]->getCodigo(), $_SESSION['matricula']);
+    $pres = UsuarioDao::SelectPresenca($dias[$i]->getCodigo(), $_SESSION['codigo']);
     if ($pres == 1) {
       $fundo_cor = ' aluno__confirmado ';
       $cor_texto_presenca = 'cardapio__confirmacao--confirmado';

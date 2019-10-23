@@ -14,11 +14,12 @@ class UsuarioDao
 
 	public static function Insert(Usuario $usuario)
 	{
-		$sql = "INSERT INTO Usuario (matricula, senha, nome, tipo)
-		VALUES (:matricula, :senha, :nome, :tipo)";
+		$sql = "INSERT INTO Usuario (codigo, username, senha, nome, tipo)
+		VALUES (:codigo, :username, :senha, :nome, :tipo)";
 
 		$params = [
-			'matricula' => $usuario->getCodigo(),
+			'codigo' => $usuario->getCodigo(),
+			'username' => $usuario->getUsername(),
 			'nome' => $usuario->getNome(),
 			'senha' => $usuario->getSenha(),
 			'tipo' => $usuario->getTipo()
@@ -31,9 +32,9 @@ class UsuarioDao
 	public static function UpdateAlimentacao(Usuario $usuario)
 	{
 		return StatementBuilder::update(
-			"UPDATE Usuario SET alimentacao = :alimentacao WHERE matricula = :matricula",
+			"UPDATE Usuario SET alimentacao = :alimentacao WHERE codigo = :codigo",
 			[
-				'matricula' => $usuario->getCodigo(),
+				'codigo' => $usuario->getCodigo(),
 				'alimentacao' => $usuario->getAlimentacao()->getCodigo()
 			]
 		);
@@ -42,9 +43,9 @@ class UsuarioDao
 	public static function UpdateFrequencia(Usuario $usuario)
 	{
 		return StatementBuilder::update(
-			"UPDATE Usuario SET frequencia = :frequencia WHERE matricula = :matricula",
+			"UPDATE Usuario SET frequencia = :frequencia WHERE codigo = :codigo",
 			[
-				'matricula' => $usuario->getCodigo(),
+				'codigo' => $usuario->getCodigo(),
 				'frequencia' => $usuario->getFrequencia()->getCodigo()
 			]
 		);
@@ -70,9 +71,9 @@ class UsuarioDao
 		for ($i = 0; $i < count($todas); $i++) {
 			if (in_array($todas[$i]->getCodigo(), $carnes)) {
 				StatementBuilder::insert(
-					"INSERT INTO Carne_usuario (usuario_matricula, carne_cod) VALUES (:matricula, :carne)",
+					"INSERT INTO Carne_usuario (usuario_cod, carne_cod) VALUES (:usuario_cod, :carne)",
 					[
-						'matricula' => $usuario->getCodigo(),
+						'usuario_cod' => $usuario->getCodigo(),
 						'carne' => $todas[$i]->getCodigo()
 					]
 				);
@@ -90,7 +91,8 @@ class UsuarioDao
 	public static function Popula($row)
 	{
 		$usuario = new Usuario;
-		$usuario->setCodigo($row['matricula']);
+		$usuario->setCodigo($row['codigo']);
+		$usuario->setUsername($row['username']);
 		$usuario->setSenha($row['senha']);
 		$usuario->setNome($row['nome']);
 		$usuario->setTipo($row['tipo']);
@@ -112,10 +114,11 @@ class UsuarioDao
 		try {
 			switch ($criterio) {
 				case 'nome':
+				case 'username':
 					$sql = "SELECT * FROM Usuario WHERE $criterio like '%$pesquisa%'";
 					break;
 
-				case 'matricula':
+				case 'codigo':
 				case 'tipo':
 					$sql = "SELECT * FROM Usuario WHERE $criterio = '$pesquisa'";
 					break;
@@ -149,9 +152,10 @@ class UsuarioDao
 
 		// Se a pesquisa não foi por todos os usuários do tipo, no entanto, pesquisa por nome e matrícula
 		if ($pesquisa != 'TODOS') {
-			$sql .= " AND (nome like :nome OR matricula like :matricula)";
-			$params['nome'] = "%{$pesquisa}%";
-			$params['matricula'] = "%{$pesquisa}%";
+			$sql .= " AND (nome like :nome OR codigo like :codigo OR username like :username)";
+			$params['nome'] = "%{$pesquisa}%";			
+			$params['codigo'] = "%{$pesquisa}%";
+			$params['username'] = "%{$pesquisa}%";
 		}
 
 		return self::PopulaVarios(
@@ -159,12 +163,12 @@ class UsuarioDao
 		);
 	}
 
-	public static function SelectPorMatricula($matricula)
+	public static function SelectPorCodigo($codigo)
 	{
 		return self::Popula(
 			StatementBuilder::select(
-				"SELECT * FROM Usuario WHERE matricula = :matricula",
-				['matricula' => $matricula]
+				"SELECT * FROM Usuario WHERE codigo = :codigo",
+				['codigo' => $codigo]
 			)[0]
 		);
 	}
@@ -172,11 +176,11 @@ class UsuarioDao
 	/**
 	 * Recebe o código de um dia e de um usuário e retorna 0 ou 1 (coluna 'presenca' da tabela Presenca), não o objeto AlunoPresenca
 	 */
-	public static function SelectPresenca($dia_cod, $user_mat)
+	public static function SelectPresenca($dia_cod, $user_cod)
 	{
 		$result = StatementBuilder::select(
-			"SELECT * FROM Presenca WHERE diaAlmoco_codigo = :dia_cod AND usuario_matricula = :user_mat",
-			['dia_cod' => $dia_cod, 'user_mat' => $user_mat]
+			"SELECT * FROM Presenca WHERE diaAlmoco_codigo = :dia_cod AND usuario_cod = :user_cod",
+			['dia_cod' => $dia_cod, 'user_cod' => $user_cod]
 		);
 
 		if ($result == []) {
@@ -200,8 +204,8 @@ class UsuarioDao
 		$frequencia = new Frequencia;
 		$frequencia->setCodigo(
 			StatementBuilder::select(
-				"SELECT frequencia FROM Usuario WHERE matricula = :matricula",
-				['matricula' => $usuario->getCodigo()]
+				"SELECT frequencia FROM Usuario WHERE codigo = :codigo",
+				['codigo' => $usuario->getCodigo()]
 			)[0]['frequencia']
 		);
 
@@ -217,8 +221,8 @@ class UsuarioDao
 		$al = new Alimentacao;
 		$al->setCodigo(
 			StatementBuilder::select(
-				"SELECT alimentacao FROM Usuario WHERE matricula = :matricula",
-				['matricula' => $usuario->getCodigo()]
+				"SELECT alimentacao FROM Usuario WHERE codigo = :codigo",
+				['codigo' => $usuario->getCodigo()]
 			)[0]['alimentacao']
 		);
 
@@ -233,8 +237,8 @@ class UsuarioDao
 	public static function SelectCarnes(Usuario $usuario)
 	{
 		$carne_cods = StatementBuilder::select(
-			"SELECT carne_cod FROM carne_usuario WHERE usuario_matricula = :matricula",
-			['matricula' => $usuario->getCodigo()]
+			"SELECT carne_cod FROM carne_usuario WHERE usuario_cod = :usuario_cod",
+			['usuario_cod' => $usuario->getCodigo()]
 		);
 
 		foreach ($carne_cods as $cod) {
@@ -253,23 +257,28 @@ class UsuarioDao
 	public static function Update(Usuario $usuario)
 	{
 		return StatementBuilder::update(
-			"UPDATE Usuario SET nome = :nome, tipo = :tipo, senha = :senha, alimentacao = :alimentacao WHERE matricula = :matricula",
+			"UPDATE Usuario SET nome = :nome, username = :username, tipo = :tipo, senha = :senha, alimentacao = :alimentacao WHERE codigo = :codigo",
 			[
 				'nome' => $usuario->getNome(),
+				'username' => $usuario->getUsername(),
 				'tipo' => $usuario->getTipo(),
 				'senha' => $usuario->getSenha(),
 				'alimentacao' => $usuario->getAlimentacao(),
-				'matricula' => $usuario->getCodigo()
+				'codigo' => $usuario->getCodigo()
 			]
 		);
 	}
 
-	public static function UpdateNome(Usuario $usuario)
+	/**
+	 * Update especial para o ADM que altera apenas nome e username
+	 */
+	public static function Update2(Usuario $usuario)
 	{
-		$sql = "UPDATE Usuario SET nome = :nome WHERE matricula = :matricula";
+		$sql = "UPDATE Usuario SET nome = :nome, username = :username WHERE codigo = :codigo";
 		$params = [
 			'nome' => $usuario->getNome(),
-			'matricula' => $usuario->getCodigo()
+			'username' => $usuario->getUsername(),
+			'codigo' => $usuario->getCodigo()
 		];
 
 		return StatementBuilder::update($sql, $params);
@@ -280,10 +289,10 @@ class UsuarioDao
 	 */
 	public static function UpdateSenha(Usuario $usuario)
 	{
-		$sql = "UPDATE Usuario SET senha = :senha WHERE matricula = :matricula";
+		$sql = "UPDATE Usuario SET senha = :senha WHERE codigo = :codigo";
 		$params = [
 			'senha' => $usuario->getSenha(), // acao.php já coloca em sha1
-			'matricula' => $usuario->getCodigo()
+			'codigo' => $usuario->getCodigo()
 		];
 
 		return StatementBuilder::update($sql, $params);
@@ -294,10 +303,10 @@ class UsuarioDao
 	 * DELETE
 	 */
 
-	public static function Delete($matricula)
+	public static function Delete($codigo)
 	{
-		$sql = "DELETE FROM Usuario WHERE matricula = :matricula";
-		$params = ['matricula' => $matricula];
+		$sql = "DELETE FROM Usuario WHERE codigo = :codigo";
+		$params = ['codigo' => $codigo];
 
 		return StatementBuilder::delete($sql, $params);
 	}
@@ -305,12 +314,12 @@ class UsuarioDao
 	/**
 	 * Deleta todos os registros da tabela 'Carne_usuario' de um determinado usuário
 	 */
-	public static function CarnesReset($matricula)
+	public static function CarnesReset($codigo)
 	{
-		$sql = "DELETE FROM Carne_usuario WHERE usuario_matricula = :matricula";
+		$sql = "DELETE FROM Carne_usuario WHERE usuario_cod = :codigo";
 		try {
 			$stmt = Conexao::conexao()->prepare($sql);
-			$stmt->bindParam(":matricula", $matricula);
+			$stmt->bindParam(":codigo", $codigo);
 		} catch (PDOException $e) {
 			echo "<b>Erro (UsuarioDao::CarnesReset): </b>" . $e->getMessage();
 		}
@@ -324,11 +333,11 @@ class UsuarioDao
 
 	public static function Login(Usuario $usuario)
 	{
-		$matricula = $usuario->getCodigo();
+		$username = $usuario->getUsername();
 		$senha = $usuario->getSenha();
 
 		$sql = "SELECT * FROM Usuario
-			WHERE `matricula` = '$matricula'
+			WHERE `username` = '$username'
 			AND `senha` = '$senha'";
 
 		try {
@@ -343,16 +352,18 @@ class UsuarioDao
 		/** $login_info
 		 * Informações que a função retornará:
 		 * ['acao'] -> se o login deverá ser efetuado OU, caso contrário, qual foi o erro
-		 * ['matricula'] -> matrícula do usuário
+		 * ['codigo'] -> código do usuário
+		 * ['username'] -> nome do usuário único para o login
 		 * ['nome'] -> nome do usuário
 		 * ['tipo'] -> tipo do usuário (adm)
-		 * ['matricula', 'nome' e 'tipo'] só serão preenchidas caso o login será feito
+		 * ['codigo', 'nome' e 'tipo'] só serão preenchidas caso o login será feito
 		 * serão armazenadas em $_SESSION
 		 */
-
+		
 		if ($row) {
 			$login_info['acao'] = "fazer_login";
-			$login_info['matricula'] = $row['matricula'];
+			$login_info['codigo'] = $row['codigo'];
+			$login_info['username'] = $row['username'];
 			$login_info['nome'] = $row['nome'];
 			$login_info['tipo'] = $row['tipo']; //tipo (adm)
 		} else {
@@ -368,7 +379,7 @@ class UsuarioDao
 	 */
 	public static function perfilCompleto(Usuario $usuario)
 	{
-		$usuario = self::SelectPorMatricula($usuario->getCodigo());
+		$usuario = self::SelectPorCodigo($usuario->getCodigo());
 		$usuario = self::SelectFrequencia($usuario);
 		$usuario = self::SelectCarnes($usuario);
 		$usuario = self::SelectAlimentacao($usuario);

@@ -10,5 +10,5 @@ require_once "{$root_path}classes/FrequenciaDao.class.php";
 include "funcoes.php";
 
 $usuario = new Usuario;
-$usuario->setCodigo($_SESSION['matricula']);
+$usuario->setCodigo($_SESSION['codigo']);
 $usuario = UsuarioDao::perfilCompleto($usuario);

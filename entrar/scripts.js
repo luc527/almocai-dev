@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function erroLogin() {
-  var texto = 'Usuário ou senha incorreto, por favor, tente novamente.';
+  var texto = 'Nome de usuário ou senha incorretos, por favor, tente novamente.';
   const elem = document.getElementById('modal-erro');
   const instance = M.Modal.init(elem);
   var textId = document.getElementById('texto-erro');

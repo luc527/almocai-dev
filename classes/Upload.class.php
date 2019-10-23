@@ -3,10 +3,16 @@
         private $name; //name do input que o usuário colocará a imagem
         private $pasta; //nome da pasta que receberá a imagem
         private $nome_substituto; //nome que irá sobrescrever o nome da imagem atual
-        private $permite; //Tipo de imagem permitida, ex:png,jpg,gif,bmp
+
+        private $permite; //Tipo de imagem permitida, ex:png,jpg,gif,pjpeg,jpeg
+
 
         /**
+         * @param name_imagem é o nome do arquivo enviado
+         * @param pasta_destino é o caminho da pasta onde será armazenado o arquivo
          * 
+         * @return array caso ocorra um erro, onde o na posição de mensagem está descrito o erro
+         * @return upload_arquivo caso o upload seja um sucesso, a variavel armazena o caminho da ima
          */
         public function uploadImagem ($name_imagem,$pasta_destino)
         {
@@ -30,16 +36,16 @@
                 }
 
                 // verifica se o nome não é vazio e se a entensão é permitida
-                if(!empty($nome) and in_array($this->name['type'],$this->permite)) { 
+                if(!empty($nome) and in_array($extensao,$this->permite)) { 
                     // verifica de o arquivo foi movido para pasta
                     if(move_uploaded_file($this->name['tmp_name'], $upload_arquivo)) {
                         return $upload_arquivo;
                     } else {
-                        return "erro ao enviar a imagem";
+                        return ['tipo' => 'erro', 'mensagem' => 'não foi possível enviar a imagem'];
                     }
                 } else{
                     //faça algo caso não seja a extensão permitida
-                    return "formato de imagem não aceito pelo sistema.";
+                    return ['tipo' => 'erro', 'mensagem' => "formato de imagem não aceito pelo sistema."];
                 }
 
         }

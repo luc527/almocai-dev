@@ -28,74 +28,19 @@ class UsuarioDao
 		return StatementBuilder::insert($sql, $params);
 	}
 
-
-	public static function UpdateAlimentacao(Usuario $usuario)
-	{
-		return StatementBuilder::update(
-			"UPDATE Usuario SET alimentacao = :alimentacao WHERE codigo = :codigo",
-			[
-				'codigo' => $usuario->getCodigo(),
-				'alimentacao' => $usuario->getAlimentacao()->getCodigo()
-			]
-		);
-	}
-
-	public static function UpdateFrequencia(Usuario $usuario)
-	{
-		return StatementBuilder::update(
-			"UPDATE Usuario SET frequencia = :frequencia WHERE codigo = :codigo",
-			[
-				'codigo' => $usuario->getCodigo(),
-				'frequencia' => $usuario->getFrequencia()->getCodigo()
-			]
-		);
-	}
-
-	public static function SalvarCarnes(Usuario $usuario)
-	{
-		// Deleta todos os registros da tabela Carne_usuario de um usuário para evitar erros no INSERT (registro duplicado)
-		self::CarnesReset($usuario->getCodigo());
-
-		// Consulta todas as carnes do BD, transforma objetos em código
-		$todas = CarneDao::SelectTodas();
-
-		// Transforma array de objetos carne em array de códigos de cada carne para verificação in_array() -- não funcionou com objetos
-		$carnes = $usuario->getCarnes();
-		for ($i = 0; $i < count($carnes); $i++) {
-			$carnes[$i] = $carnes[$i]->getCodigo();
-		}
-
-		// Verifica se cada uma das carnes está no array de carnes selecionadas pelo usuário
-		// Se está, faz um insert na tabela Carne_usuario (pode ocorrer um erro se o valor já estiver registrado, mas não tem problema?)
-		// Se não está, não insere nada
-		for ($i = 0; $i < count($todas); $i++) {
-			if (in_array($todas[$i]->getCodigo(), $carnes)) {
-				StatementBuilder::insert(
-					"INSERT INTO Carne_usuario (usuario_cod, carne_cod) VALUES (:usuario_cod, :carne)",
-					[
-						'usuario_cod' => $usuario->getCodigo(),
-						'carne' => $todas[$i]->getCodigo()
-					]
-				);
-			}
-		}
-	}
-
-
-
-
 	/**
 	 * SELECT
 	 */
 
 	public static function Popula($row)
-	{
+	{		
 		$usuario = new Usuario;
 		$usuario->setCodigo($row['codigo']);
 		$usuario->setUsername($row['username']);
 		$usuario->setSenha($row['senha']);
 		$usuario->setNome($row['nome']);
 		$usuario->setTipo($row['tipo']);
+		$usuario->setEmail($row['email']);
 
 		return $usuario;
 	}
@@ -267,6 +212,69 @@ class UsuarioDao
 				'codigo' => $usuario->getCodigo()
 			]
 		);
+	}
+
+	public static function UpdateAlimentacao(Usuario $usuario)
+	{
+		return StatementBuilder::update(
+			"UPDATE Usuario SET alimentacao = :alimentacao WHERE codigo = :codigo",
+			[
+				'codigo' => $usuario->getCodigo(),
+				'alimentacao' => $usuario->getAlimentacao()->getCodigo()
+			]
+		);
+	}
+
+	public static function UpdateFrequencia(Usuario $usuario)
+	{
+		return StatementBuilder::update(
+			"UPDATE Usuario SET frequencia = :frequencia WHERE codigo = :codigo",
+			[
+				'codigo' => $usuario->getCodigo(),
+				'frequencia' => $usuario->getFrequencia()->getCodigo()
+			]
+		);
+	}
+
+	public static function SalvarCarnes(Usuario $usuario)
+	{
+		// Deleta todos os registros da tabela Carne_usuario de um usuário para evitar erros no INSERT (registro duplicado)
+		self::CarnesReset($usuario->getCodigo());
+
+		// Consulta todas as carnes do BD, transforma objetos em código
+		$todas = CarneDao::SelectTodas();
+
+		// Transforma array de objetos carne em array de códigos de cada carne para verificação in_array() -- não funcionou com objetos
+		$carnes = $usuario->getCarnes();
+		for ($i = 0; $i < count($carnes); $i++) {
+			$carnes[$i] = $carnes[$i]->getCodigo();
+		}
+
+		// Verifica se cada uma das carnes está no array de carnes selecionadas pelo usuário
+		// Se está, faz um insert na tabela Carne_usuario (pode ocorrer um erro se o valor já estiver registrado, mas não tem problema?)
+		// Se não está, não insere nada
+		for ($i = 0; $i < count($todas); $i++) {
+			if (in_array($todas[$i]->getCodigo(), $carnes)) {
+				StatementBuilder::insert(
+					"INSERT INTO Carne_usuario (usuario_cod, carne_cod) VALUES (:usuario_cod, :carne)",
+					[
+						'usuario_cod' => $usuario->getCodigo(),
+						'carne' => $todas[$i]->getCodigo()
+					]
+				);
+			}
+		}
+	}
+
+	public static function UpdateEmail(Usuario $usuario)
+	{
+		$sql = "UPDATE Usuario SET email = :email WHERE codigo = :codigo";
+		$params = [
+			"email" => $usuario->getEmail(),
+			"codigo" => $usuario->getCodigo()
+		];
+
+		return StatementBuilder::update($sql, $params);
 	}
 
 	/**

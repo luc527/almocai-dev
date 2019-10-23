@@ -10,6 +10,7 @@ class Usuario extends AbsCodigo
     private $username;
     private $senha;
     private $tipo;
+    private $email;
     private $alimentacao; // vegetariano, vegano ou nenhum dos dois
     private $carnes_come = array(); // quais carnes come
     private $frequencia; // se almoça sempre no if, nunca, as vezes etc.
@@ -51,6 +52,15 @@ class Usuario extends AbsCodigo
     public function getTipo()
     {
         return $this->tipo;
+    }
+
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+    public function getEmail()
+    {
+        return $this->email;
     }
 
     public function setAlimentacao($a)

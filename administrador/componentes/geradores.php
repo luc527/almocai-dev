@@ -98,11 +98,13 @@ function gerarLinhas ($users) {
       $codigo = $user->getCodigo();
       $username = $user->getUsername();
       $nome = $user->getNome();
+      $email = $user->getEmail();
       $tipo = $user->getTipo();
 
       $linha = str_replace("{codigo}", $codigo, $linha);
       $linha = str_replace("{username}", $username, $linha);
       $linha = str_replace("{nome}", $nome, $linha); 
+      $linha = str_replace("{email}", $email, $linha); 
       $linha = str_replace("{tipo}", $tipo, $linha);
       
       // Concatena a linha do usuário com o conjunto completo das linhas

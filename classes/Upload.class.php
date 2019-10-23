@@ -4,10 +4,13 @@
         private $pasta; //nome da pasta que receberá a imagem
         private $nome_substituto; //nome que irá sobrescrever o nome da imagem atual
         private $permite; //Tipo de imagem permitida, ex:png,jpg,gif,pjpeg,jpeg
-        // pinto pintoprivate static $tipos_permitidos = ['']
 
         /**
+         * @param name_imagem é o nome do arquivo enviado
+         * @param pasta_destino é o caminho da pasta onde será armazenado o arquivo
          * 
+         * @return array caso ocorra um erro, onde o na posição de mensagem está descrito o erro
+         * @return upload_arquivo caso o upload seja um sucesso, a variavel armazena o caminho da ima
          */
         public function uploadImagem ($name_imagem,$pasta_destino)
         {
@@ -36,11 +39,11 @@
                     if(move_uploaded_file($this->name['tmp_name'], $upload_arquivo)) {
                         return $upload_arquivo;
                     } else {
-                        return "erro ao enviar a imagem";
+                        return ['tipo' => 'erro', 'mensagem' => 'não foi possível enviar a imagem'];
                     }
                 } else{
                     //faça algo caso não seja a extensão permitida
-                    return "formato de imagem não aceito pelo sistema.";
+                    return ['tipo' => 'erro', 'mensagem' => "formato de imagem não aceito pelo sistema."];
                 }
 
         }

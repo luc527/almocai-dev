@@ -63,6 +63,10 @@ class UsuarioDao
 					$sql = "SELECT * FROM Usuario WHERE $criterio like '%$pesquisa%'";
 					break;
 
+				case 'username-exato':
+					$sql = "SELECT * FROM Usuario WHERE username = '$pesquisa'";
+					break;
+
 				case 'codigo':
 				case 'tipo':
 					$sql = "SELECT * FROM Usuario WHERE $criterio = '$pesquisa'";

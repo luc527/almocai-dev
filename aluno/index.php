@@ -79,24 +79,9 @@ if (SemanaCardapioDao::SemanaExiste($data)) {
 
   foreach ($alimentos as $alimento) {
     
-    // Primeiro determina o ícone a acompanhar o alimento (nenhum, carne ou vegetariano/vegano)
-    $icon = "";
-    switch ($alimento->getTipo()) {
-      case 'CARNE':
-        $icon = file_get_contents("cartao_dia_item_icon.html");
-        $icon = str_replace("{icon}", 'carne', $icon);
-        break;
-      case 'VEGETARIANA':
-      case 'VEGANA':
-        $icon = file_get_contents("cartao_dia_item_icon.html");
-        $icon = str_replace("{icon}", 'folha', $icon);
-        break;
-    }
-
     // Carrega o nome e o ícone do alimento no template da linha
     $item = file_get_contents("cartao_dia_item.html");
     $item = str_replace("{nome}", $alimento->getDescricao(), $item);
-    $item = str_replace("{{icon}}", $icon, $item);
 
     // Concatena
     $itens .= $item;

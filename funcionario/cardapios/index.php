@@ -33,15 +33,17 @@ foreach ($semanas as $semana) {
 	$data_inicio = date("d/m", strtotime($semana->getData_inicio()));
 	$data_fim = date("d/m", strtotime($semana->getData_inicio() . " + 3 days"));
 	$semana_cod = $semana->getCodigo();
-	$cor = SemanaCardapioDao::diaEhDaSemana(date("Y-m-d"), $semana_cod) ? 
-		" almocai azul "
-		: " green-gradient ";
+
+	$diaEhDaSemana = SemanaCardapioDao::diaEhDaSemana(date("Y-m-d"), $semana_cod);
+	$cor = $diaEhDaSemana ? " almocai azul " : " green-gradient ";
+	$cor_botao = $diaEhDaSemana ? "text-azul" : "";
 
 	$cartao = file_get_contents("cartao_semana.html");
 	$cartao = str_replace("{data_inicio}", $data_inicio, $cartao);
 	$cartao = str_replace("{data_fim}", $data_fim, $cartao);
 	$cartao = str_replace("{semana_cod}", $semana_cod, $cartao);
 	$cartao = str_replace("{cor}", $cor, $cartao);
+	$cartao = str_replace("{cor_botao}", $cor_botao, $cartao);
 
 	$cartoes .= $cartao;
 }

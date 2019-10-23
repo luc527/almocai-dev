@@ -33,7 +33,7 @@ if (isset($_GET['freq_selecionada'])) {
 		$mensagem = "Conforme a frequência que você selecionou, o sistema automaticamente marcará ausência em todos os dias.
 		<br><b>Não se esqueça de marcar presença nos dias que vier.</b>";
 	}
-	$freq_msg = file_get_contents("frequencia_cartao.html");
+	$freq_msg = file_get_contents("frequenciaAlterada_cartao.html");
 	$freq_msg = str_replace("{mensagem}", $mensagem, $freq_msg);
 }
 $cartao_freq = str_replace("{{frequencia_mensagem}}", $freq_msg, $cartao_freq);

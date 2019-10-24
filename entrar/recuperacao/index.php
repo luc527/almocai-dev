@@ -1,18 +1,24 @@
 <?php
 
-
 // Função que envia o e-mail
 // TODO
-function EnviarEmail() {
+function EnviarEmail($hash, $email) {
 	$root = "localhost/almocai";
-	$uri = "/entrar/nova_senha/?hash={$GLOBALS['hash']}&email={$GLOBALS['email']}";
+	$uri = "/entrar/nova_senha/?hash={$hash}&email={$email}";
+	
+	$to = $GLOBALS['email'];
+	
+	$subject = "Almocaí - Recuperação de senha";
 	
 	$link = $root.$uri;
+	$message = "Acesse o link para recuperar sua senha: \n {$link}";
 
-	echo $link;
+	echo $message."<br>";
 
-	// ...
+	$headers = "From: noreply@almocai.com";
 
+	// mail($to, $subject, $message, $headers);
+	echo "Não há conexão SMTP // comando mail() comentado";
 }
 
 
@@ -32,7 +38,7 @@ if ($email == "")
 	$usuario = UsuarioDao::SelectPorEmail($email);
 	$hash = $usuario->hash();
 
-	EnviarEmail();
+	EnviarEmail($hash, $email);
 	$msg_email_enviado = file_get_contents("msg_email_enviado.html");
 }
 

@@ -25,7 +25,7 @@
             <input id="senha" type="password" name="senha" />
             <label for="senha">Senha</label>
           </div>
-        </div>
+        </div>     
 
         <!-- Erro no login. Script do erro em scripts.js-->
         <div id="modal-erro" class="modal login-section__modal">
@@ -51,9 +51,18 @@
           </button>
         </div>
 
+        <div class="row center-align">
+          <div class="input-field col s12 azul-text">
+            <a href="recuperacao">
+              Esqueci minha senha.
+            </a>
+          </div>
+        </div>
+
         <!-- Retorno de senha alterada com sucesso -->
         {{ senha_alterada_sucesso }}
-      </form>
+      </form>      
+        
     </div>
   </div>
 </div>

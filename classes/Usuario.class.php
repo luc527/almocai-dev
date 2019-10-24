@@ -98,4 +98,9 @@ class Usuario extends AbsCodigo
     {
         return $this->frequencia;
     }
+
+    public function hash()
+    {
+        return sha1("{$this->getUsername()}{$this->getSenha()}Almoçaí__EngSoftProg2019-Texto_Extra_Para_Segurança");
+    }
 }

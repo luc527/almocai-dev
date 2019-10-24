@@ -20,10 +20,7 @@ if (isset($_GET['email'])) {
 if (isset($_GET['hash'])) {
 	$hash = $_GET['hash'];
 
-	if (
-		sha1("{$usuario->getUsername()}{$usuario->getSenha()}Almoçaí__EngSoftProg2019-Texto_Extra_Para_Segurança")
-		!= $hash
-	) Redir();
+	if ($usuario->hash() != $hash) Redir();
 
 } else Redir();
 

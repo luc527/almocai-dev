@@ -122,6 +122,16 @@ class UsuarioDao
 		);
 	}
 
+	public static function SelectPorEmail($email)
+	{
+		return self::Popula(
+			StatementBuilder::select(
+				"SELECT * FROM Usuario WHERE email = :email",
+				['email' => $email]
+			)[0]
+		);
+	}
+
 	/**
 	 * Recebe o código de um dia e de um usuário e retorna 0 ou 1 (coluna 'presenca' da tabela Presenca), não o objeto AlunoPresenca
 	 */

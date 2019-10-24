@@ -13,12 +13,11 @@ function EnviarEmail($hash, $email) {
 	$link = $root.$uri;
 	$message = "Acesse o link para recuperar sua senha: \n {$link}";
 
-	echo $message."<br>";
+	// echo $message."<br>";
 
 	$headers = "From: noreply@almocai.com";
 
 	// mail($to, $subject, $message, $headers);
-	echo "Não há conexão SMTP // comando mail() comentado";
 }
 
 

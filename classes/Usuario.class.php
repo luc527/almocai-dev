@@ -10,6 +10,7 @@ class Usuario extends AbsCodigo
     private $username;
     private $senha;
     private $tipo;
+    private $email;
     private $alimentacao; // vegetariano, vegano ou nenhum dos dois
     private $carnes_come = array(); // quais carnes come
     private $frequencia; // se almoça sempre no if, nunca, as vezes etc.
@@ -53,6 +54,15 @@ class Usuario extends AbsCodigo
         return $this->tipo;
     }
 
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
     public function setAlimentacao($a)
     {
         if ($a instanceof Alimentacao) {
@@ -87,5 +97,10 @@ class Usuario extends AbsCodigo
     public function getFrequencia()
     {
         return $this->frequencia;
+    }
+
+    public function hash()
+    {
+        return sha1("{$this->getUsername()}{$this->getSenha()}Almoçaí__EngSoftProg2019-Texto_Extra_Para_Segurança");
     }
 }

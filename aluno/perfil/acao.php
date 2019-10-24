@@ -16,7 +16,14 @@ if (isset($_POST['acao'])) $acao = $_POST['acao'];
 else if (isset($_GET['acao'])) $acao = $_GET['acao'];
 else $acao = '';
 
-if ($acao == 'AlterarSenha') {
+if ($acao == 'AlterarEmail') {
+
+  $usuario->setEmail($_POST['email']);
+  UsuarioDao::UpdateEmail($usuario);
+
+  header("location:{$root_path}aluno/perfil/?sucesso=email_alterado");
+
+} else if ($acao == 'AlterarSenha') {
 
   $senhaAntiga = sha1($_POST['senhaAntiga']);
   $_POST['senhaAntiga'] = '';
@@ -59,4 +66,8 @@ if ($acao == 'AlterarSenha') {
   $usuario->setAlimentacao($alimentacao);
   UsuarioDao::UpdateAlimentacao($usuario);
   header("location:{$root_path}aluno/perfil/");
-} else if ($acao == 'CadastrarIntolerancia') { } else if ($acao == 'RemoverIntrolerancia') { }
+} else if ($acao == 'CadastrarIntolerancia') { 
+
+} else if ($acao == 'RemoverIntrolerancia') { 
+
+}

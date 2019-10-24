@@ -2,6 +2,8 @@
 
 $root_path = "../../";
 
+require_once "{$root_path}classes/UsuarioDao.class.php";
+
 // Função de redirecionamento, usada nos vários casos em que o usuário não pode acessar essa página
 function Redir()
 {
@@ -20,14 +22,15 @@ if (isset($_GET['email'])) {
 if (isset($_GET['hash'])) {
 	$hash = $_GET['hash'];
 
-	if (
-		sha1("{$usuario->getUsername()}{$usuario->getSenha()}Almoçaí__EngSoftProg2019-Texto_Extra_Para_Segurança")
-		!= $hash
-	) Redir();
+	if ($usuario->hash() != $hash) Redir();
 
 } else Redir();
 
 // Gera a página de alteração de senha
+
+$main = file_get_contents("main.html");
+$main = str_replace("{usuario_codigo}", $usuario->getCodigo(), $main);
+$main = str_replace("{usuario_email}", $usuario->getEmail(), $main);
 
 $novas = file_get_contents("{$root_path}template.html");
 
@@ -36,6 +39,9 @@ $novas = str_replace("{peso_fonte}", "", $novas);
 $novas = str_replace("{{nav}}", "", $novas);
 $novas = str_replace("{{footer}}", "", $novas);
 $novas = str_replace("{{scripts}}", "", $novas);
-$novas = str_replace("{{main}}", file_get_contents("main.html"), $novas);
+$novas = str_replace("{{main}}", $main, $novas);
 
+// TODO verificação com JS se nova senha = confirma nova senha
+
+$novas = str_replace("{root_path}", $root_path, $novas);
 print $novas;

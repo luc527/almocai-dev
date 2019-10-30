@@ -1,163 +1,172 @@
-create database almocai;
-use almocai;
+CREATE DATABASE `almocai`;
+USE `almocai`;
 
-create table if not exists SemanaCardapio (
-	codigo int primary key auto_increment,
-    data_inicio date -- o primeiro dia (segunda) da semana, p. ex. 2019-08-12
+CREATE TABLE IF NOT EXISTS `SemanaCardapio` (
+	`codigo` INT PRIMARY KEY AUTO_INCREMENT,
+  `data_inicio` DATE -- O primeiro dia (segunda) da semana, p. ex	. 2019-08-12
 );
 
-create table if not exists DiaAlmoco (
-	codigo int primary key auto_increment,
-	`data` date,
-	semanaCardapio_codigo int,
-	diaSemana varchar(45),
-	foreign key (semanaCardapio_codigo) references SemanaCardapio(codigo) 
-    on delete cascade
-    on update cascade
+CREATE TABLE IF NOT EXISTS `DiaAlmoco` (
+	`codigo` INT PRIMARY KEY AUTO_INCREMENT,
+	`data` DATE,
+	`semanaCardapio_codigo` INT,
+	`diaSemana` VARCHAR(45),
+	FOREIGN KEY (`semanaCardapio_codigo`) REFERENCES `SemanaCardapio`(`codigo`) 
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 
-delimiter :)
+DELIMITER :)
 
-create trigger cria_dias_semana
-after insert on SemanaCardapio
-for each row
-begin
-	insert into DiaAlmoco (`data`, semanaCardapio_codigo, diaSemana) values
+CREATE TRIGGER `cria_dias_semana`
+AFTER INSERT ON `SemanaCardapio`
+FOR EACH ROW
+BEGIN
+	INSERT INTO `DiaAlmoco` (`data`, `semanaCardapio_codigo`, `diaSemana`) VALUES
     (new.data_inicio, new.codigo, 'Segunda-feira'),
-    (date_add(new.data_inicio, interval 1 day), new.codigo, 'Terça-feira'),
-    (date_add(new.data_inicio, interval 2 day), new.codigo, 'Quarta-feira'),
-    (date_add(new.data_inicio, interval 3 day), new.codigo, 'Quinta-feira');
-end :)
-delimiter ;
+    (date_add(NEW.data_inicio, interval 1 day), NEW.codigo, 'Terça-feira'),
+    (date_add(NEW.data_inicio, interval 2 day), NEW.codigo, 'Quarta-feira'),
+    (date_add(NEW.data_inicio, interval 3 day), NEW.codigo, 'Quinta-feira');
+END :)
+DELIMITER ;
 
-create table if not exists Alimento (
-	codigo int primary key auto_increment,
-	descricao varchar(100),
-	diaAlmoco_codigo int,
-	tipo varchar(45),
-
-	foreign key (diaAlmoco_codigo) references DiaAlmoco(codigo) 
-		on delete cascade
-		on update cascade
+CREATE TABLE IF NOT EXISTS Alimento (
+	`codigo` INT PRIMARY KEY AUTO_INCREMENT,
+	`descricao` VARCHAR(100),
+	`diaAlmoco_codigo` INT,
+	`tipo` VARCHAR(45),
+	FOREIGN KEY (`diaAlmoco_codigo`) REFERENCES `DiaAlmoco`(`codigo`) 
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
 );
 
-create table if not exists Frequencia (
-	# se o usuário geralmente almoça no IF ou nunca almoça
-    # usado para determinar, automaticamente, a presença do aluno 
-    codigo int primary key,
-    descricao varchar(100)
-);
-insert into Frequencia (codigo, descricao) values (1, 'Sempre'), (2, 'Geralmente'), (3, 'Pouca vezes'), (4, 'Nunca');
-
-create table if not exists Alimentacao (
-	codigo int primary key auto_increment,
-    descricao varchar(45)
+CREATE TABLE IF NOT EXISTS `Frequencia` (
+	-- se o usuário geralmente almoça no IF ou nunca almoça
+  -- usado para determinar, automaticamente, a presença do aluno varchar
+	`codigo` INT PRIMARY KEY,
+	`descricao` VARCHAR(100)
 );
 
-insert into Alimentacao (descricao) values ('Come Carne'), ('Vegetariano'), ('Vegano');
+INSERT INTO `Frequencia` (`codigo`, `descricao`) 
+VALUES (1, 'Sempre'), 
+			 (2, 'Geralmente'), 
+			 (3, 'Pouca vezes'), 
+			 (4, 'Nunca');
+
+CREATE TABLE IF NOT EXISTS `Alimentacao` (
+	`codigo` INT PRIMARY KEY AUTO_INCREMENT,
+  `descricao` VARCHAR(45)
+);
+
+INSERT INTO `Alimentacao` (`descricao`) 
+VALUES ('Come Carne'), ('Vegetariano'), ('Vegano');
 
 
-create table if not exists Usuario (
-	codigo int auto_increment primary key,
-    username varchar(100) unique,
-	senha varchar(255),
-	nome varchar(100),
-	tipo varchar(50),
-    email varchar(255),
+CREATE TABLE IF NOT EXISTS `Usuario` (
+	`codigo` INT PRIMARY KEY AUTO_INCREMENT,
+	`username` VARCHAR(100) UNIQUE,
+	`senha` VARCHAR(255),
+	`nome` VARCHAR(100),
+	`tipo` VARCHAR(50),
+	`email` VARCHAR(255),
+	
+	`alimentacao` INT DEFAULT 1,
+	FOREIGN KEY (`alimentacao`) REFERENCES `Alimentacao`(`codigo`) 
+		ON DELETE SET null
+		ON DELETE SET null,
+	
+	`frequencia` INT DEFAULT 1,
+	FOREIGN KEY (`frequencia`) REFERENCES `Frequencia`(`codigo`)  
+		ON DELETE SET null
+		ON UPDATE SET null
+);
+
+CREATE TABLE IF NOT EXISTS `Carne` (
+	`codigo` INT PRIMARY KEY AUTO_INCREMENT,
+  `descricao` VARCHAR(45)
+);
+INSERT INTO `Carne` (`codigo`, `descricao`)
+VALUES (1, 'Frango'), 
+			 (2, 'Porco'), 
+			 (3, 'Boi');
+
+CREATE TABLE IF NOT EXISTS `Carne_usuario` (
+	`usuario_cod` INT,
+	`carne_cod` INT,
     
-    alimentacao int default 1,
-    foreign key (alimentacao) references Alimentacao(codigo) 
-    on delete set null
-    on update set null,
+    PRIMARY KEY (`usuario_cod`, `carne_cod`),
     
-    frequencia int default 1,
-    foreign key (frequencia) references Frequencia(codigo)  
-    on delete set null
-    on update set null
+    foreign key (`usuario_cod`) references `Usuario`(`codigo`) on delete cascade,
+    foreign key (`carne_cod`) references `Carne`(`codigo`) on delete cascade
 );
 
-create table if not exists Carne (
-	codigo int primary key auto_increment,
-    descricao varchar(45)
-);
-insert into Carne (codigo, descricao) values (1, 'Frango'), (2, 'Porco'), (3, 'Boi');
-
-create table if not exists Carne_usuario (
-	usuario_cod int,
-    carne_cod int,
-    
-    primary key (usuario_cod, carne_cod),
-    
-    foreign key (usuario_cod) references Usuario(codigo) on delete cascade,
-    foreign key (carne_cod) references Carne(codigo) on delete cascade
-);
-
-insert into Usuario (username, senha, nome, tipo) values
+INSERT INTO `Usuario` (`username`, `senha`, `nome`, `tipo`) values
 ('admin','d033e22ae348aeb5660fc2140aec35850c4da997','admin','ADMINISTRADOR');
 -- senha (provisória): admin
 
-create table if not exists Presenca (
-	usuario_cod int,
-	diaAlmoco_codigo int,
-	presenca tinyint,
-	primary key (usuario_cod, diaAlmoco_codigo),
+CREATE TABLE IF NOT EXISTS `Presenca` (
+	`usuario_cod` INT,
+	`diaAlmoco_codigo` INT,
+	`presenca` TINYINT,
+	PRIMARY KEY (`usuario_cod`, `diaAlmoco_codigo`),
 
-	foreign key (usuario_cod) references Usuario(codigo)
-		on delete cascade
-		on update cascade,
-  foreign key (diaAlmoco_codigo) references DiaAlmoco(codigo)
-		on delete cascade
-		on update cascade
+	FOREIGN KEY (`usuario_cod`) REFERENCES `Usuario`(`codigo`)
+		ON DELETE CASCADE
+		ON DELETE CASCADE,
+  FOREIGN KEY (`diaAlmoco_codigo`) REFERENCES `DiaAlmoco`(`codigo`)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
 );
 
-create table if not exists Intolerancia (
-	codigo int primary key auto_increment,
-	descricao varchar(150)
+CREATE TABLE IF NOT EXISTS `Intolerancia` (
+	`codigo` INT PRIMARY KEY AUTO_INCREMENT,
+	`descricao` VARCHAR(150)
 );
 
-create table if not exists Usuario_intolerancia (
-	usuario_cod int,
-	intolerancia_codigo int,
-    arquivo varchar(2000),
-	primary key (usuario_cod, intolerancia_codigo),
-	foreign key (usuario_cod) references Usuario(codigo)
-		on delete cascade,
-	foreign key (intolerancia_codigo) references Intolerancia(codigo)
-		on delete cascade
+CREATE TABLE IF NOT EXISTS `Usuario_intolerancia` (
+	`usuario_cod` INT,
+	`intolerancia_codigo` INT,
+	`arquivo` VARCHAR(200),
+	PRIMARY KEY (`usuario_cod`, `intolerancia_codigo`),
+	FOREIGN KEY (`usuario_cod`) REFERENCES `Usuario`(`codigo`)
+		ON DELETE CASCADE,
+	FOREIGN KEY (`intolerancia_codigo`) REFERENCES `Intolerancia`(`codigo`)
+		ON DELETE CASCADE
 );
 
-delimiter :)
-create trigger AdicionaPresenca
-after insert on DiaAlmoco 
-for each row
-begin
-	declare idFrequencia int;
-    declare tipoUsuario varchar(40);
-    declare finished int default 0;
-	declare id int;
-	declare usuarioCursor cursor for select codigo from Usuario;
-	DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;
+DELIMITER :)
+CREATE TRIGGER `AdicionaPresenca`
+AFTER INSERT ON `DiaAlmoco` 
+FOR EACH ROW
+BEGIN
+	DECLARE `idFrequencia` INT;
+	DECLARE `tipoUsuario` VARCHAR(40);
+	DECLARE `finished` INT DEFAULT 0;
+	DECLARE `id` INT;
+	DECLARE `usuarioCursor` CURSOR FOR SELECT `codigo` FROM `Usuario`;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET `finished` = 1;
     
-    open usuarioCursor;
+	OPEN `usuarioCursor`;
     
-    add_presenca : loop fetch usuarioCursor into id;
-    if finished = 1 then
-      leave add_presenca;
-    end if;
+    `add_presenca` : LOOP FETCH `usuarioCursor` INTO `id`;
+    IF `finished` = 1 THEN
+      LEAVE `add_presenca`;
+    END IF;
 
-    select frequencia into idFrequencia from Usuario where codigo = id;
-    select tipo into tipoUsuario from Usuario where codigo = id;
-    if tipoUsuario = 'Aluno' then
-		if idFrequencia = 1 or idFrequencia = 2 then
-			insert into Presenca value(id, new.codigo, 1);
-		else
-			insert into Presenca value(id, new.codigo, 0);
-		end if;
-    end if;
-  end loop;
+    SELECT `frequencia` INTO `idFrequencia` FROM `Usuario` WHERE `codigo` = `id`;
+    SELECT `tipo` INTO `tipoUsuario` FROM `Usuario` WHERE `codigo` = `id`;
+    IF `tipoUsuario` = 'Aluno' THEN
+		IF `idFrequencia` = 1 OR `idFrequencia` = 2 THEN
+			INSERT INTO `Presenca` VALUE(id, NEW.codigo, 1);
+		ELSE
+			INSERT INTO `Presenca` VALUE(id, NEW.codigo, 0);
+		END IF;
+    END IF;
+  END LOOP;
 
-  close usuarioCursor;
-end :)
-delimiter ;
+  CLOSE `usuarioCursor`;
+END :)
+DELIMITER ;
+
 /* create view Semana as Select s.data_inicio, d.diaSemana, a.descricao, a.tipo from SemanaCardapio s, DiaAlmoco d,
  Alimento a where s.codigo = d.semanaCardapio_codigo and d.codigo = a.diaAlmoco_codigo; */

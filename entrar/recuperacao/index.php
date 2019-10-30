@@ -17,7 +17,7 @@ function EnviarEmail($hash, $email) {
 
 	$headers = "From: noreply@almocai.com";
 
-	// mail($to, $subject, $message, $headers);
+	mail($to, $subject, $message, $headers);
 }
 
 

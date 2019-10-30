@@ -1,0 +1,29 @@
+<div class="container">
+	
+	<div class="row">
+		<div class="col s12">
+			<h4 class="almocai-text">Recuperar senha</h4>
+		</div>
+	</div>
+
+	<form action="acao.php" method="POST">
+		<input type="hidden" name="usuario_codigo" value="{usuario_codigo}">
+		<input type="hidden" name="usuario_email" value="{usuario_email}">
+
+		<div class="row">
+			<div class="input-field col s12">
+				<label for="nova_senha">Nova senha</label>
+				<input type="password" name="nova_senha" id="nova_senha" required />
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="input-field col s12">
+				<button class="almocai btn white-text bold waves-effect waves-light">
+					<i class="material-icons left">send</i>
+					Salvar
+				</button>
+			</div>
+		</div>
+	</form>
+</div>

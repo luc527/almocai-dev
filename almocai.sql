@@ -1,4 +1,4 @@
-CREATE DATABASE `almocai`;
+CREATE DATABASE IF NOT EXISTS `almocai`;
 USE `almocai`;
 
 CREATE TABLE IF NOT EXISTS `SemanaCardapio` (
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `Usuario` (
 	`alimentacao` INT DEFAULT 1,
 	FOREIGN KEY (`alimentacao`) REFERENCES `Alimentacao`(`codigo`) 
 		ON DELETE SET null
-		ON DELETE SET null,
+		ON UPDATE SET null,
 	
 	`frequencia` INT DEFAULT 1,
 	FOREIGN KEY (`frequencia`) REFERENCES `Frequencia`(`codigo`)  
@@ -85,6 +85,7 @@ CREATE TABLE IF NOT EXISTS `Carne` (
 	`codigo` INT PRIMARY KEY AUTO_INCREMENT,
   `descricao` VARCHAR(45)
 );
+
 INSERT INTO `Carne` (`codigo`, `descricao`)
 VALUES (1, 'Frango'), 
 			 (2, 'Porco'), 
@@ -112,8 +113,9 @@ CREATE TABLE IF NOT EXISTS `Presenca` (
 
 	FOREIGN KEY (`usuario_cod`) REFERENCES `Usuario`(`codigo`)
 		ON DELETE CASCADE
-		ON DELETE CASCADE,
-  FOREIGN KEY (`diaAlmoco_codigo`) REFERENCES `DiaAlmoco`(`codigo`)
+		ON UPDATE CASCADE,
+        
+	FOREIGN KEY (`diaAlmoco_codigo`) REFERENCES `DiaAlmoco`(`codigo`)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
 );

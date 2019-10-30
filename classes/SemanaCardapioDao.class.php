@@ -97,7 +97,7 @@ class SemanaCardapioDao
 	public static function SelectUltimoCod()
 	{
 		return StatementBuilder::select(
-			"SELECT codigo FROM SemanaCardapio ORDER BY codigo DESC LIMIT 1",
+			"SELECT codigo FROM SemanaCardapio ORDER BY codigo DESC LIMIT 1"
 		)[0]['codigo'];
 	}
 

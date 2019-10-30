@@ -19,7 +19,7 @@ $func = str_replace("{title}", $title, $func);
 $func = str_replace("{peso_fonte}", $peso_fonte, $func);
 $func = str_replace("{{nav}}", $nav, $func);
 $func = str_replace("{{footer}}", $footer, $func);
-$func = str_replace("{{scripts}}", $title, $func);
+$func = str_replace("{{scripts}}", file_get_contents("scripts.js"), $func);
 
 // $data = date("Y-m-d");
 $data = Funcoes::CorrigeData(date("Y-m-d"));
@@ -53,5 +53,6 @@ $main = str_replace("{{cartoes_presenca}}", $cartoes_presenca, $main);
 $func = str_replace("{{main}}", $main, $func);
 
 $func = str_replace("{root_path}", $root_path, $func);
+
 print($func);
 ?>

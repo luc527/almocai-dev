@@ -1,0 +1,58 @@
+<div class="container">
+	<div class="card-panel hoverable">
+
+		<div class="row">
+			<div class="col s12 center">
+				<h4><b class="almocai-text">
+					Solicitação de registro de intolerância
+				</b></h4>
+			</div>
+		</div>
+
+		<form action="acao.php" method="POST">
+			
+			<div class="row">
+				<div class="input-field col s12">
+					
+					<span class="helper-text">Selecione a sua intolerância ou alergia</span>
+					<select name="intolerancia_cod" id="intolerancia_cod">
+						
+						<option disabled>Selecione uma intolerância</option>
+						<option value="-1">... A minha não está aqui</option>
+
+						{{opcoes_intolerancia}}
+
+					</select>				
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="input-field col s12">
+					<label for="nova_intolerancia">Caso sua intolerância não esteja na lista, digite ela aqui</label>
+					<input type="text" name="nova_intolerancia" id="nova_intolerancia"/>
+				</div>
+			</div>
+			
+			<div class="row">			
+				<div class="file-field input-field col s12">				
+					<div class="btn">
+						<input type="file" name="documento" id="documento" required />
+					</div>
+					<div class="file-path wrapper">
+						<input type="text" class="file-path validate" id="path_txt" placeholder="Documento que comprova sua intolerância ou alergia" />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="input-field col s12 center">
+					<button name="acao" value="solicitarIntolerancia" type="submit" class="btn waves-effect waves-light almocai">
+						<i class="material-icons left">send</i>
+						Solicitar
+					</button>
+				</div>
+			</div>
+
+		</form>
+	</div>
+</div>

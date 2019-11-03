@@ -12,7 +12,8 @@
          * 
          * @return 
          */
-        public static function Inserir(IntoleranciaUsuario $intoleranciaUsuario, $nome_arquivo, $matricula) {
+        public static function Inserir(IntoleranciaUsuario $intoleranciaUsuario, $nome_arquivo, $matricula)
+        {
             // pasta de destino do arquivo
             $pasta_destino = "../arquivos/Intolerancia/";
             $Upload = new Upload;
@@ -25,6 +26,6 @@
                 'intolerancia_id' => $intoleranciaUsuario->getIntolerancia()->getCodigo(),
                 'documento' => $intoleranciaUsuario->getDocumento()
             ]);
-        } 
+        }         
     }
 ?>

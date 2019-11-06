@@ -4,6 +4,12 @@ require_once("Conexao.class.php");
 class Funcoes
 {
 
+	public static function ProximoCod($tabela) {
+		return StatementBuilder::select(
+			"SELECT Auto_Increment FROM Information_schema.Tables WHERE Table_name = '{$tabela}'"
+		)[0]['Auto_Increment'];
+	}
+
 	public static function GerarSelectHTML($tabela, $selectName, $selecionado, $value, $texto)
 	{
 		$txt = '';

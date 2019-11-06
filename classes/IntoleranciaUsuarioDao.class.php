@@ -12,10 +12,10 @@
          * 
          * @return 
          */
-        public static function Inserir(IntoleranciaUsuario $intoleranciaUsuario, $nome_arquivo, $matricula)
+        public static function Inserir(IntoleranciaUsuario $intoleranciaUsuario, $nome_arquivo, $matricula, $pasta_destino)
         {
             // pasta de destino do arquivo
-            $pasta_destino = "../arquivos/Intolerancia/";
+            
             $Upload = new Upload;
             // faz o upload do arquivo e coloca o caminho no atributo documento
             $intoleranciaUsuario->setDocumento($Upload->uploadImagem($nome_arquivo, $pasta_destino));

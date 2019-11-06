@@ -14,7 +14,7 @@ class Funcoes
 
 		$txt .= "<select name='" . $selectName . "'>";
 		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-			if ($selecionado = $row["$value"]) {
+			if ($selecionado == $row["$value"]) {
 				$selected = "selected";
 			} else {
 				$selected = "";

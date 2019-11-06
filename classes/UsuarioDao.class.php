@@ -209,6 +209,24 @@ class UsuarioDao
 		return $usuario;
 	}
 
+
+	public static function SelectPorIntolerancia($intol_cod)
+	{
+		$usuario_cod = StatementBuilder::select(
+			"SELECT usuario_cod FROM Usuario_intolerancia WHERE codigo = :codigo",
+			['codigo' => $intol_cod]
+		)[0]['usuario_cod'];
+
+		return self::Popula(
+			StatementBuilder::select(
+				"SELECT * FROM Usuario WHERE codigo = :codigo",
+				['codigo' => $usuario_cod]
+			)[0]
+		);
+	}
+
+
+
 	/**
 	 * UPDATE
 	 */

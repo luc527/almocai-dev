@@ -125,15 +125,21 @@ CREATE TABLE IF NOT EXISTS `Intolerancia` (
 	`descricao` VARCHAR(150)
 );
 
+CREATE TABLE IF NOT EXISTS `Estado_intolerancia` (
+	`codigo` INT PRIMARY KEY AUTO_INCREMENT,
+    `descricao` VARCHAR(255)
+);
+INSERT INTO `Estado_intolerancia` VALUES (1, 'Pendente'), (2, 'Rejeitada'), (3, 'Validada');
+
 CREATE TABLE IF NOT EXISTS `Usuario_intolerancia` (
-	`usuario_cod` INT,
-	`intolerancia_codigo` INT,
-	`arquivo` VARCHAR(200),
-	PRIMARY KEY (`usuario_cod`, `intolerancia_codigo`),
-	FOREIGN KEY (`usuario_cod`) REFERENCES `Usuario`(`codigo`)
-		ON DELETE CASCADE,
-	FOREIGN KEY (`intolerancia_codigo`) REFERENCES `Intolerancia`(`codigo`)
-		ON DELETE CASCADE
+	`codigo` INT PRIMARY KEY AUTO_INCREMENT,
+    `usuario_cod` INT,
+	`intolerancia_cod` INT,
+    `estado_cod` INT,
+	`arquivo` VARCHAR(255), 
+	FOREIGN KEY (`usuario_cod`) REFERENCES `Usuario`(`codigo`),
+	FOREIGN KEY (`intolerancia_cod`) REFERENCES `Intolerancia`(`codigo`),
+	FOREIGN KEY (`estado_cod`) REFERENCES `Estado_intolerancia`(`codigo`)
 );
 
 DELIMITER :)

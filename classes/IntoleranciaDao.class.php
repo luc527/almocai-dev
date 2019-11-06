@@ -21,6 +21,15 @@ class IntoleranciaDao
 		return $intols;
 	}
 
+	public static function SelectPorCodigo($codigo)
+	{
+		return self::Popula(
+			StatementBuilder::select(
+				"SELECT * FROM Intolerancia WHERE codigo = :codigo",
+				['codigo' => $codigo]
+			)[0]
+		);
+	}
 
 	/**
 	 * Seleciona todas as intolerâncias do BD em objetos

@@ -1,0 +1,102 @@
+<tr class="{estado->cor}">
+	<td>{codigo}</td>
+	<td>{aluno_nome} ({username})</td>
+	<td>{intolerancia}</td>
+	<td>
+		<a href="{doc_path}" download class="btn almocai waves-light waves-effect">
+			{doc_nome}
+			<i class="material-icons right">cloud_download</i>
+		</a>
+	</td>
+	<td>
+		<a 
+			href=""
+			class="btn almocai azul waves-light waves-effect modal-trigger"
+			data-target="alterar{codigo}"
+		>
+			<i class="material-icons">edit</i>
+		</a>
+	</td>
+</tr>
+
+<div class="modal" id="alterar{codigo}">
+	<div class="modal-content">
+
+		<div class="row">
+			<div class="col s12">
+				<ul class="collection">
+					<li class="collection-item almocai-text">
+						Aluno: 
+						<b>{aluno_nome}</b>
+					</li>
+					<li class="collection-item almocai-text">
+						Username: 
+						<b >{username}</b>
+					</li>
+					<li class="collection-item almocai-text text-azul">
+						Intolerância:
+						<b>{intolerancia}</b>
+					</li>
+					<li class="collection-item almocai-text text-azul">
+						Documento: 
+						<a 
+							href="{doc_path}" 
+							class="btn almocai azul waves-effect waves-light" 
+							download>
+							{doc_nome}
+							<i class="material-icons right">
+								cloud_download
+							</i>
+						</a>
+
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<form action="acao.php" method="POST">
+
+			<div class="row">
+				<div class="col s12">
+					<p>
+						<label>
+							<input type="radio" name="estado" value="validar" class="with-gap" />
+							<span>Validar</span>
+						</label>						
+					</p>
+
+					<p>
+						<label>
+							<input type="radio" name="estado" value="rejeitar" class="with-gap" />
+							<span>Rejeitar</span>
+						</label>
+					</p>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col s12">
+					<textarea 
+						class="materialize-textarea"
+						name="motivo_rejeicao" 
+						id="motivo_rejeicao" 
+						placeholder="Em caso de rejeição, informe o motivo"
+					></textarea>
+				</div>			
+			</div>
+
+			<div class="row">
+				<div class="col s12 center">
+					<button class="btn waves-effect waves-light almocai">
+						<i class="material-icons left">send</i>
+						Salvar
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<div class="modal-footer">
+		<a href="#!" class="modal-close waves-effect waves-green btn-flat">Voltar</a>
+	</div>
+</div>

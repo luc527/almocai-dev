@@ -2,6 +2,17 @@
 
 class IntoleranciaDao
 {
+	public static function Insert(Intolerancia $intolerancia)
+	{
+		$sql = "INSERT INTO Usuario (descricao)
+		VALUES (:descricao)";
+
+		$params = [
+			'descricao' => $intolerancia->getDescricao(),
+		];
+
+		return StatementBuilder::insert($sql, $params);
+	}
 
 	public static function Popula($row)
 	{
@@ -32,6 +43,16 @@ class IntoleranciaDao
 		$sql = "SELECT * FROM Intolerancia";
 		return self::PopulaVarias(	
 			StatementBuilder::select($sql)
+		);
+	}
+
+	public static function SelectPorCodigo($codigo)
+	{
+		return self::Popula(
+			StatementBuilder::select(
+				"SELECT * FROM Intolerancia WHERE codigo = :codigo",
+				['codigo' => $codigo]
+			)[0]
 		);
 	}
 }

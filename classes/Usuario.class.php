@@ -99,6 +99,19 @@ class Usuario extends AbsCodigo
         return $this->frequencia;
     }
 
+    public function setIntolerancia_usuario($intol)
+    {
+        if ($intol instanceof IntoleranciaUsuario) {
+            $this->intolerancia_usuario = $intol;
+        }
+    }
+
+    public function getIntolerancia_usuario()
+    {
+        return $this->intolerancia_usuario;
+    }
+
+
     public function hash()
     {
         return sha1("{$this->getUsername()}{$this->getSenha()}Almoçaí__EngSoftProg2019-Texto_Extra_Para_Segurança");

@@ -196,7 +196,7 @@ class UsuarioDao
 	public static function SelectCarnes(Usuario $usuario)
 	{
 		$carne_cods = StatementBuilder::select(
-			"SELECT carne_cod FROM carne_usuario WHERE usuario_cod = :usuario_cod",
+			"SELECT carne_cod FROM Carne_usuario WHERE usuario_cod = :usuario_cod",
 			['usuario_cod' => $usuario->getCodigo()]
 		);
 

@@ -61,6 +61,7 @@ e ver as que tem e os estados das solicitações */
 $cartao_intol = file_get_contents("cartao_intolerancia.html");
 
 $intols = $usuario->getIntolerancias();
+$intolsHTML = "";
 foreach ($intols as $intol) {
 	$doc = $intol->getDocumento();
 	$doc_path = $root_path.'arquivos/intolerancias/'.$doc;	

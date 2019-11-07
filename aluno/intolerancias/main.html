@@ -15,7 +15,7 @@
 				<div class="input-field col s12">
 					
 					<span class="helper-text">Selecione a sua intolerância ou alergia</span>
-					<select name="intolerancia_cod" id="intolerancia_cod">
+					<select name="intolerancia_cod" id="intolerancia_cod" required>
 						
 						<option disabled>Selecione uma intolerância</option>
 						<option value="-1">... A minha não está aqui</option>
@@ -39,7 +39,7 @@
 						<input type="file" name="documento" id="documento" required />
 					</div>
 					<div class="file-path wrapper">
-						<input type="text" class="file-path validate" id="path_txt" placeholder="Documento que comprova sua intolerância ou alergia" />
+						<input required type="text" class="file-path validate" id="path_txt" placeholder="Documento que comprova sua intolerância ou alergia" />
 					</div>
 				</div>
 			</div>

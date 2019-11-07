@@ -1,9 +1,9 @@
-<tr class="{estado->cor}">
+<tr class="{estado_cor}">
 	<td>{codigo}</td>
 	<td>{aluno_nome} ({username})</td>
 	<td>{intolerancia}</td>
 	<td>
-		<a href="{doc_path}" download class="btn almocai waves-light waves-effect">
+		<a href="{doc_path}" download class="btn almocai azul waves-light waves-effect">
 			{doc_nome}
 			<i class="material-icons right">cloud_download</i>
 		</a>
@@ -56,18 +56,28 @@
 
 		<form action="acao.php" method="POST">
 
+			<input type="hidden" name="codigo" value="{codigo}">
+
 			<div class="row">
 				<div class="col s12">
+					<label for="estado">Estado da intolerância</label>
 					<p>
 						<label>
-							<input type="radio" name="estado" value="validar" class="with-gap" />
+							<input type="radio" name="estado" value="pendente" class="with-gap" {checked_pendente} />
+							<span>Pendente</span>
+						</label>						
+					</p>
+
+					<p>
+						<label>
+							<input type="radio" name="estado" value="validar" class="with-gap" {checked_validar} />
 							<span>Validar</span>
 						</label>						
 					</p>
 
 					<p>
 						<label>
-							<input type="radio" name="estado" value="rejeitar" class="with-gap" />
+							<input type="radio" name="estado" value="rejeitar" class="with-gap" {checked_rejeitar} />
 							<span>Rejeitar</span>
 						</label>
 					</p>
@@ -76,18 +86,18 @@
 
 			<div class="row">
 				<div class="col s12">
+					<label for="motivo_rejeicao">Em caso de rejeição, informe o motivo</label>
 					<textarea 
 						class="materialize-textarea"
 						name="motivo_rejeicao" 
 						id="motivo_rejeicao" 
-						placeholder="Em caso de rejeição, informe o motivo"
-					></textarea>
+					>{motivo_rejeicao}</textarea>
 				</div>			
 			</div>
 
 			<div class="row">
 				<div class="col s12 center">
-					<button class="btn waves-effect waves-light almocai">
+					<button name="acao" value="alterarEstadoIntolerancia" class="btn waves-effect waves-light almocai">
 						<i class="material-icons left">send</i>
 						Salvar
 					</button>

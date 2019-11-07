@@ -10,8 +10,6 @@ echo "</pre>";
 $pasta_destino = $root_path."/arquivos/intolerancia/";
 $acao = isset($_POST['acao']) ? $_POST['acao'] : "";
 
-die(var_dump(Funcoes::ProximoCod('Intolerancia')));
-
 if ($acao == "solicitarIntolerancia")
 {
 	

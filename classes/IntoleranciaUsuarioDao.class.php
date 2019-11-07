@@ -1,6 +1,8 @@
 <?php
     require_once("Upload.class.php");
+    require_once("IntoleranciaDao.class.php");
     require_once("IntoleranciaUsuario.class.php");
+    require_once("IntoleranciaEstadoDao.class.php");
     require_once("Conexao.class.php");
     require_once("StatementBuilder.class.php");
     class IntoleranciaUsuarioDao{
@@ -29,6 +31,26 @@
         }
 
 
+        /**
+         * Atualiza apenas o estado da intolerânica (se foi validada ou rejeitada)
+         * e, caso foi rejeitada, o motivo da rejeição
+         */
+        public static function UpdateEstado(IntoleranciaUsuario $intolUs)
+        {
+            $sql = "UPDATE Usuario_intolerancia SET estado_cod = :estado_cod, motivo_rejeicao = :motivo_rejeicao";
+            $params = [ 'estado_cod' => $intolUs->getEstado()->getCodigo(),
+                        'motivo_rejeicao' => $intolUs->getMotivo_rejeicao() ];
+            if ($intolUs->getEstado()->getCodigo() == REJEITADA) {
+                $sql .= ", motivo_rejeicao = :motivo_rejeicao";
+                $params['motivo_rejeicao'] = $intolUs->getMotivo_rejeicao();
+            }
+            $sql .= " WHERE codigo = :codigo";
+            $params['codigo'] = $intolUs->getCodigo();            
+
+            return StatementBuilder::update($sql, $params);
+        }
+
+
         public static function Popula($row)
         {
             $intol = IntoleranciaDao::SelectPorCodigo($row['intolerancia_cod']);
@@ -39,6 +61,8 @@
 
             $intol_us->setIntolerancia($intol);
             $intol_us->setEstado($estado);
+            
+            $intol_us->setMotivo_rejeicao($row['motivo_rejeicao']);
 
             $intol_us->setDocumento($row['arquivo']);
 
@@ -56,6 +80,17 @@
         }
 
         
+        public static function SelectPorCodigo($codigo)
+        {
+            return self::Popula(
+                StatementBuilder::select(
+                    "SELECT * FROM Usuario_intolerancia WHERE codigo = :codigo",
+                    ['codigo' => $codigo]
+                )[0]
+            );
+        }
+
+
         public static function SelectTodas()
         {
             return self::PopulaVarias(

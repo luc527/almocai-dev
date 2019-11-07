@@ -26,10 +26,43 @@ foreach($intolsUser as $intolUser) {
 
 	$intolUserHTML = file_get_contents("intolerancia.html");
 
+	$checked_pendente = '';
+	$checked_rejeitar = '';
+	$checked_validar = '';
+
+	$motivo_rejeicao = '';
+	
+	switch ($intolUser->getEstado()->getCodigo()) {
+		case PENDENTE:
+			$estado_cor = 'pendente';
+			$checked_pendente = ' checked ';
+			break;
+		case REJEITADA:
+			$estado_cor = 'rejeitada';
+			$checked_rejeitar = ' checked ';
+			break;
+		case VALIDADA:
+			$estado_cor = 'validada';
+			$checked_validar = ' checked ';
+			break;
+	}
+
+	if ($intolUser->getMotivo_rejeicao() != null) {
+		$motivo_rejeicao = $intolUser->getMotivo_rejeicao();
+	}
+	
 	$intolUserHTML = str_replace("{codigo}", $intolUser->getCodigo(), $intolUserHTML);
 	$intolUserHTML = str_replace("{aluno_nome}", $aluno->getNome(), $intolUserHTML);
 	$intolUserHTML = str_replace("{username}", $aluno->getUsername(), $intolUserHTML);
 	$intolUserHTML = str_replace("{intolerancia}", $intol->getDescricao(), $intolUserHTML);
+	$intolUserHTML = str_replace("{estado_cor}", $estado_cor, $intolUserHTML);
+
+	$intolUserHTML = str_replace("{checked_pendente}", $checked_pendente, $intolUserHTML);
+	$intolUserHTML = str_replace("{checked_rejeitar}", $checked_rejeitar, $intolUserHTML);
+	$intolUserHTML = str_replace("{checked_validar}", $checked_validar, $intolUserHTML);
+
+	$intolUserHTML = str_replace("{motivo_rejeicao}", $motivo_rejeicao, $intolUserHTML);
+
 
 	$intolUserHTML = str_replace("{doc_path}", $doc_path, $intolUserHTML);
 	$intolUserHTML = str_replace("{doc_nome}", $doc, $intolUserHTML);

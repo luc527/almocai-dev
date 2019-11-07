@@ -1,5 +1,7 @@
 <?php
 
+require_once ("IntoleranciaEstado.class.php");
+
 class IntoleranciaEstadoDao
 {
 	public static function Popula($row)

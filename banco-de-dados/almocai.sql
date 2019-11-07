@@ -58,8 +58,8 @@ CREATE TABLE IF NOT EXISTS `Alimentacao` (
   `descricao` VARCHAR(45)
 );
 
-INSERT INTO `Alimentacao` (`descricao`) 
-VALUES ('Come Carne'), ('Vegetariano'), ('Vegano');
+INSERT INTO `Alimentacao` (`codigo`, `descricao`) 
+VALUES (1, 'Come Carne'), (2, 'Vegetariano'), (3, 'Vegano');
 
 
 CREATE TABLE IF NOT EXISTS `Usuario` (
@@ -136,6 +136,7 @@ CREATE TABLE IF NOT EXISTS `Usuario_intolerancia` (
     `usuario_cod` INT,
 	`intolerancia_cod` INT,
     `estado_cod` INT,
+    `motivo_rejeicao` TEXT,
 	`arquivo` VARCHAR(255), 
 	FOREIGN KEY (`usuario_cod`) REFERENCES `Usuario`(`codigo`),
 	FOREIGN KEY (`intolerancia_cod`) REFERENCES `Intolerancia`(`codigo`),

@@ -55,8 +55,48 @@ $cartao_alim = gerarCartao(
 
 $cartao_carne = gerarCartaoCarne($usuario);
 
-// TODO cartão que mostra as intolerâncias do usuário (não de cadastro)
-$intolerancia = file_get_contents("cartao_intolerancia.html");
+/* Cartão de intolerâncias do usuário
+em que ele pode solicitar ser registrado com uma
+e ver as que tem e os estados das solicitações */
+$cartao_intol = file_get_contents("cartao_intolerancia.html");
+
+$intols = $usuario->getIntolerancias();
+foreach ($intols as $intol) {
+	$doc = $intol->getDocumento();
+	$doc_path = $root_path.'arquivos/intolerancias/'.$doc;	
+
+	switch($intol->getEstado()->getCodigo()) {
+		case PENDENTE:
+			$estado_cor = 'pendente';
+			break;
+		case REJEITADA:
+			$estado_cor = 'rejeitada';
+			break;
+		case VALIDADA:
+			$estado_cor = 'validada';
+			break;
+	}
+
+	$motivo_rejeicao = '';
+	if ($intol->getEstado()->getCodigo() == REJEITADA
+		&& $intol->getMotivo_rejeicao() !== null)
+	{
+		$motivo_rejeicao = file_get_contents("cartao_intolerancia_item_motrej.html");
+		$motivo_rejeicao = str_replace("{motivo_rejeicao}", $intol->getMotivo_rejeicao(), $motivo_rejeicao);
+	}
+
+	$intolHTML = file_get_contents("cartao_intolerancia_item.html");
+	$intolHTML = str_replace("{{motivo_rejeicao}}", $motivo_rejeicao, $intolHTML);
+	$intolHTML = str_replace("{codigo}", $intol->getCodigo(), $intolHTML);
+	$intolHTML = str_replace("{descricao}", $intol->getIntolerancia()->getDescricao(), $intolHTML);
+	$intolHTML = str_replace("{estado}", $intol->getEstado()->getDescricao(), $intolHTML);
+	$intolHTML = str_replace("{estado_cor}", $estado_cor, $intolHTML);
+	$intolHTML = str_replace("{doc_nome}", $doc, $intolHTML);
+	$intolHTML = str_replace("{doc_path}", $doc_path, $intolHTML);
+
+	$intolsHTML .= $intolHTML;
+}
+$cartao_intol = str_replace("{{intolerancias}}", $intolsHTML, $cartao_intol);
 
 // cartão de alterar email
 $alt_email = file_get_contents("cartao_alt_email.html");
@@ -88,7 +128,7 @@ $main = str_replace("{nome}", $usuario->getNome(), $main);
 $main = str_replace("{username}", $usuario->getUsername(), $main);
 $main = str_replace("{{alerta_email}}", $alerta_email, $main);
 $main = str_replace("{{cartao_frequencia}}", $cartao_freq, $main);
-$main = str_replace("{{cartao_intolerancia}}", $intolerancia, $main);
+$main = str_replace("{{cartao_intolerancia}}", $cartao_intol, $main);
 $main = str_replace("{{cartao_carne}}", $cartao_carne, $main);
 $main = str_replace("{{cartao_alimentacao}}", $cartao_alim, $main);
 $main = str_replace("{{cartao_alt_email}}", $alt_email, $main);

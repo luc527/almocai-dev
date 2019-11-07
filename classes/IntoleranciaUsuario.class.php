@@ -4,6 +4,10 @@
         private $intolerancia;
         private $estado;
         private $documento;
+        private $motivo_rejeicao;
+
+        public function setMotivo_rejeicao($m) { $this->motivo_rejeicao = $m; }
+        public function getMotivo_rejeicao() { return $this->motivo_rejeicao; }
 
         public function setIntolerancia(Intolerancia $intolerancia){
             $this->intolerancia = $intolerancia;

@@ -23,15 +23,6 @@ class IntoleranciaDao
 	}
 
 
-	public static function PopulaVarias($rows)
-	{
-		$intols = [];
-		foreach($rows as $row) {
-			$intols[] = self::Popula($row);
-		}
-		return $intols;
-	}
-
 	public static function SelectPorCodigo($codigo)
 	{
 		return self::Popula(
@@ -41,6 +32,17 @@ class IntoleranciaDao
 			)[0]
 		);
 	}
+	
+	
+	public static function PopulaVarias($rows)
+	{
+		$intols = [];
+		foreach($rows as $row) {
+			$intols[] = self::Popula($row);
+		}
+		return $intols;
+	}
+
 
 	/**
 	 * Seleciona todas as intolerâncias do BD em objetos
@@ -52,16 +54,6 @@ class IntoleranciaDao
 		$sql = "SELECT * FROM Intolerancia";
 		return self::PopulaVarias(	
 			StatementBuilder::select($sql)
-		);
-	}
-
-	public static function SelectPorCodigo($codigo)
-	{
-		return self::Popula(
-			StatementBuilder::select(
-				"SELECT * FROM Intolerancia WHERE codigo = :codigo",
-				['codigo' => $codigo]
-			)[0]
 		);
 	}
 }

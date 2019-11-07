@@ -210,6 +210,23 @@ class UsuarioDao
 	}
 
 
+	public static function SelectIntolerancias(Usuario $usuario)
+	{
+		$intols = StatementBuilder::select(
+			"SELECT codigo FROM Usuario_intolerancia WHERE usuario_cod = :usuario_cod",
+			['usuario_cod' => $usuario->getCodigo()]
+		);
+		foreach($intols as $intol) {
+			$intol_cod = $intol['codigo'];
+			$usuario->setIntolerancia(
+				IntoleranciaUsuarioDao::SelectPorCodigo($intol_cod)
+			);
+		}
+
+		return $usuario;
+	}
+
+
 	public static function SelectPorIntolerancia($intol_cod)
 	{
 		$usuario_cod = StatementBuilder::select(
@@ -424,6 +441,7 @@ class UsuarioDao
 		$usuario = self::SelectFrequencia($usuario);
 		$usuario = self::SelectCarnes($usuario);
 		$usuario = self::SelectAlimentacao($usuario);
+		$usuario = self::SelectIntolerancias($usuario);
 
 		return $usuario;
 	}

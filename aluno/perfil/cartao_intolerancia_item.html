@@ -1,0 +1,51 @@
+<li class="collection-item">
+	{descricao}
+
+	<a 
+		href="#intol{codigo}" 
+		class="secondary-content modal-trigger"
+		data-target="intol{codigo}"
+
+	>
+		<i class="material-icons">remove_red_eye</i>
+	</a>
+</li>
+
+<div class="modal" id="intol{codigo}">
+	<div class="modal-content">
+
+		<div class="row">
+			<div class="col s12">
+				<ul class="collection">
+					<li class="collection-item almocai-text">
+						Intolerância:
+						<b>{descricao}</b>
+					</li>
+					<li class="collection-item almocai-text">
+						Documento: 
+						<a 
+							href="{doc_path}" 
+							class="btn almocai azul waves-effect waves-light" 
+							download>
+							{doc_nome}
+							<i class="material-icons right">
+								cloud_download
+							</i>
+						</a>
+
+					</li>
+					<li class="collection-item">
+						Estado:
+						<b style="padding: .5rem;" class="legenda {estado_cor}">{estado}</b>
+					</li>
+					{{motivo_rejeicao}}
+				</ul>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="modal-footer">
+		<a href="#!" class="modal-close waves-effect waves-green btn-flat">Voltar</a>
+	</div>
+</div>

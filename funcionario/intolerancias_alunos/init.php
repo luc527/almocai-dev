@@ -17,3 +17,8 @@ require_once $root_path.'classes/IntoleranciaEstado.class.php';
 require_once $root_path.'classes/IntoleranciaEstadoDao.class.php';
 require_once $root_path.'classes/IntoleranciaUsuario.class.php';
 require_once $root_path.'classes/IntoleranciaUsuarioDao.class.php';
+
+/* Estados possíveis das intolerâncias dos usuários */
+define("PENDENTE", 1);
+define("REJEITADA", 2);
+define("VALIDADA", 3);

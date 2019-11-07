@@ -14,7 +14,7 @@ class Usuario extends AbsCodigo
     private $alimentacao; // vegetariano, vegano ou nenhum dos dois
     private $carnes_come = array(); // quais carnes come
     private $frequencia; // se almoça sempre no if, nunca, as vezes etc.
-    private $intolerancia_usuario = array();
+    private $intolerancias = array();
 
     public function setUsername($username)
     {
@@ -99,16 +99,16 @@ class Usuario extends AbsCodigo
         return $this->frequencia;
     }
 
-    public function setIntolerancia_usuario($intol)
+    public function setIntolerancia($intol)
     {
         if ($intol instanceof IntoleranciaUsuario) {
-            $this->intolerancia_usuario = $intol;
+            $this->intolerancias[] = $intol;
         }
     }
 
-    public function getIntolerancia_usuario()
+    public function getIntolerancias()
     {
-        return $this->intolerancia_usuario;
+        return $this->intolerancias;
     }
 
 

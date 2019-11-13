@@ -46,10 +46,18 @@ if (SemanaCardapioDao::SemanaExiste($data)) {
     Funcoes::CorrigeData($data)
   );
 
-  // Cartão com os botões para marcar presença ou ausência no dia
+  // Cartão com os botões para marcar presença ou ausência no dia  
   $cartao_presenca = file_get_contents("cartao_presenca.html");
   $cartao_presenca = str_replace("{data_hoje}", $datahj, $cartao_presenca);
   $cartao_presenca = str_replace("{dia_cod}", $dia->getCodigo(), $cartao_presenca);
+  // O aluno só pode alterar sua presença até 10h do dia
+  $disabled = "";
+  $disabled_msg = "";
+  if (date("H") >= 10) {
+    $disabled = " disabled ";
+    $disabled_msg = file_get_contents("cartao_presenca_disabledmsg.html");
+  }
+  $cartao_presenca = str_replace("{disabled}", $disabled, $cartao_presenca);
 
   // Variáveis do componente que mostra a presença marcada pelo usuário
   $pres = UsuarioDao::SelectPresenca($dia->getCodigo(), $usuario->getCodigo());
@@ -106,8 +114,10 @@ if (SemanaCardapioDao::SemanaExiste($data)) {
 $main = str_replace("{nome}", $nome, $main);
 $main = str_replace("{{cartao_dia}}", $cartao_dia, $main);
 $main = str_replace("{{cardapio_indisponivel}}", $cardapio_ind, $main);
+$main = str_replace("{{disabled_msg}}", $disabled_msg, $main);
 $main = str_replace("{{cartao_presenca}}", $cartao_presenca, $main);
 
 $aluno = str_replace("{{main}}", $main, $aluno);
 $aluno = str_replace("{root_path}", $root_path, $aluno);
+
 print($aluno);

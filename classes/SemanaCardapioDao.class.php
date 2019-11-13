@@ -175,8 +175,14 @@ class SemanaCardapioDao
 		$sql = "SELECT * FROM DiaAlmoco WHERE `data` = :data";
 		$params = ['data' => Funcoes::CorrigeData($data)];
 
-		$semana_cod_dia = StatementBuilder::select($sql, $params)[0]['semanaCardapio_codigo'];
+		$result = StatementBuilder::select($sql, $params);
 
-		return $semana_cod_dia == $semana_cod;
+		if ($result == null) {
+			return false;
+		} else {
+			$semana_cod_dia = $result[0]['semanaCardapio_codigo'];
+
+			return $semana_cod_dia == $semana_cod;
+		}		
 	}
 }

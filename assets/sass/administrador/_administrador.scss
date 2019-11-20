@@ -166,3 +166,22 @@
     color: $tertiary-color !important;
   }
 }
+
+.acessar-interface {
+  padding-bottom: 4rem;
+
+  &-btn {
+    @media #{$small-and-down} {
+      margin-bottom: .5rem;
+      margin-top: .5rem;
+    }
+    @extend .z-depth-3;
+    &:hover, &:focus {
+      @extend .z-depth-2;
+    }
+    &:active {
+      box-shadow: 0 0 0 !important;
+    }
+  }
+  
+}

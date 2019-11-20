@@ -4,7 +4,7 @@ class IntoleranciaDao
 {
 	public static function Insert(Intolerancia $intolerancia)
 	{
-		$sql = "INSERT INTO Usuario (descricao)
+		$sql = "INSERT INTO Intolerancia (descricao)
 		VALUES (:descricao)";
 
 		$params = [

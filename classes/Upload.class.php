@@ -26,11 +26,15 @@
 
                 $nome = $this->name['name'];
                 // extensão do arquivo
+                
                 $extensao = end(explode(".",$this->name['name']));
+                echo $extensao;
                 // nome gerado a cada segundo
                 $this->nome_substituto = md5(time());
                 // caminho do arquivo
                 $upload_arquivo = $this->pasta.$this->nome_substituto.".".$extensao;
+                // é o nome do arquivo que vai no banco de dados que não necessita do diretório
+                $upload_arquivoBD = $this->nome_substituto.".".$extensao;
                 foreach ($tipo_permitido as $key => $tipo) {
                     $this->permite[] = $tipo;
                 }
@@ -39,7 +43,7 @@
                 if(!empty($nome) and in_array($extensao,$this->permite)) { 
                     // verifica de o arquivo foi movido para pasta
                     if(move_uploaded_file($this->name['tmp_name'], $upload_arquivo)) {
-                        return $upload_arquivo;
+                        return $upload_arquivoBD;
                     } else {
                         return ['tipo' => 'erro', 'mensagem' => 'não foi possível enviar a imagem'];
                     }

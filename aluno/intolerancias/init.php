@@ -13,3 +13,6 @@ require_once $root_path."classes/Intolerancia.class.php";
 require_once $root_path."classes/IntoleranciaDao.class.php";
 require_once $root_path."classes/Usuario.class.php";
 require_once $root_path."classes/UsuarioDao.class.php";
+require_once $root_path."classes/IntoleranciaUsuario.class.php";
+require_once $root_path."classes/IntoleranciaUsuarioDao.class.php";
+require_once $root_path."classes/Upload.class.php";

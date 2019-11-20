@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `Usuario_intolerancia` (
 	`codigo` INT PRIMARY KEY AUTO_INCREMENT,
     `usuario_cod` INT,
 	`intolerancia_cod` INT,
-    `estado_cod` INT,
+    `estado_cod` INT DEFAULT 1,
     `motivo_rejeicao` TEXT,
 	`arquivo` VARCHAR(255), 
 	FOREIGN KEY (`usuario_cod`) REFERENCES `Usuario`(`codigo`),

@@ -36,6 +36,9 @@ $data = date("Y-m-d");
 /**
  * Mostra o dia e os botões de marcar presença ou ausência
  */
+
+$disabled_msg = "";
+
 if (SemanaCardapioDao::SemanaExiste($data)) {
   
   // Componentes que não serão mostrados
@@ -52,7 +55,6 @@ if (SemanaCardapioDao::SemanaExiste($data)) {
   $cartao_presenca = str_replace("{dia_cod}", $dia->getCodigo(), $cartao_presenca);
   // O aluno só pode alterar sua presença até 10h do dia
   $disabled = "";
-  $disabled_msg = "";
   if (date("H") >= 10) {
     $disabled = " disabled ";
     $disabled_msg = file_get_contents("cartao_presenca_disabledmsg.html");

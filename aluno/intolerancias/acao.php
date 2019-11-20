@@ -7,7 +7,7 @@ $usuario = UsuarioDao::SelectPorCodigo($_SESSION['codigo']);
 echo "<pre>";
  var_dump($_FILES);
 echo "</pre>";
-$pasta_destino = $root_path."/arquivos/intolerancia/";
+$pasta_destino = $root_path."arquivos/intolerancias/";
 $acao = isset($_POST['acao']) ? $_POST['acao'] : "";
 
 if ($acao == "solicitarIntolerancia")
@@ -24,9 +24,16 @@ if ($acao == "solicitarIntolerancia")
 
 	$intolUsuario = new IntoleranciaUsuario;
 	$intolUsuario->setIntolerancia($intol);
-	if(IntoleranciaUsuarioDao::Inserir($intolUsuario, 'documento', $_SESSION['codigo'], $pasta_destino)){
+	try{
+		IntoleranciaUsuarioDao::Inserir($intolUsuario, 'documento', $_SESSION['codigo'], $pasta_destino);
 		$usuario->setIntolerancia($intolUsuario);
+		header("location:{$root_path}aluno/perfil");
 	}
+	catch(Exception $e){
+		die("<b>Ocorreu um erro no cadastro de intolerância: </b>".$e);
+	}
+
+		
 	
 
 }

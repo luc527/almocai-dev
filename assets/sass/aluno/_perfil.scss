@@ -138,15 +138,18 @@
   }
   .input-field input[type=text]:focus {
     border-bottom: 1px solid $quaternary-color !important;
-    box-shadow: 0 1px 0 0 $quaternary-color !important;
+    -webkit-box-shadow: 0 1px 0 0 $quaternary-color !important;
+            box-shadow: 0 1px 0 0 $quaternary-color !important;
   }
   .input-field input[type=text].valid {
     border-bottom: 1px solid $quaternary-color !important;
-    box-shadow: 0 1px 0 0 $quaternary-color !important;
+    -webkit-box-shadow: 0 1px 0 0 $quaternary-color !important;
+            box-shadow: 0 1px 0 0 $quaternary-color !important;
   }
   .input-field input[type=text].invalid {
     border-bottom: 1px solid $quaternary-color !important;
-    box-shadow: 0 1px 0 0 $quaternary-color !important;
+    -webkit-box-shadow: 0 1px 0 0 $quaternary-color !important;
+            box-shadow: 0 1px 0 0 $quaternary-color !important;
   }
   .input-field .prefix.active {
     color: $quaternary-color !important;

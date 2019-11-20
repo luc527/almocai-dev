@@ -7,7 +7,8 @@
     @extend .hoverable;
     display: grid;
     @extend .no-select;
-    align-content: center;
+    -ms-flex-line-pack: center;
+        align-content: center;
     min-height: 22rem;
 
     &--title {
@@ -33,7 +34,8 @@
     padding: 1.5rem;
     min-height: 17.5rem;
     display: grid;
-    align-content: center;
+    -ms-flex-line-pack: center;
+        align-content: center;
 
     &--title {
       margin: 0;
@@ -107,7 +109,8 @@
         font-size: 1rem;
 
         i {
-          transform: translateY(.45rem);
+          -webkit-transform: translateY(.45rem);
+                  transform: translateY(.45rem);
         }
 
         &:not(:last-child) {

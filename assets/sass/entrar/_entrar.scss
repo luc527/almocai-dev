@@ -50,6 +50,7 @@
   }
 
   &__modal {
+    background-image: -webkit-gradient(linear, left top, right bottom, from(#f42f4b), color-stop(#e42740), color-stop(#d41e36), color-stop(#c4152c), to(#b40922));
     background-image: linear-gradient(to right bottom, #f42f4b, #e42740, #d41e36, #c4152c, #b40922);
     color: $branco;
 
@@ -84,4 +85,18 @@
 
   }
 
+}
+
+.esqueci-senha {
+  color: $primary-color;
+  transition: color .3s ease-in-out;
+  letter-spacing: .05rem;
+  border-bottom: .05rem solid $primary-color;
+  &:hover {
+    color: $primary-color-dark;
+    border-bottom: .05rem solid $primary-color-dark;
+  }
+  @media #{$large-and-up} {
+    margin-left: .2rem;
+  }
 }

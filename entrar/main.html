@@ -10,18 +10,18 @@
         action="acao.php"
         method="post"
       >
-        <div class="row col s12 l6 offset-l2">
+        <div class="row col s12 m8 offset-m2 l6 offset-l2">
           <img class="no-select" src="{root_path}assets/img/logo-verde.svg" />
         </div>
 
         <div class="row">
-          <div class="input-field col s12 l6 offset-l2">
+          <div class="input-field col s12 m8 offset-m2 l6 offset-l2">
             <input id="username" type="text" name="username" />
             <label for="username">Nome de usuário</label>
           </div>
         </div>
         <div class="row">
-          <div class="input-field col s12 l6 offset-l2">
+          <div class="input-field col s12 m8 offset-m2 l6 offset-l2">
             <input id="senha" type="password" name="senha" />
             <label for="senha">Senha</label>
           </div>
@@ -32,18 +32,18 @@
           <div class="modal-content transparent">
             <h4 class="login-section__modal--title">Falha ao conectar</h4>
             <p class="login-section__modal--text" id="texto-erro"></p>
-            <a href="./" class="login-section__modal--btn modal-close"
-              >Fechar e continuar</a
-            >
+            <a href="./" class="login-section__modal--btn modal-close">
+              Fechar e continuar
+            </a>
           </div>
         </div>
 
         <div
-          class="row center col s12 l6 offset-l2 login-section__padding-zero"
+          class="row center col s12 m8 offset-m2 l6 offset-l2 login-section__padding-zero"
         >
           <button
             type="submit"
-            class="waves-effect waves-light btn login-section__button"
+            class="waves-effect waves-light btn login-section__button bold"
             name="acao"
             value="Login"
           >
@@ -51,10 +51,10 @@
           </button>
         </div>
 
-        <div class="row center-align">
-          <div class="input-field col s12 azul-text">
-            <a href="recuperacao">
-              Esqueci minha senha.
+        <div class="row">
+          <div class="input-field col s12 m8 offset-m2 l6 offset-l2">
+            <a href="recuperacao" class="esqueci-senha">
+              Esqueci minha senha
             </a>
           </div>
         </div>
@@ -67,4 +67,4 @@
   </div>
 </div>
 
-{erro_trigger}
+<!-- {erro_trigger} -->

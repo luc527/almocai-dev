@@ -59,12 +59,10 @@ nav {
   // Logo
   .brand-logo {
     position: absolute; 
-    padding-top: .15rem;
     color: $navbar-font-color;
     display: inline-block;
     font-size: $navbar-brand-font-size;
     padding: 0;
-    height: 4rem;
 
     &.center {
       left: 50%;

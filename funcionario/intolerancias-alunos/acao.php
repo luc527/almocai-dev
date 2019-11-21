@@ -30,7 +30,7 @@ if ($acao == 'alterarEstadoIntolerancia')
 
 	IntoleranciaUsuarioDao::UpdateEstado($intolUs);
 
-	$redir = $root_path.'funcionario/intolerancias_alunos/';
+	$redir = $root_path.'funcionario/intolerancias-alunos/';
 }
 
 header('location:'.$redir);

@@ -1,7 +1,6 @@
 <?php
 
 // Função que envia o e-mail
-// TODO
 function EnviarEmail($hash, $email) {
 	$root = "localhost/almocai";
 	$uri = "/entrar/nova_senha/?hash={$hash}&email={$email}";

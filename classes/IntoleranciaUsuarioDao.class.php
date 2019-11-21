@@ -22,11 +22,11 @@
             // faz o upload do arquivo e coloca o caminho no atributo documento
             $intoleranciaUsuario->setDocumento($Upload->uploadImagem($nome_arquivo, $pasta_destino));
             if(!is_array($intoleranciaUsuario->getDocumento()))
-            return StatementBuilder::insert("INSERT INTO Usuario_Intolerancia value (:usuario_matricula, :intolerancia_id, :documento)", 
+            return StatementBuilder::insert("INSERT INTO Usuario_intolerancia (usuario_cod,intolerancia_cod,arquivo) value (:usuario_cod, :intolerancia_cod, :arquivo)", 
             [
-                'usuario_matricula' => $matricula,
-                'intolerancia_id' => $intoleranciaUsuario->getIntolerancia()->getCodigo(),
-                'documento' => $intoleranciaUsuario->getDocumento()
+                'usuario_cod' => $matricula,
+                'intolerancia_cod' => $intoleranciaUsuario->getIntolerancia()->getCodigo(),
+                'arquivo' => $intoleranciaUsuario->getDocumento()
             ]);
         }
 

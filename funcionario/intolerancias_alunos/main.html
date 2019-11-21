@@ -1,0 +1,57 @@
+<style type="text/css">
+.legenda {
+	border-radius: 8px;
+}
+
+.validada {
+	background-color: rgba(67, 137, 69, .3);
+}
+
+.pendente {
+	background-color: rgba(235, 166, 63, .3);
+}
+
+.rejeitada {
+	background-color: rgba(228, 12, 43, .3);
+}
+</style>
+
+<div class="container">
+	<div class="row">
+		<div class="col s12 center">
+			<h3 class="almocai-text text-amarelo">
+				<b>Gerenciamento de <u>intolerâncias</u> dos alunos</b>
+			</h3>
+		</div>
+	</div>
+
+	<div class="row" style="margin: 1rem 0 2rem 0;">
+		<div class="col s12 center">
+			Legenda (estados das intolerâncias): 
+			<b style="padding: .75rem;" class="legenda pendente">Pendente</b>
+			<b style="padding: .75rem;" class="legenda rejeitada">Rejeitada</b>
+			<b style="padding: .75rem;" class="legenda validada">Validada</b>
+			
+		</div>
+	</div>
+
+	<div class="card-panel">
+		<table class="responsive-table">
+			<thead>
+				<tr>
+					<th class="grey-text">#</th>
+					<th class="almocai-text">Aluno</th>
+					<th class="almocai-text text-amarelo">Intolerância</th>
+					<th class="almocai-text text-azul">Documento</th>
+					<th class="almocai-text text-azul">Alterar</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				{{intolerancias}}
+			</tbody>
+
+		</table>
+	</div>
+	
+</div>

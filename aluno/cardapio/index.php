@@ -28,11 +28,10 @@ $cardapio = str_replace("{{scripts}}", $scripts, $cardapio);
 // Vazios (peso_fonte)
 $cardapio = str_replace("{peso_fonte}", "", $cardapio);
 
-
 /**
  * Carrega a semana/cardápio / os cartões de cada dia / os alimentos
  */
-$dataHj = date("Y-m-d");
+$dataHj = date("Y-m-d H:i:s");
 if (SemanaCardapioDao::SemanaExiste($dataHj)) {
 
   $data = Funcoes::CorrigeData($dataHj);
@@ -61,10 +60,28 @@ if (SemanaCardapioDao::SemanaExiste($dataHj)) {
     }
   }
 
+  // $disabled = variável que armazena se deve bloquear o aluno a alterar sua presença
+  // começa "disabled" (texto que irá nos botões para os tornar inacessíveis)
+  // mas se torna "" quando determina que o usuário já pode alterar sua presença
+  $disabled = " disabled ";
+  
   // Cria cada cartão/dia
   for ($i = 0; $i < count($dias); $i++) {
     $data = $dias[$i]->getData();
     $diaSemana = $dias[$i]->getDiaSemana();
+    
+    $diaSemanaCod = date("w", strtotime($data));
+    $diaSemanaHj = date("w", strtotime($dataHj));
+    
+    // $disabled != "" -> só verifica se deve habilitar os botões se eles estiverem desabilitados
+    if ($disabled != "" && $diaSemanaCod >= $diaSemanaHj)
+      
+      if ($diaSemanaCod == $diaSemanaHj) {
+        if (date("H", strtotime($dataHj)) < 10)
+          $disabled = "";
+          // só vai habilitar o botão no mesmo dia se não tiver passado das 10h
+      } else
+        $disabled = "";
 
     // Presença do aluno no dia
     $pres = UsuarioDao::SelectPresenca($dias[$i]->getCodigo(), $_SESSION['codigo']);
@@ -79,6 +96,7 @@ if (SemanaCardapioDao::SemanaExiste($dataHj)) {
     }
 
     $dia[$i] = file_get_contents("dia_cartao.html");
+    $dia[$i] = str_replace("{disabled}", $disabled, $dia[$i]);
     $dia[$i] = str_replace("{dia_cod}", $dias[$i]->getCodigo(), $dia[$i]);
     $dia[$i] = str_replace("{fundo_cor}", $fundo_cor, $dia[$i]);
     $dia[$i] = str_replace("{cor_texto_presenca}", $cor_texto_presenca, $dia[$i]);
@@ -86,6 +104,7 @@ if (SemanaCardapioDao::SemanaExiste($dataHj)) {
 
 
     $alimentosHTML = "";
+
 
     // Concatena os <li>alimento</li> em um $alimentosHTML para cada dia
     for ($j = 0; $j < count($alimentos[$i]); $j++) {
@@ -135,3 +154,4 @@ $cardapio = str_replace("{{cardapio_indisponivel}}", $cardapio_indisponivel, $ca
 // Carrega caminho à raiz (root_path) SEMPRE NO FINAL, ANTES DO PRINT
 $cardapio = str_replace("{root_path}", $root_path, $cardapio);
 print($cardapio);
+

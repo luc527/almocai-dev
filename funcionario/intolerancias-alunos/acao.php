@@ -3,7 +3,7 @@
 require 'init.php';
 
 /* Para onde o usuário deverá ser redirecionado após a ação */
-/* Valor padrão */
+/* Valor padrão = root */
 $redir = $root_path;
 
 if (isset($_POST['acao'])) {

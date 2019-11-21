@@ -65,7 +65,6 @@ foreach($intolsUser as $intolUser) {
 
 
 	$intolUserHTML = str_replace("{doc_path}", $doc_path, $intolUserHTML);
-	$intolUserHTML = str_replace("{doc_nome}", $doc, $intolUserHTML);
 
 	$intolsUserHTML .= $intolUserHTML;
 }

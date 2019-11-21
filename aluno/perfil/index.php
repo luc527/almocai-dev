@@ -92,7 +92,6 @@ foreach ($intols as $intol) {
 	$intolHTML = str_replace("{descricao}", $intol->getIntolerancia()->getDescricao(), $intolHTML);
 	$intolHTML = str_replace("{estado}", $intol->getEstado()->getDescricao(), $intolHTML);
 	$intolHTML = str_replace("{estado_cor}", $estado_cor, $intolHTML);
-	$intolHTML = str_replace("{doc_nome}", $doc, $intolHTML);
 	$intolHTML = str_replace("{doc_path}", $doc_path, $intolHTML);
 
 	$intolsHTML .= $intolHTML;

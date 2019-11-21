@@ -122,6 +122,16 @@ class UsuarioDao
 		);
 	}
 
+	public static function VerificaEmail($email)
+	{
+		return count(
+			StatementBuilder::select(
+				"SELECT * FROM Usuario WHERE email = :email",
+				['email' => $email]
+			)
+		);
+	}
+
 	public static function SelectPorEmail($email)
 	{
 		return self::Popula(

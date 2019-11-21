@@ -31,14 +31,20 @@ if ($email == "")
 {
 	$msg_email_enviado = "";
 
-} else
-{
-	// Carrega usuário do BD pelo e-mail e carrega hash
-	$usuario = UsuarioDao::SelectPorEmail($email);
-	$hash = $usuario->hash();
+} else{
+	if(UsuarioDao::VerificaEmail($email) > 0){
+		// Carrega usuário do BD pelo e-mail e carrega hash
+		$usuario = UsuarioDao::SelectPorEmail($email);
 
-	EnviarEmail($hash, $email);
-	$msg_email_enviado = file_get_contents("msg_email_enviado.html");
+		
+		$hash = $usuario->hash();
+
+		EnviarEmail($hash, $email);
+		$msg_email_enviado = file_get_contents("msg_email_enviado.html");
+	}
+	else{
+		$msg_email_enviado = file_get_contents("msg_email_invalido.html");
+	}
 }
 
 $main = file_get_contents("main.html");

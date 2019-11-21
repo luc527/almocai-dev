@@ -53,9 +53,9 @@ if (SemanaCardapioDao::SemanaExiste($data)) {
   $cartao_presenca = file_get_contents("cartao_presenca.html");
   $cartao_presenca = str_replace("{data_hoje}", $datahj, $cartao_presenca);
   $cartao_presenca = str_replace("{dia_cod}", $dia->getCodigo(), $cartao_presenca);
-  // O aluno só pode alterar sua presença até 10h do dia
+
   $disabled = "";
-  if (date("H") >= 10) {
+  if (! $dia->alunoPodeMudarPresenca(date("Y-m-d H:i:s"))) {
     $disabled = " disabled ";
     $disabled_msg = file_get_contents("cartao_presenca_disabledmsg.html");
   }

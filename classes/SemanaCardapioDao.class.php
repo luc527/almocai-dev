@@ -103,12 +103,12 @@ class SemanaCardapioDao
 
 	public static function SelectPorData($data)
 	{
-		$sql = "SELECT semanaCardapio_codigo FROM diaAlmoco WHERE `data` = :data";
+		$sql = "SELECT semanaCardapio_codigo FROM DiaAlmoco WHERE `data` = :data";
 		$params = ['data' => Funcoes::CorrigeData($data)];
 
 		return self::SelectPorCodigo(
 			StatementBuilder::select(
-				"SELECT semanaCardapio_codigo FROM diaAlmoco WHERE `data` = :data",
+				"SELECT semanaCardapio_codigo FROM DiaAlmoco WHERE `data` = :data",
 				['data' => $data]
 			)[0]['semanaCardapio_codigo']
 		);

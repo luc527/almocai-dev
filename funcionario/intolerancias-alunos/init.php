@@ -3,7 +3,7 @@
 $root_path = "../../";
 
 include $root_path.'valida_secao.php';
-valida_secao_tipo($root_path, ['ADMINISTRADOR', 'ALUNO']);
+valida_secao_tipo($root_path, ['FUNCIONARIO', 'ADMINISTRADOR']);
 
 require_once $root_path.'classes/StatementBuilder.class.php';
 require_once $root_path.'classes/Conexao.class.php';

@@ -122,3 +122,24 @@
   }
 
 }
+
+.legenda {
+	border-radius: 8px;
+}
+
+.validada {
+	background-color: rgba(67, 137, 69, .3);
+}
+
+.pendente {
+	background-color: rgba(235, 166, 63, .3);
+}
+
+.rejeitada {
+	background-color: rgba(228, 12, 43, .3);
+}
+
+.texto {
+  color: #1d1d2c;
+  font-size: 1rem;
+}

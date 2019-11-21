@@ -32,8 +32,4 @@ if ($acao == "solicitarIntolerancia")
 	catch(Exception $e){
 		die("<b>Ocorreu um erro no cadastro de intolerância: </b>".$e);
 	}
-
-		
-	
-
 }

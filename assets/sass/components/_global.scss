@@ -39,7 +39,23 @@ ul {
 
     & > li {
       list-style-type: none;
+    
+      &.active {
+        i {
+          transition: all .25s;
+          transform: rotate(45deg);
+        }
+      }
+
+      &:not(.active) {
+        i {
+          transition: all .25s;
+          transform: rotate(0deg);
+        }
+      }
+
     }
+    
   }
 }
 

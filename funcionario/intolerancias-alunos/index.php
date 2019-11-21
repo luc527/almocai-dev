@@ -7,7 +7,7 @@ $intol_alunos = file_get_contents($root_path.'template.html');
 $intol_alunos = str_replace("{title}", "Gerenciar intolerâncias dos alunos", $intol_alunos);
 $intol_alunos = str_replace("{peso_fonte}", "", $intol_alunos);
 $intol_alunos = str_replace(
-	"{{nav}}", file_get_contents($root_path.'componentes/nav-funcionario.html'), $intol_alunos);
+	"{{nav}}", file_get_contents($root_path.'componentes/nav-funcionario-trp.html'), $intol_alunos);
 $intol_alunos = str_replace(
 	"{{footer}}", file_get_contents($root_path.'componentes/footer.html'), $intol_alunos);
 $intol_alunos = str_replace(
@@ -65,7 +65,6 @@ foreach($intolsUser as $intolUser) {
 
 
 	$intolUserHTML = str_replace("{doc_path}", $doc_path, $intolUserHTML);
-	$intolUserHTML = str_replace("{doc_nome}", $doc, $intolUserHTML);
 
 	$intolsUserHTML .= $intolUserHTML;
 }

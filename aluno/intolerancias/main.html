@@ -1,24 +1,25 @@
+<div class="section banner valign-wrapper banner--12">
+  <div class="row">
+    <div class="col s12">
+      <h1 class="banner__titulo">Solicitação de registro</h1>
+      <h4 class="banner__subtitulo">de intolerância alimentar ou alergia</h4>
+    </div>
+  </div>
+</div>
+
 <div class="container">
 	<div class="card-panel hoverable">
-
-		<div class="row">
-			<div class="col s12 center">
-				<h4><b class="almocai-text">
-					Solicitação de registro de intolerância
-				</b></h4>
-			</div>
-		</div>
 
 		<form action="acao.php" method="POST" enctype="multipart/form-data">
 			
 			<div class="row">
 				<div class="input-field col s12">
 					
-					<span class="helper-text">Selecione a sua intolerância ou alergia</span>
+					<span class="helper-text">Selecione a sua intolerância alimentar ou alergia</span>
 					<select name="intolerancia_cod" id="intolerancia_cod" required>
 						
-						<option disabled>Selecione uma intolerância</option>
-						<option value="-1">... A minha não está aqui</option>
+						<option disabled>Selecione uma intolerância alimentar ou alergia </option>
+						<option value="-1">Não está na lista</option>
 
 						{{opcoes_intolerancia}}
 
@@ -28,26 +29,32 @@
 
 			<div class="row">
 				<div class="input-field col s12">
-					<label for="nova_intolerancia">Caso sua intolerância não esteja na lista, digite ela aqui</label>
-					<input type="text" name="nova_intolerancia" id="nova_intolerancia"/>
+					<label for="nova_intolerancia">Caso não esteja na lista, digite aqui</label>
+					<input type="text" name="nova_intolerancia" id="nova_intolerancia" placeholder="Ex: Lactose"/>
 				</div>
 			</div>
 			
-			<div class="row">			
-				<div class="file-field input-field col s12" >				
-					<div class="btn">
-						<input type="file" name="documento" id="documento" required />
-					</div>
-					<div class="file-path wrapper">
-						<input required type="text" class="file-path validate" id="path_txt" placeholder="Documento que comprova sua intolerância ou alergia" />
+			<div class="row">
+				<div class="col s12">
+					<p>Adicione abaixo, um documento que comprove sua intolerância alimentar ou alergia.</p>
+				</div>
+				<div class="col s12">
+					<div class="file-field input-field">
+						<div class="btn">
+							<span>Documento</span>
+							<input type="file" name="documento" id="documento" required >
+						</div>
+						<div class="file-path-wrapper">
+								<input required type="text" class="file-path validate" id="path_txt" placeholder="Ex: Comprovante" />
+						</div>
 					</div>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="input-field col s12 center">
-					<button name="acao" value="solicitarIntolerancia" type="submit" class="btn waves-effect waves-light almocai">
-						<i class="material-icons left">send</i>
+					<button name="acao" value="solicitarIntolerancia" type="submit" class="btn waves-effect waves-light almocai bold acessar-interface-btn">
+						<i class="material-icons right">send</i>
 						Solicitar
 					</button>
 				</div>

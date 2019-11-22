@@ -6,7 +6,7 @@ require 'init.php';
 
 $title = "Intolerâncias";
 $peso_fonte = "";
-$nav = file_get_contents($root_path."componentes/nav.html");
+$nav = file_get_contents($root_path."componentes/nav-transparent.html");
 $footer = file_get_contents($root_path."componentes/footer.html");
 $scripts = file_get_contents("scripts.js");
 

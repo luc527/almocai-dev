@@ -8,7 +8,7 @@ class Conexao {
 
 	private function __construct ()	{
 		$db_host = "localhost";
-		$db_nome = "almocai";
+		$db_nome = "almocaiLocal";
 		$db_usuario = "root";
 		$db_senha = "";
 		$db_driver = "mysql";

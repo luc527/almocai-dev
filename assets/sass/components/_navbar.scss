@@ -66,12 +66,14 @@ nav {
 
     &.center {
       left: 50%;
-      transform: translateX(-50%);
+      -webkit-transform: translateX(-50%);
+              transform: translateX(-50%);
     }
 
     @media #{$medium-and-down} {
       left: 50%;
-      transform: translateX(-50%);
+      -webkit-transform: translateX(-50%);
+              transform: translateX(-50%);
 
     
       & img {
@@ -81,7 +83,8 @@ nav {
 
       &.left, &.right {
         padding: 0;
-        transform: none;
+        -webkit-transform: none;
+                transform: none;
       }
 
       &.left { left: 0.5rem; }
@@ -118,6 +121,7 @@ nav {
     margin: 0;
 
     li {
+      -webkit-transition: background-color .3s;
       transition: background-color .3s;
       float: left;
       position: relative;
@@ -130,6 +134,7 @@ nav {
       text-align: center;
       display: block;
       position: relative;
+      -webkit-transition: all 0.3s ease;
       transition: all 0.3s ease;
       cursor: pointer;
 
@@ -194,6 +199,8 @@ nav {
   color: $branco !important;
   background-color: transparent !important;
   width: 100%;
+  -webkit-transition: all .3s ease !important;
+  transition: all .3s ease !important;
   height: $navbar-height-mobile;
   line-height: $navbar-line-height-mobile;
 
@@ -203,6 +210,8 @@ nav {
   [class^="mdi-"], [class*="mdi-"],
   i.material-icons {
     display: block;
+    -webkit-transition: all .3s ease !important;
+    transition: all .3s ease !important;
     font-size: 24px;
     height: $navbar-height-mobile;
     line-height: $navbar-line-height-mobile;
@@ -222,6 +231,8 @@ nav {
   .sidenav-trigger {
     i {
       color: $branco !important;
+      -webkit-transition: all .3s ease !important;
+      transition: all .3s ease !important;
       &:hover {
         color: rgba($branco, 0.7) !important;
       }
@@ -241,6 +252,8 @@ nav {
   ul {
     a {
       color: $branco;
+      -webkit-transition: all .3s ease !important;
+      transition: all .3s ease !important;
       &:hover {
         color: rgba($branco, 0.6);
       }

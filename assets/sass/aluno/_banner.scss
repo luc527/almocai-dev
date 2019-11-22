@@ -59,8 +59,22 @@
 
   // Sobre
   &--11 {
+    background-image: -webkit-gradient(linear, left top, right bottom, from(rgba($primary-color-light, 0.6)), to(rgba($primary-color-dark, 0.6))), url(../img/sobre/fundo.jpg);
     background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/sobre/fundo.jpg);
   }
+
+  // Intolerancia aluno
+  &--12 {
+    background-image: -webkit-gradient(linear, left top, right bottom, from(rgba($primary-color-light, 0.6)), to(rgba($primary-color-dark, 0.6))), url(../img/aluno/fundo-intolerancia.jpg);
+    background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/aluno/fundo-intolerancia.jpg);
+  }
+
+  // Funcionário --> Gerenciar intolerãncia
+  &--13 {
+    background-image: -webkit-gradient(linear, left top, right bottom, from(rgba($primary-color-light, 0.6)), to(rgba($primary-color-dark, 0.6))), url(../img/funcionario/intolerancia.jpg);
+    background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/funcionario/intolerancia.jpg);
+  }
+
 
   min-height: 30rem;
   margin-top: -4.5rem !important;

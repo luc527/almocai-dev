@@ -24,12 +24,8 @@ if ($acao == "solicitarIntolerancia")
 
 	$intolUsuario = new IntoleranciaUsuario;
 	$intolUsuario->setIntolerancia($intol);
-	try{
-		IntoleranciaUsuarioDao::Inserir($intolUsuario, 'documento', $_SESSION['codigo'], $pasta_destino);
-		$usuario->setIntolerancia($intolUsuario);
-		header("location:{$root_path}aluno/perfil");
-	}
-	catch(Exception $e){
-		die("<b>Ocorreu um erro no cadastro de intolerância: </b>".$e);
-	}
+
+	IntoleranciaUsuarioDao::Inserir($intolUsuario, 'documento', $_SESSION['codigo'], $pasta_destino);
+	$usuario->setIntolerancia($intolUsuario);
+	header("location:{$root_path}aluno/perfil");
 }

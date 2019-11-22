@@ -3,15 +3,15 @@
 	<td>{aluno_nome} ({username})</td>
 	<td>{intolerancia}</td>
 	<td>
-		<a href="{doc_path}" download class="btn almocai azul waves-light waves-effect">
-			{doc_nome}
+		<a href="{doc_path}" download class="btn almocai azul waves-light waves-effect bold acessar-interface-btn">
+			Baixar
 			<i class="material-icons right">cloud_download</i>
 		</a>
 	</td>
 	<td>
 		<a 
 			href=""
-			class="btn almocai azul waves-light waves-effect modal-trigger"
+			class="btn almocai azul waves-light waves-effect modal-trigger bold acessar-interface-btn"
 			data-target="alterar{codigo}"
 		>
 			<i class="material-icons">edit</i>
@@ -41,7 +41,7 @@
 						Documento: 
 						<a 
 							href="{doc_path}" 
-							class="btn almocai azul waves-effect waves-light" 
+							class="btn almocai azul waves-effect waves-light bold acessar-interface-btn" 
 							download>
 							Baixar
 							<i class="material-icons right">
@@ -97,7 +97,7 @@
 
 			<div class="row">
 				<div class="col s12 center">
-					<button name="acao" value="alterarEstadoIntolerancia" class="btn waves-effect waves-light almocai">
+					<button name="acao" value="alterarEstadoIntolerancia" class="btn waves-effect waves-light almocai bold acessar-interface-btn">
 						<i class="material-icons left">send</i>
 						Salvar
 					</button>

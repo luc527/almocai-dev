@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS `almocai`;
-USE `almocai`;
+CREATE DATABASE IF NOT EXISTS `almocaiLocal`;
+USE `almocaiLocal`;
 
 CREATE TABLE IF NOT EXISTS `SemanaCardapio` (
 	`codigo` INT PRIMARY KEY AUTO_INCREMENT,
@@ -60,7 +60,6 @@ CREATE TABLE IF NOT EXISTS `Alimentacao` (
 
 INSERT INTO `Alimentacao` (`codigo`, `descricao`) 
 VALUES (1, 'Come Carne'), (2, 'Vegetariano'), (3, 'Vegano');
-
 
 CREATE TABLE IF NOT EXISTS `Usuario` (
 	`codigo` INT PRIMARY KEY AUTO_INCREMENT,

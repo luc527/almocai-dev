@@ -3,6 +3,26 @@
 }
 
 .perfil {
+
+  &__dismiss {
+    padding: 1rem;
+    color: $branco;
+    transition: color .3s ease-in;
+    &:hover {
+      color: rgba($branco, .6);
+    }
+  }
+
+  &__intolerancia {
+    padding: 1rem 1rem 0 1rem;
+
+    &--text {
+      font-size: 1.25rem;
+      line-height: 2rem;
+    }
+
+  }
+
   &__cartao-almoca {
 
     padding: 2rem;
@@ -153,5 +173,14 @@
   }
   .input-field .prefix.active {
     color: $quaternary-color !important;
+  }
+}
+
+.olho {
+  color: $primary-color !important;
+  -webkit-transition: color .3s ease-in-out;
+  transition: color .3s ease-in-out;
+  &:hover {
+    color: $primary-color-dark !important;
   }
 }

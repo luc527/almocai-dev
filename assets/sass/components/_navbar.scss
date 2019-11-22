@@ -13,14 +13,6 @@ nav {
     }
   }
 
-  color: $navbar-font-color;
-  background-color: $background-color-default;
-  width: 100%;
-  height: $navbar-height-mobile;
-  line-height: $navbar-line-height-mobile;
-
-  a { color: $navbar-font-color; }
-
   i,
   [class^="mdi-"], [class*="mdi-"],
   i.material-icons {
@@ -128,14 +120,11 @@ nav {
     }
     a {
       font-size: $navbar-font-size;
-      color: $navbar-font-color;
       padding: 0 15px;
       text-decoration: none;
       text-align: center;
       display: block;
       position: relative;
-      -webkit-transition: all 0.3s ease;
-      transition: all 0.3s ease;
       cursor: pointer;
 
       &.btn, &.btn-large, &.btn-flat, &.btn-floating {
@@ -149,10 +138,6 @@ nav {
         }
       }
 
-      &:hover {
-        color: $primary-color-dark;
-      }
-
       &:hover::before {
         right: 0;
         left: 0;
@@ -162,10 +147,6 @@ nav {
     &.left {
       float: left;
     }
-  }
-  
-  .active {
-    color: $primary-color-dark;        
   }
 
 }
@@ -199,12 +180,8 @@ nav {
   color: $branco !important;
   background-color: transparent !important;
   width: 100%;
-  -webkit-transition: all .3s ease !important;
-  transition: all .3s ease !important;
   height: $navbar-height-mobile;
   line-height: $navbar-line-height-mobile;
-
-  a { color: $branco; }
 
   i,
   [class^="mdi-"], [class*="mdi-"],
@@ -248,14 +225,17 @@ nav {
     height: 4rem; 
   }
 
-  // Navbar Links
   ul {
+
     a {
-      color: $branco;
-      -webkit-transition: all .3s ease !important;
-      transition: all .3s ease !important;
+      color: $branco !important;
+      -webkit-transition: all .3s ease-in-out !important;
+      transition: all .3s ease-in-out !important;
+      &:hover > i {
+        color: rgba($branco, 0.6) !important;
+      }
       &:hover {
-        color: rgba($branco, 0.6);
+        color: rgba($branco, 0.6) !important;
       }
     }
   }

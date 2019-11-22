@@ -13,7 +13,7 @@ $title = "Aluno";
 $peso_fonte = '';
 $nav = file_get_contents($root_path . "componentes/nav-transparent.html");
 $footer = file_get_contents($root_path . "componentes/footer.html");
-$scripts = '';
+$scripts = file_get_contents("scripts.js");
 
 // Carregamento das variáveis e componentes no template
 $aluno = file_get_contents($root_path . "template.html");
@@ -64,14 +64,14 @@ if (SemanaCardapioDao::SemanaExiste($data)) {
   // Variáveis do componente que mostra a presença marcada pelo usuário
   $pres = UsuarioDao::SelectPresenca($dia->getCodigo(), $usuario->getCodigo());
   if ($pres == 'nao-selecionada') {
-    $cor = ' amarelo ';
-    $txt = 'Ainda não selecionei';
+    $cor = 'amarelo';
+    $txt = 'Ainda não selecionei <i class="material-icons" style="transform: translateY(6px);">thumbs_up_down</i>';
   } else if ($pres) {
-    $cor = ''; // por padrão verde
-    $txt = 'Almoçarei';
+    $cor = 'verde'; // por padrão verde
+    $txt = ' Almoçarei <i class="material-icons" style="transform: translateY(6px);">thumb_up</i>';
   } else {
-    $cor = ' vermelho ';
-    $txt = 'Não almoçarei';
+    $cor = 'vermelho';
+    $txt = 'Não almoçarei <i class="material-icons" style="transform: translateY(6px);">thumb_down</i>';
   }
 
   // Componente HTML que mostra a presença marcada pelo usuário
@@ -116,8 +116,8 @@ if (SemanaCardapioDao::SemanaExiste($data)) {
 $main = str_replace("{nome}", $nome, $main);
 $main = str_replace("{{cartao_dia}}", $cartao_dia, $main);
 $main = str_replace("{{cardapio_indisponivel}}", $cardapio_ind, $main);
-$main = str_replace("{{disabled_msg}}", $disabled_msg, $main);
 $main = str_replace("{{cartao_presenca}}", $cartao_presenca, $main);
+$main = str_replace("{{disabled_msg}}", $disabled_msg, $main);
 
 $aluno = str_replace("{{main}}", $main, $aluno);
 $aluno = str_replace("{root_path}", $root_path, $aluno);

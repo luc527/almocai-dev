@@ -20,37 +20,23 @@
 </tr>
 
 <div class="modal" id="alterar{codigo}">
-	<div class="modal-content">
+	<div class="modal-content" style="padding-bottom: 0;">
 
 		<div class="row">
 			<div class="col s12">
-				<ul class="collection">
-					<li class="collection-item almocai-text">
-						Aluno: 
-						<b>{aluno_nome}</b>
-					</li>
-					<li class="collection-item almocai-text">
-						Username: 
-						<b >{username}</b>
-					</li>
-					<li class="collection-item almocai-text text-azul">
-						Intolerância:
-						<b>{intolerancia}</b>
-					</li>
-					<li class="collection-item almocai-text text-azul">
-						Documento: 
-						<a 
-							href="{doc_path}" 
-							class="btn almocai azul waves-effect waves-light bold acessar-interface-btn" 
-							download>
-							Baixar
-							<i class="material-icons right">
-								cloud_download
-							</i>
-						</a>
 
-					</li>
-				</ul>
+				<p>
+					Nome do aluno: 
+					<b>{aluno_nome}</b>
+				</p>
+				<p>
+					Usuário do aluno:
+					<b>{username}</b>
+				</p>
+				<p>
+					Intolerância ou alergia apresentada:
+					<b>{intolerancia}</b>
+				</p>
 			</div>
 		</div>
 
@@ -60,7 +46,7 @@
 
 			<div class="row">
 				<div class="col s12">
-					<label for="estado">Estado da intolerância</label>
+					<p>Situação da solicitação: </p>
 					<p>
 						<label>
 							<input type="radio" name="estado" value="pendente" class="with-gap" {checked_pendente} />
@@ -88,6 +74,7 @@
 				<div class="col s12">
 					<label for="motivo_rejeicao">Em caso de rejeição, informe o motivo</label>
 					<textarea 
+						placeholder="Ex: Documentos não válidas para a solicitação."
 						class="materialize-textarea"
 						name="motivo_rejeicao" 
 						id="motivo_rejeicao" 
@@ -107,6 +94,6 @@
 	</div>
 
 	<div class="modal-footer">
-		<a href="#!" class="modal-close waves-effect waves-green btn-flat">Voltar</a>
+		<a href="#!" class="modal-close waves-effect waves-light btn-flat left">Voltar</a>
 	</div>
 </div>

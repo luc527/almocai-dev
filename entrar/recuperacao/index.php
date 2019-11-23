@@ -3,7 +3,7 @@
 // Função que envia o e-mail
 function EnviarEmail($hash, $email) {
 	$root = "localhost/almocai";
-	$uri = "/entrar/nova_senha/?hash={$hash}&email={$email}";
+	$uri = "/entrar/nova-senha/?hash={$hash}&email={$email}";
 	
 	$to = $GLOBALS['email'];
 	

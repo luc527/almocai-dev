@@ -10,18 +10,18 @@
         action="acao.php"
         method="post"
       >
-        <div class="row col s12 m8 offset-m2 l6 offset-l2">
+        <div class="row col s12 m8 offset-m2 l8 offset-l2 xl6 offset-xl2">
           <img class="no-select" src="{root_path}assets/img/logo-verde.svg" />
         </div>
 
         <div class="row">
-          <div class="input-field col s12 m8 offset-m2 l6 offset-l2">
+          <div class="input-field col s12 m8 offset-m2 l8 offset-l2 xl6 offset-xl2">
             <input id="username" type="text" name="username" />
             <label for="username">Nome de usuário</label>
           </div>
         </div>
         <div class="row">
-          <div class="input-field col s12 m8 offset-m2 l6 offset-l2">
+          <div class="input-field col s12 m8 offset-m2 l8 offset-l2 xl6 offset-xl2">
             <input id="senha" type="password" name="senha" />
             <label for="senha">Senha</label>
           </div>
@@ -39,7 +39,7 @@
         </div>
 
         <div
-          class="row center col s12 m8 offset-m2 l6 offset-l2 login-section__padding-zero"
+          class="row center col s12 m8 offset-m2 l8 offset-l2 xl6 offset-xl2 login-section__padding-zero"
         >
           <button
             type="submit"
@@ -52,7 +52,7 @@
         </div>
 
         <div class="row">
-          <div class="input-field col s12 m8 offset-m2 l6 offset-l2">
+          <div class="input-field col s12 m8 offset-m2 l8 offset-l2 xl6 offset-xl2">
             <a href="recuperacao" class="esqueci-senha">
               Esqueci minha senha
             </a>
@@ -62,9 +62,14 @@
         <!-- Retorno de senha alterada com sucesso -->
         {{ senha_alterada_sucesso }}
       </form>      
-        
+
     </div>
   </div>
 </div>
 
 <!-- {erro_trigger} -->
+
+<div class="entrar__sobre-container">
+    <!-- stuff -->
+    <a class="entrar__sobre-container--link" href="{root_path}sobre/">Sobre</a>
+</div>

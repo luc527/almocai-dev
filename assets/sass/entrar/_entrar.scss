@@ -4,13 +4,7 @@
   min-height: 100vh;
 
   @extend .almocai;
-  @extend .branco;
-
-  @media #{$medium-and-down} {
-    background: url('../img/entrar/entrar.svg') ;
-    background-size: cover;
-    background-position: center;
-  }
+  @extend .branco; 
 
   &__container {
     height: 100%;
@@ -89,6 +83,7 @@
 
 .esqueci-senha {
   color: $primary-color;
+  -webkit-transition: color .3s ease-in-out;
   transition: color .3s ease-in-out;
   letter-spacing: .05rem;
   border-bottom: .05rem solid $primary-color;
@@ -99,4 +94,24 @@
   @media #{$large-and-up} {
     margin-left: .2rem;
   }
+}
+
+.entrar__sobre-container {
+
+  position: relative;
+
+  &--link {
+    font-size: 1.25rem;
+    color: $primary-color;
+    -webkit-transition: color .3s ease-in;
+    transition: color .3s ease-in;
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    line-height: normal;
+    &:hover, &:focus {
+      color: $primary-color-dark;
+    }
+  }
+
 }

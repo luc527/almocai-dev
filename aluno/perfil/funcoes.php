@@ -32,20 +32,3 @@ function gerarCartao(string $nomeArquivoCartao, string $nomeArquivoItem, $regist
     $cartao = str_replace('{{itens}}', $itens, $cartao);
     return $cartao;
 }
-
-function gerarCartaoCarne($usuario)
-{
-    $id_carnes = array();
-    $carnes = $usuario->getCarnes();
-    foreach ($carnes as $carne) {
-        array_push($id_carnes, $carne->getCodigo());
-    }
-    $checked = $id_carnes;
-
-    return gerarCartao(
-        'cartao_carne.html',
-        'cartao_carne_item.html',
-        CarneDao::SelectTodas(),
-        $checked
-    );
-}

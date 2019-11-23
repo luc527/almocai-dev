@@ -53,8 +53,6 @@ $cartao_alim = gerarCartao(
 	$usuario->getAlimentacao()->getCodigo()
 );
 
-$cartao_carne = gerarCartaoCarne($usuario);
-
 /* Cartão de intolerâncias do usuário
 em que ele pode solicitar ser registrado com uma
 e ver as que tem e os estados das solicitações */
@@ -129,7 +127,6 @@ $main = str_replace("{username}", $usuario->getUsername(), $main);
 $main = str_replace("{{alerta_email}}", $alerta_email, $main);
 $main = str_replace("{{cartao_frequencia}}", $cartao_freq, $main);
 $main = str_replace("{{cartao_intolerancia}}", $cartao_intol, $main);
-$main = str_replace("{{cartao_carne}}", $cartao_carne, $main);
 $main = str_replace("{{cartao_alimentacao}}", $cartao_alim, $main);
 $main = str_replace("{{cartao_alt_email}}", $alt_email, $main);
 $main = str_replace("{{cartao_alt_senha}}", $alt_senha, $main);

@@ -48,17 +48,6 @@ if ($acao == 'AlterarEmail') {
   UsuarioDao::UpdateFrequencia($usuario);
   header("location:{$root_path}aluno/perfil/?freq_selecionada={$frequencia->getCodigo()}");
 
-} else if ($acao == 'SalvarCarnes') {
-
-  $carnes_cod = $_POST['carnes'];
-  for ($i = 0; $i < count($carnes_cod); $i++) {
-    $carne[$i] = new Carne;
-    $carne[$i]->setCodigo($carnes_cod[$i]);
-    $usuario->setCarne($carne[$i]);
-  }
-  UsuarioDao::SalvarCarnes($usuario);
-  header("location:{$root_path}aluno/perfil/");
-
 } else if ($acao == 'SalvarAlimentacao') {
 
   $alimentacao = new Alimentacao;

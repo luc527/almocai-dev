@@ -200,26 +200,6 @@ class UsuarioDao
 		return $usuario;
 	}
 
-	/**
-	 * Recebe um objeto Usuario e coloca as carnes do BD dele
-	 */
-	public static function SelectCarnes(Usuario $usuario)
-	{
-		$carne_cods = StatementBuilder::select(
-			"SELECT carne_cod FROM Carne_usuario WHERE usuario_cod = :usuario_cod",
-			['usuario_cod' => $usuario->getCodigo()]
-		);
-
-		foreach ($carne_cods as $cod) {
-			$carne = new Carne;
-			$carne->setCodigo($cod['carne_cod']);
-			$usuario->setCarne($carne);
-		}
-
-		return $usuario;
-	}
-
-
 	public static function SelectIntolerancias(Usuario $usuario)
 	{
 		$intols = StatementBuilder::select(
@@ -293,36 +273,6 @@ class UsuarioDao
 				'frequencia' => $usuario->getFrequencia()->getCodigo()
 			]
 		);
-	}
-
-	public static function SalvarCarnes(Usuario $usuario)
-	{
-		// Deleta todos os registros da tabela Carne_usuario de um usuário para evitar erros no INSERT (registro duplicado)
-		self::CarnesReset($usuario->getCodigo());
-
-		// Consulta todas as carnes do BD, transforma objetos em código
-		$todas = CarneDao::SelectTodas();
-
-		// Transforma array de objetos carne em array de códigos de cada carne para verificação in_array() -- não funcionou com objetos
-		$carnes = $usuario->getCarnes();
-		for ($i = 0; $i < count($carnes); $i++) {
-			$carnes[$i] = $carnes[$i]->getCodigo();
-		}
-
-		// Verifica se cada uma das carnes está no array de carnes selecionadas pelo usuário
-		// Se está, faz um insert na tabela Carne_usuario (pode ocorrer um erro se o valor já estiver registrado, mas não tem problema?)
-		// Se não está, não insere nada
-		for ($i = 0; $i < count($todas); $i++) {
-			if (in_array($todas[$i]->getCodigo(), $carnes)) {
-				StatementBuilder::insert(
-					"INSERT INTO Carne_usuario (usuario_cod, carne_cod) VALUES (:usuario_cod, :carne)",
-					[
-						'usuario_cod' => $usuario->getCodigo(),
-						'carne' => $todas[$i]->getCodigo()
-					]
-				);
-			}
-		}
 	}
 
 	public static function UpdateEmail(Usuario $usuario)

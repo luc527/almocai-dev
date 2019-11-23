@@ -80,26 +80,6 @@ CREATE TABLE IF NOT EXISTS `Usuario` (
 		ON UPDATE SET null
 );
 
-CREATE TABLE IF NOT EXISTS `Carne` (
-	`codigo` INT PRIMARY KEY AUTO_INCREMENT,
-  `descricao` VARCHAR(45)
-);
-
-INSERT INTO `Carne` (`codigo`, `descricao`)
-VALUES (1, 'Frango'), 
-			 (2, 'Porco'), 
-			 (3, 'Boi');
-
-CREATE TABLE IF NOT EXISTS `Carne_usuario` (
-	`usuario_cod` INT,
-	`carne_cod` INT,
-    
-    PRIMARY KEY (`usuario_cod`, `carne_cod`),
-    
-    foreign key (`usuario_cod`) references `Usuario`(`codigo`) on delete cascade,
-    foreign key (`carne_cod`) references `Carne`(`codigo`) on delete cascade
-);
-
 INSERT INTO `Usuario` (`username`, `senha`, `nome`, `tipo`) values
 ('admin','d033e22ae348aeb5660fc2140aec35850c4da997','admin','ADMINISTRADOR');
 -- senha (provisória): admin

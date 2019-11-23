@@ -12,7 +12,6 @@ class Usuario extends AbsCodigo
     private $tipo;
     private $email;
     private $alimentacao; // vegetariano, vegano ou nenhum dos dois
-    private $carnes_come = array(); // quais carnes come
     private $frequencia; // se almoça sempre no if, nunca, as vezes etc.
     private $intolerancias = array();
 
@@ -73,18 +72,6 @@ class Usuario extends AbsCodigo
     public function getAlimentacao()
     {
         return $this->alimentacao;
-    }
-
-    public function setCarne($c)
-    {
-        if ($c instanceof Carne) {
-            array_push($this->carnes_come, $c);
-        }
-    }
-
-    public function getCarnes()
-    {
-        return $this->carnes_come;
     }
 
     public function setFrequencia($f)

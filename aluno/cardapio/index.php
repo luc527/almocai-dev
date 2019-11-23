@@ -31,10 +31,9 @@ $cardapio = str_replace("{peso_fonte}", "", $cardapio);
 /**
  * Carrega a semana/cardápio / os cartões de cada dia / os alimentos
  */
-$dataHj = date("Y-m-d");
-if (SemanaCardapioDao::SemanaExiste($dataHj)) {
+if (SemanaCardapioDao::SemanaExiste(date("Y-m-d"))) {
 
-	$data = Funcoes::CorrigeData($dataHj);
+	$data = Funcoes::CorrigeData(date("Y-m-d"));
 
 	// Pega a semana do BD a partir da data
 	$semana = SemanaCardapioDao::SelectPorData($data);
@@ -69,7 +68,7 @@ if (SemanaCardapioDao::SemanaExiste($dataHj)) {
 	for ($i = 0; $i < count($dias); $i++) {
 		$data = $dias[$i]->getData();
 		$diaSemana = $dias[$i]->getDiaSemana();
-				
+
 		// se em um dia o aluno pode mudar presença, pode também nos dias restantes
 		// $disabled != "" -> não precisa verificar mais de uma vez
 		if (
@@ -120,10 +119,6 @@ if (SemanaCardapioDao::SemanaExiste($dataHj)) {
 	 * Fim do carregamento do cardápio
 	 */
 
-	// Carrega os botões para marcar presença/ausência em todos os dias (+ código da semana p/ acao.php)
-	$presenca_todos = file_get_contents("presenca_todos.html");
-	$presenca_todos = str_replace("{semana_cod}", $semana->getCodigo(), $presenca_todos);
-
 	// Não mostra erro de cardápio indisponível
 	$cardapio_indisponivel = "";
 
@@ -134,14 +129,12 @@ if (SemanaCardapioDao::SemanaExiste($dataHj)) {
 } else {
 
 	$dias_cartoes = "";
-	$presenca_todos = "";
 	$cardapio_indisponivel = file_get_contents("cardapio_indisponivel.html");
 	$periodo = "";
 }
 
 $cardapio = str_replace('{periodo_cardapio}', $periodo, $cardapio);
 $cardapio = str_replace("{{dias_cartoes}}", $dias_cartoes, $cardapio);
-$cardapio = str_replace("{{presenca_todos}}", $presenca_todos, $cardapio);
 $cardapio = str_replace("{{cardapio_indisponivel}}", $cardapio_indisponivel, $cardapio);
 
 

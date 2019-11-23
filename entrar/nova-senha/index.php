@@ -10,7 +10,6 @@ function Redir()
 	header("location:{$GLOBALS['root_path']}entrar/");
 }
 
-
 // Pega usuário do banco
 if (isset($_GET['email'])) {
 	$email = $_GET['email'];

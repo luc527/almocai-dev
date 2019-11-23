@@ -13,15 +13,6 @@ nav {
     }
   }
 
-  i,
-  [class^="mdi-"], [class*="mdi-"],
-  i.material-icons {
-    display: block;
-    font-size: 24px;
-    height: $navbar-height-mobile;
-    line-height: $navbar-line-height-mobile;
-  }
-
   .nav-wrapper {
     position: relative;
     height: 100%;
@@ -113,8 +104,6 @@ nav {
     margin: 0;
 
     li {
-      -webkit-transition: background-color .3s;
-      transition: background-color .3s;
       float: left;
       position: relative;
     }

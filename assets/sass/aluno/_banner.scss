@@ -80,6 +80,12 @@
     background-image: -webkit-gradient(linear, left top, right bottom, from(rgba($primary-color-light, 0.6)), to(rgba($primary-color-dark, 0.6))), url(../img/entrar/recuperar.jpg);
     background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/entrar/recuperar.jpg);
   }
+  
+  // Entrar --> Redefinir senha
+  &--15 {
+    background-image: -webkit-gradient(linear, left top, right bottom, from(rgba($primary-color-light, 0.6)), to(rgba($primary-color-dark, 0.6))), url(../img/entrar/redefinir.jpg);
+    background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.6), rgba($primary-color-dark, 0.6)), url(../img/entrar/redefinir.jpg);
+  }
 
 
   min-height: 30rem;

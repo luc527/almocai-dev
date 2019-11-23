@@ -1,7 +1,6 @@
 <?php
 require_once("AbsCodigo.class.php");
 require_once("Alimentacao.class.php");
-require_once("Carne.class.php");
 require_once("Frequencia.class.php");
 
 class Usuario extends AbsCodigo

@@ -2,7 +2,6 @@
 require_once("Conexao.class.php");
 require_once("StatementBuilder.class.php");
 require_once("Usuario.class.php");
-require_once("CarneDao.class.php");
 
 class UsuarioDao
 {
@@ -329,21 +328,6 @@ class UsuarioDao
 		return StatementBuilder::delete($sql, $params);
 	}
 
-	/**
-	 * Deleta todos os registros da tabela 'Carne_usuario' de um determinado usuário
-	 */
-	public static function CarnesReset($codigo)
-	{
-		$sql = "DELETE FROM Carne_usuario WHERE usuario_cod = :codigo";
-		try {
-			$stmt = Conexao::conexao()->prepare($sql);
-			$stmt->bindParam(":codigo", $codigo);
-		} catch (PDOException $e) {
-			echo "<b>Erro (UsuarioDao::CarnesReset): </b>" . $e->getMessage();
-		}
-		return $stmt->execute();
-	}
-
 
 	/**
 	 * LOGIN
@@ -399,7 +383,6 @@ class UsuarioDao
 	{
 		$usuario = self::SelectPorCodigo($usuario->getCodigo());
 		$usuario = self::SelectFrequencia($usuario);
-		$usuario = self::SelectCarnes($usuario);
 		$usuario = self::SelectAlimentacao($usuario);
 		$usuario = self::SelectIntolerancias($usuario);
 

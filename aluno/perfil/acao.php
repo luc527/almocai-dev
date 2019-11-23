@@ -6,7 +6,6 @@ valida_secao($root_path);
 
 require_once("{$root_path}classes/UsuarioDao.class.php");
 require_once("{$root_path}classes/Frequencia.class.php");
-require_once("{$root_path}classes/Carne.class.php");
 require_once("{$root_path}classes/Alimentacao.class.php");
 
 $usuario = new Usuario;

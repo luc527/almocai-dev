@@ -150,10 +150,22 @@ class SemanaCardapioDao
 	 * @param string $data data
 	 * @return bool true se existe, false se não
 	 */
-	public static function SemanaExiste($data)
+	public static function SemanaExisteData($data)
 	{
 		$sql = "SELECT * FROM DiaAlmoco WHERE `data` = :data";
 		$params = ['data' => Funcoes::CorrigeData($data)];
+
+		if (StatementBuilder::select($sql, $params) == []) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public static function SemanaExisteCodigo($codigo)
+	{
+		$sql = "SELECT * FROM SemanaCardapio WHERE codigo = :codigo";
+		$params = ['codigo' => $codigo];
 
 		if (StatementBuilder::select($sql, $params) == []) {
 			return false;

@@ -39,7 +39,7 @@ $data = date("Y-m-d");
 
 $disabled_msg = "";
 
-if (SemanaCardapioDao::SemanaExiste($data)) {
+if (SemanaCardapioDao::SemanaExisteData($data)) {
   
   // Componentes que não serão mostrados
   $cardapio_ind = ""; // Erro de cardápio indisponível (se a semana existe, está disponível)

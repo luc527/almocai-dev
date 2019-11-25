@@ -65,13 +65,13 @@ if (SemanaCardapioDao::SemanaExiste($data)) {
   $pres = UsuarioDao::SelectPresenca($dia->getCodigo(), $usuario->getCodigo());
   if ($pres == 'nao-selecionada') {
     $cor = 'amarelo';
-    $txt = 'Ainda não selecionei <i class="material-icons" style="transform: translateY(6px);">thumbs_up_down</i>';
+    $txt = 'Ainda não selecionei <i class="material-icons" style="transform: translateY(5px);">thumbs_up_down</i> ?';
   } else if ($pres) {
     $cor = 'verde'; // por padrão verde
-    $txt = ' Almoçarei <i class="material-icons" style="transform: translateY(6px);">thumb_up</i>';
+    $txt = ' Almoçarei <i class="material-icons" style="transform: translateY(5px);">thumb_up</i> !';
   } else {
     $cor = 'vermelho';
-    $txt = 'Não almoçarei <i class="material-icons" style="transform: translateY(6px);">thumb_down</i>';
+    $txt = 'Não almoçarei <i class="material-icons" style="transform: translateY(5px);">thumb_down</i> ...';
   }
 
   // Componente HTML que mostra a presença marcada pelo usuário

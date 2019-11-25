@@ -305,11 +305,10 @@ class UsuarioDao
 	 */
 	public static function UpdateSenha(Usuario $usuario)
 	{
-		$sql = "UPDATE Usuario SET senha = :senha WHERE codigo = :codigo AND email = :email";
+		$sql = "UPDATE Usuario SET senha = :senha WHERE codigo = :codigo";
 		$params = [
 			'senha' => $usuario->getSenha(), // acao.php já coloca em sha1
-			'codigo' => $usuario->getCodigo(),
-			'email' => $usuario->getEmail()
+			'codigo' => (int)$usuario->getCodigo()
 		];
 
 		return StatementBuilder::update($sql, $params);

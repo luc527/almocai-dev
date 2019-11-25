@@ -31,7 +31,7 @@ $cardapio = str_replace("{peso_fonte}", "", $cardapio);
 /**
  * Carrega a semana/cardápio / os cartões de cada dia / os alimentos
  */
-if (SemanaCardapioDao::SemanaExiste(date("Y-m-d"))) {
+if (SemanaCardapioDao::SemanaExisteData(date("Y-m-d"))) {
 
 	$data = Funcoes::CorrigeData(date("Y-m-d"));
 

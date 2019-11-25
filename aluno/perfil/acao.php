@@ -33,7 +33,7 @@ if ($acao == 'AlterarEmail') {
   $usuario = UsuarioDao::SelectPorCodigo($usuario->getCodigo());
   if ($usuario->getSenha() == $senhaAntiga) {
     $usuario->setSenha($senhaNova);
-    UsuarioDao::Update($usuario);
+    UsuarioDao::UpdateSenha($usuario);
     session_destroy();
     header("location:{$root_path}entrar/?sucesso=senha_alterada");
   } else {

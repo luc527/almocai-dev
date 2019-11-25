@@ -25,11 +25,11 @@ class StatementBuilder
 			$statement = self::bindParams($statement, $colvals);
 
 			$statement->execute();
+
+			return $statement->fetchAll(PDO::FETCH_ASSOC);
 		} catch (PDOException $e) {
 			self::mensagemErro($e, $sql, $colvals);
 		}
-
-		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	}
 
 
@@ -47,7 +47,7 @@ class StatementBuilder
 
 			$statement = self::bindParams($statement, $colvals);
 
-			$statement->execute();
+			return $statement->execute();
 		} catch (PDOException $e) {
 			self::mensagemErro($e, $sql, $colvals);
 		}

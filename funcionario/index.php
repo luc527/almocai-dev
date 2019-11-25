@@ -28,7 +28,7 @@ $data = Funcoes::CorrigeData(date("Y-m-d"));
  */
 $main = file_get_contents("main.html");
 // Cartões de presença
-if (SemanaCardapioDao::SemanaExiste($data)) {
+if (SemanaCardapioDao::SemanaExisteData($data)) {
   // Não mostra o erro de cardápio indisponível
   $erro_card_indisp = "";
   $dia = DiaAlmocoDao::SelectPorData($data);

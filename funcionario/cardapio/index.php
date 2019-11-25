@@ -15,18 +15,23 @@ $scripts = file_get_contents("scripts.js");
  */
 // carrega semana conforme código ou data ou mostra erro de cardápio indisponível
 if (isset($_GET['cod'])) {
-	$cardapio = SemanaCardapioDao::SelectPorCodigo($_GET['cod']);
+	$cardapio_existe = SemanaCardapioDao::SemanaExisteCodigo($_GET['cod']);
+	$cardapio = $cardapio_existe ? 
+		SemanaCardapioDao::SelectPorCodigo($_GET['cod'])
+		: false;
 } else {
-	$cardapio_existe = SemanaCardapioDao::SemanaExiste(date("Y-m-d"));
+	$cardapio_existe = SemanaCardapioDao::SemanaExisteData(date("Y-m-d"));
 	$cardapio = $cardapio_existe ?
 		SemanaCardapioDao::SelectPorData(date("Y-m-d"))
 		: false;
 }
+
 if (!$cardapio) {
 
 	$cardapio_indisponivel = file_get_contents('cardapio_indisponivel.html');
 	$add_alimento_semana = "";
 	$dias = "";
+	$intervalo_semana = "";
 } else {
 
 	$cardapio_indisponivel = ""; // vazio pois cardápio está disponível
@@ -107,6 +112,7 @@ $main = file_get_contents("main.html");
 $main = str_replace("{intervalo_semana}", $intervalo_semana, $main);
 $main = str_replace("{{ add_alimento_semana }}", $add_alimento_semana, $main);
 $main = str_replace("{{ dias }}", $dias, $main);
+$main = str_replace("{{ cardapio_indisponivel }}", $cardapio_indisponivel, $main);
 /**
  * FIM MAIN
  */

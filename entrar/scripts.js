@@ -12,4 +12,3 @@ function erroLogin() {
   textId.innerHTML = texto;
   instance.open();
 }
-

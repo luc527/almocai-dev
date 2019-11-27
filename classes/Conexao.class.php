@@ -12,7 +12,7 @@ class Conexao {
 		$db_usuario = "root";
 		$db_senha = "";
 		$db_driver = "mysql";
-		
+
 		// $db_host = "localhost";
 		// $db_nome = "almocai";
 		// $db_usuario = "almocai";

@@ -18,3 +18,18 @@ if ($_SESSION['tipo'] == 'ADMINISTRADOR') {
 
 }
 ?>
+
+
+<script>
+	if ('serviceWorker' in navigator) {
+		window.addEventListener('load', function() {
+			navigator.serviceWorker.register('{root_path}service-worker.js', {scope: '{./}'})
+				.then(reg => {
+					console.log('Service worker registered! 😎', reg);
+				})
+				.catch(err => {
+					console.log('😥 Service worker registration failed: ', err);
+				});
+		});
+	}
+</script>

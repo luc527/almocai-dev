@@ -7,7 +7,7 @@
   "orientation": "portrait",
   "scope": "/almocai/",
   "lang": "pt-BR",
-  "start_url": "/almocai/entrar/",
+  "start_url": "/almocai/",
   "icons": [
     {
       "src": "assets/img/icons/icon-192x192.png",

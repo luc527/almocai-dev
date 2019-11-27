@@ -180,7 +180,8 @@
       @extend .z-depth-2;
     }
     &:active {
-      box-shadow: 0 0 0 !important;
+      -webkit-box-shadow: 0 0 0 !important;
+              box-shadow: 0 0 0 !important;
     }
   }
   

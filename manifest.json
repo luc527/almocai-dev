@@ -1,12 +1,13 @@
 {
   "name": "Almoçaí",
   "short_name": "Almoçaí",
+  "theme_color": "#fafafa",
   "background_color": "#fafafa",
   "display": "standalone",
   "orientation": "portrait",
-  "scope": "/",
+  "scope": "/almocai/",
   "lang": "pt-BR",
-  "start_url": "/Projetos/almocai",
+  "start_url": "/almocai/offline.html",
   "icons": [
     {
       "src": "assets/img/icons/icon-192x192.png",

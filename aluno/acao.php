@@ -19,7 +19,7 @@ $dia_cod = isset($_POST['dia_cod']) ? $_POST['dia_cod'] : '';
 // Para qual página o usuário deve ser redirecionado após cadastrar a ação
 $redir = $_POST['redir'];
 if ($redir == 'cardapio') {
-  $redir = "{$root_path}aluno/cardapio/#{$dia_cod}";
+  $redir = "{$root_path}aluno/cardapio/";
 } else if ($redir == 'index') {
   $redir = "{$root_path}aluno";
 }

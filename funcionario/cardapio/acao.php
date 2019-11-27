@@ -22,7 +22,7 @@ if ($acao == 'AddAlimento') {
 
 	$semana_cod = $_POST['semana_cod'];
 
-	header("location:index.php?cod={$semana_cod}");
+	header("location:index.php?cod={$semana_cod}#".$dia_cod);
 
 } else if ($acao == 'AddAlimentoSemana') {
 
@@ -34,7 +34,7 @@ if ($acao == 'AddAlimento') {
 
 	AlimentoDao::InserirEmSemana($alimento, $semana_cod);
 
-	header("location:index.php?cod={$semana_cod}");
+	header("location:index.php?cod={$semana_cod}#addSemana");
 
 } else if ($acao == 'DeletarAlimento') {
 

@@ -20,19 +20,8 @@ if ($acao == 'Login') {
     $_SESSION['username'] = $login_info['username'];
     $_SESSION['nome'] = $login_info['nome'];
     $_SESSION['tipo'] = $login_info['tipo'];
-    
-    switch ($_SESSION['tipo']) {
-      case 'ALUNO':
-        $redir = $root_path . "aluno";
-        break;
-      case 'FUNCIONARIO':
-        $redir = $root_path . "funcionario";
-        break;
-      case 'ADMINISTRADOR':
-        $redir = $root_path . "administrador";
-        break;
-    }
-    header("location:".$redir);
+
+    header("location:".$root_path);
   } else {
     header("location:".$root_path."entrar/?erro=".$login_info['acao']);
   }

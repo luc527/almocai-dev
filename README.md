@@ -1,7 +1,7 @@
 # Almoçaí
 
 <p align="center">
-  <img width="256" height="256" src="https://fabricadetecnologias.ifc-riodosul.edu.br/almocai/assets/img/logo-verde.svg">
+  <img width="256" height="96" src="https://fabricadetecnologias.ifc-riodosul.edu.br/almocai/assets/img/logo-verde.svg">
 </p>
 
 ## O que é?

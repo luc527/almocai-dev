@@ -1,4 +1,4 @@
-const cacheName = 'almocai-v7';
+const cacheName = 'almocai-v8';
 var assets = [
   // Base
   '/almocai/assets/css/almocai.css',

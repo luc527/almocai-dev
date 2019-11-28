@@ -159,7 +159,3 @@ DELIMITER ;
 
 /* create view Semana as Select s.data_inicio, d.diaSemana, a.descricao, a.tipo from SemanaCardapio s, DiaAlmoco d,
  Alimento a where s.codigo = d.semanaCardapio_codigo and d.codigo = a.diaAlmoco_codigo; */
- 
- 
- 
- UPDATE Usuario SET token = :token WHERE codigo = :codigo

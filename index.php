@@ -23,7 +23,7 @@ if ($_SESSION['tipo'] == 'ADMINISTRADOR') {
 <script>
 	if ('serviceWorker' in navigator) {
 		window.addEventListener('load', function() {
-			navigator.serviceWorker.register('{root_path}service-worker.js', {scope: '{./}'})
+			navigator.serviceWorker.register('service-worker.js', {scope: './'})
 				.then(reg => {
 					console.log('Service worker registered! 😎', reg);
 				})

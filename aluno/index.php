@@ -65,12 +65,15 @@ if (SemanaCardapioDao::SemanaExisteData($data)) {
   $pres = UsuarioDao::SelectPresenca($dia->getCodigo(), $usuario->getCodigo());
   if ($pres == 'nao-selecionada') {
     $cor = 'amarelo';
+    $fundo_cor = " ";
     $txt = 'Ainda não selecionei <i class="material-icons" style="transform: translateY(3px);">thumbs_up_down</i> ?';
   } else if ($pres) {
     $cor = 'verde'; // por padrão verde
+    $fundo_cor = ' aluno__confirmado ';
     $txt = ' Almoçarei <i class="material-icons" style="transform: translateY(3px);">thumb_up</i> !';
   } else {
     $cor = 'vermelho';
+    $fundo_cor = ' aluno__negado ';
     $txt = 'Não almoçarei <i class="material-icons" style="transform: translateY(3px);">thumb_down</i> ...';
   }
 
@@ -80,6 +83,8 @@ if (SemanaCardapioDao::SemanaExisteData($data)) {
   $Cpres_selec = str_replace("{presenca_selecionada}", $txt, $Cpres_selec);
   // O cartão com a opção selecionada é mostrado dentro do cartão em que o usuário seleciona "Sim" ou "Não" (presença ou ausência)
   $cartao_presenca = str_replace("{{cartao_presenca_selecionada}}", $Cpres_selec, $cartao_presenca);
+  // Adiciona a cor de fundo ao cartão de presenã
+  $cartao_presenca = str_replace("{fundo_cor}", $fundo_cor, $cartao_presenca);
 
   // Carrega os alimentos do dia do BD
   $alimentos = AlimentoDao::SelectPorDia($dia->getCodigo());
@@ -87,21 +92,30 @@ if (SemanaCardapioDao::SemanaExisteData($data)) {
   // Itens: conjunto de alimentos do dia
   $itens = "";
 
-  foreach ($alimentos as $alimento) {
-    
-    // Carrega o nome e o ícone do alimento no template da linha
-    $item = file_get_contents("cartao_dia_item.html");
-    $item = str_replace("{nome}", $alimento->getDescricao(), $item);
+  // Sem alimentos - mensagem caso ainda não haja alimentos no dia
+  $sem_alimentos = "";
 
-    // Concatena
-    $itens .= $item;
+  if (count($alimentos) == 0) {
+    $sem_alimentos = file_get_contents("cartao_dia_semAlimentos.html");
+  } else {
+    foreach ($alimentos as $alimento) {
+      
+      // Carrega o nome e o ícone do alimento no template da linha
+      $item = file_get_contents("cartao_dia_item.html");
+      $item = str_replace("{nome}", $alimento->getDescricao(), $item);
+  
+      // Concatena
+      $itens .= $item;
+    }
   }
+
 
   // Carrega o dia do BD no template do dia 
   $dia_semana = $dia->getDiaSemana();
   $num_dia = $NUM_DIA[$dia->getDiaSemana()]; // array $NUM_DIA[] em config.php
 
   $cartao_dia = file_get_contents("cartao_dia.html");
+  $cartao_dia = str_replace("{{sem_alimentos}}", $sem_alimentos, $cartao_dia);
   $cartao_dia = str_replace("{{itens}}", $itens, $cartao_dia);  
   $cartao_dia = str_replace("{dia_semana}", $dia_semana, $cartao_dia);  
   $cartao_dia = str_replace("{num_dia}", $num_dia, $cartao_dia);

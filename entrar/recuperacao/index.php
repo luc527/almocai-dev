@@ -2,21 +2,37 @@
 
 // Função que envia o e-mail
 function EnviarEmail($hash, $email) {
-	$root = "localhost/almocai";
+	$root = "https://fabricadetecnologias.ifc-riodosul.edu.br/almocai";
 	$uri = "/entrar/nova-senha/?hash={$hash}&email={$email}";
 	
 	$to = $GLOBALS['email'];
-	
+	$link = $root.$uri;
+
+	$message = 'Acesse o link para recuperar sua senha <br/> <a href="'. $link. '">'. $link. '</a>';
 	$subject = "Almocaí - Recuperação de senha";
 	
-	$link = $root.$uri;
-	$message = "Acesse o link para recuperar sua senha: \n {$link}";
+	$content = file_get_contents('modelo-mensagem.html');
+	$content = str_replace('{subject}', $subject, $content);
+	$content = str_replace('{message}', $message, $content);
+	$content = str_replace('{year}', date("Y"), $content);
 
-	// echo $message."<br>";
+	$headers = "From: contato@lixeirainteligente.com \r\n";
+	$headers .= "MIME-Version: 1.0\r\n";
+	$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+	$headers .= 'Content-Transfer-Encoding: base64' . "\r\n\r\n";
+	$headers .= rtrim(chunk_split(base64_encode($content)));
 
-	$headers = "From: noreply@almocai.com";
 
-	mail($to, $subject, $message, $headers);
+	try {
+		if (mail($to, $subject, '', $headers)) {
+			return true;
+		} else {
+			return false;
+		}
+	} catch (Exception $e) {
+		return false;
+	}
+
 }
 
 
@@ -35,14 +51,21 @@ if ($email == "")
 		// Carrega usuário do BD pelo e-mail e carrega hash
 		$usuario = UsuarioDao::SelectPorEmail($email);
 
-		
 		$hash = $usuario->hash();
 
-		EnviarEmail($hash, $email);
-		$msg_email_enviado = file_get_contents("msg_email_enviado.html");
+		if (EnviarEmail($hash, $email)) {
+			$msg_email_enviado = file_get_contents("msg_email_enviado.html");
+		} else {
+			$msg_email_enviado = file_get_contents("msg_email_invalido.html");
+			$errorMessage = 'Não foi possível enviar o email, tente novamente mais tarde. Caso o erro persista, contate a Cordenação Geral de Ensino';
+			$msg_email_enviado = str_replace('errorMessage', $errorMessage, $msg_email_enviado);
+		}
+
 	}
 	else{
 		$msg_email_enviado = file_get_contents("msg_email_invalido.html");
+		$errorMessage = 'O email inserido é invalido. Verifique seu email e tente novamente!';
+		$msg_email_enviado = str_replace('errorMessage', $errorMessage, $msg_email_enviado);
 	}
 }
 

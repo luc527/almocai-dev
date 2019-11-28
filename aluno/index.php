@@ -66,15 +66,15 @@ if (SemanaCardapioDao::SemanaExisteData($data)) {
   if ($pres == 'nao-selecionada') {
     $cor = 'amarelo';
     $fundo_cor = " ";
-    $txt = 'Ainda não selecionei <i class="material-icons" style="transform: translateY(3px);">thumbs_up_down</i> ?';
+    $txt = 'Ainda não selecionei <i class="material-icons" style="transform: translateY(3px);">thumbs_up_down</i>';
   } else if ($pres) {
     $cor = 'verde'; // por padrão verde
     $fundo_cor = ' aluno__confirmado ';
-    $txt = ' Almoçarei <i class="material-icons" style="transform: translateY(3px);">thumb_up</i> !';
+    $txt = ' Almoçarei <i class="material-icons" style="transform: translateY(3px);">thumb_up</i>';
   } else {
     $cor = 'vermelho';
     $fundo_cor = ' aluno__negado ';
-    $txt = 'Não almoçarei <i class="material-icons" style="transform: translateY(3px);">thumb_down</i> ...';
+    $txt = 'Não almoçarei <i class="material-icons" style="transform: translateY(3px);">thumb_down</i>';
   }
 
   // Componente HTML que mostra a presença marcada pelo usuário
@@ -83,7 +83,8 @@ if (SemanaCardapioDao::SemanaExisteData($data)) {
   $Cpres_selec = str_replace("{presenca_selecionada}", $txt, $Cpres_selec);
   // O cartão com a opção selecionada é mostrado dentro do cartão em que o usuário seleciona "Sim" ou "Não" (presença ou ausência)
   $cartao_presenca = str_replace("{{cartao_presenca_selecionada}}", $Cpres_selec, $cartao_presenca);
-  // Adiciona a cor de fundo ao cartão de presenã
+  $cartao_presenca = str_replace("{cor}", $cor, $cartao_presenca);
+  // Adiciona a cor de fundo ao cartão de presenã amiguito
   $cartao_presenca = str_replace("{fundo_cor}", $fundo_cor, $cartao_presenca);
 
   // Carrega os alimentos do dia do BD

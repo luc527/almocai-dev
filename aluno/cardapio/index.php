@@ -81,11 +81,11 @@ if (SemanaCardapioDao::SemanaExisteData(date("Y-m-d"))) {
 		if ($pres == 1) {
 			$fundo_cor = ' aluno__confirmado ';
 			$cor_texto_presenca = 'cardapio__confirmacao--confirmado';
-			$texto_presenca = "👍 Almoçarei 🍛";
+			$texto_presenca = 'Almoçarei <i class="material-icons" style="transform: translateY(3px);">thumb_up</i>';
 		} else {
 			$fundo_cor = ' aluno__negado ';
 			$cor_texto_presenca = 'cardapio__confirmacao--negado';
-			$texto_presenca = "👎 Não almoçarei 🍽";
+			$texto_presenca = 'Não almoçarei <i class="material-icons" style="transform: translateY(3px);">thumb_down</i>';
 		}
 
 		$dia[$i] = file_get_contents("dia_cartao.html");

@@ -4,6 +4,20 @@
  * Redireciona o usuário que acabou de entrar no sistema para sua interface correspondente. Ou para a página de login, caso não haja seção.
  */
 
+require_once 'classes/UsuarioDao.class.php';
+
+if (isset($_COOKIE['almifctkn'])) {
+	$usuario = UsuarioDao::SelectPorToken($_COOKIE['almifctkn']);
+	if ($usuario) {
+		session_start();
+
+		$_SESSION['codigo'] = $usuario->getCodigo();
+		$_SESSION['username'] = $usuario->getUsername();
+		$_SESSION['nome'] = $usuario->getNome();
+		$_SESSION['tipo'] = $usuario->getTipo();
+	}
+}
+
 include('valida_secao.php');
 valida_secao("");
 

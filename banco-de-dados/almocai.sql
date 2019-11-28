@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS `Usuario` (
 	`nome` VARCHAR(100),
 	`tipo` VARCHAR(50),
 	`email` VARCHAR(255),
+    `token` VARCHAR(255),
 	
 	`alimentacao` INT DEFAULT 1,
 	FOREIGN KEY (`alimentacao`) REFERENCES `Alimentacao`(`codigo`) 
@@ -158,3 +159,7 @@ DELIMITER ;
 
 /* create view Semana as Select s.data_inicio, d.diaSemana, a.descricao, a.tipo from SemanaCardapio s, DiaAlmoco d,
  Alimento a where s.codigo = d.semanaCardapio_codigo and d.codigo = a.diaAlmoco_codigo; */
+ 
+ 
+ 
+ UPDATE Usuario SET token = :token WHERE codigo = :codigo

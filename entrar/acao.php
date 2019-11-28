@@ -21,7 +21,18 @@ if ($acao == 'Login') {
     $_SESSION['nome'] = $login_info['nome'];
     $_SESSION['tipo'] = $login_info['tipo'];
 
+    $manterConectado = isset($_POST['manterConectado']) ? true : false;
+    if ($manterConectado) {
+      $usuario->setCodigo($_SESSION['codigo']);
+      $usuario->gerarToken();
+
+      UsuarioDao::SalvarToken($usuario);
+
+      $dia = time() + (60 * 60 * 24 * 5); // 5 dias de validade
+      setcookie("almifctkn", $usuario->token(), $dia, '/');
+    }
     header("location:".$root_path);
+
   } else {
     header("location:".$root_path."entrar/?erro=".$login_info['acao']);
   }

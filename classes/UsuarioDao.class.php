@@ -66,13 +66,12 @@ class UsuarioDao
 					$sql = "SELECT * FROM Usuario WHERE username = '$pesquisa'";
 					break;
 
-				case 'codigo':
-				case 'tipo':
-					$sql = "SELECT * FROM Usuario WHERE $criterio = '$pesquisa'";
-					break;
-
 				case 'todos':
 					$sql = "SELECT * FROM Usuario";
+					break;
+
+				default:
+					$sql = "SELECT * FROM Usuario WHERE $criterio = '$pesquisa'";
 					break;
 			}
 
@@ -119,6 +118,18 @@ class UsuarioDao
 				['codigo' => $codigo]
 			)[0]
 		);
+	}
+
+	public static function SelectPorToken($token)
+	{
+		$result = StatementBuilder::select(
+			"SELECT * FROM Usuario WHERE token = :token", ['token' => $token]
+		);
+
+		if (!$result)
+			return null;
+
+		return self::Popula($result[0]);
 	}
 
 	public static function VerificaEmail($email)
@@ -374,6 +385,36 @@ class UsuarioDao
 	}
 
 	// //////////////////// //
+
+	/**
+	 * Salva token do usuário no banco de dados para o manter logado
+	 */
+	public static function SalvarToken (Usuario $usuario)
+	{
+		$sql = "UPDATE Usuario SET token = :token WHERE codigo = :codigo";
+		$params = [
+			'token'  => $usuario->token(),
+			'codigo' => $usuario->getCodigo()
+		];
+
+		return StatementBuilder::update($sql, $params);		
+	}
+
+
+	/**
+	 * Apaga token de um usuário (feito quando ele faz logoff)
+	 */
+	public static function ApagarToken ($codigo)
+	{
+		$sql = "UPDATE Usuario SET token = :token WHERE codigo = :codigo";
+		$params = [
+			'token' => null,
+			'codigo' => $codigo
+		];
+
+		return StatementBuilder::update($sql, $params);
+	}
+
 
 	/**
 	 * Gera uma instância do usuário com todas as suas configurações

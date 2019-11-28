@@ -13,6 +13,7 @@ class Usuario extends AbsCodigo
     private $alimentacao; // vegetariano, vegano ou nenhum dos dois
     private $frequencia; // se almoça sempre no if, nunca, as vezes etc.
     private $intolerancias = array();
+    private $token;
 
     public function setUsername($username)
     {
@@ -101,5 +102,25 @@ class Usuario extends AbsCodigo
     public function hash()
     {
         return sha1("{$this->getUsername()}{$this->getSenha()}Almoçaí__EngSoftProg2019-Texto_Extra_Para_Segurança");
+    }
+
+
+    public function gerarToken()
+    {
+        $tamanho = 192;
+        $caracteres = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%&*()';
+        
+        $token = '';
+        for ($i = 0; $i < $tamanho; $i++) {
+            $token .= $caracteres[mt_rand(0, (strlen($caracteres) - 1))];
+        }
+        
+        $this->token = $token;        
+    }
+
+
+    public function token()
+    {
+        return $this->token;
     }
 }

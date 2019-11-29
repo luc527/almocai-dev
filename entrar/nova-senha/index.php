@@ -33,7 +33,7 @@ $main = str_replace("{usuario_email}", $usuario->getEmail(), $main);
 
 $novas = file_get_contents("{$root_path}template.html");
 
-$novas = str_replace("{title}", "Recuperação de senha", $novas);
+$novas = str_replace("{title}", "Redefinir senha", $novas);
 $novas = str_replace("{peso_fonte}", "", $novas);
 $novas = str_replace("{{nav}}", "", $novas);
 $novas = str_replace("{{footer}}", "", $novas);

@@ -14,11 +14,11 @@ function EnviarEmail($hash, $email) {
 	$content = str_replace('{link}', $link, $content);
 	$content = str_replace('{year}', date("Y"), $content);
 
-	$from = 'mateus.lucas840@outlook.com';
+	$from = 'suporte@ifc-riodosul.edu.br';
 
-	$headers = "From: '. $from. ' \r\n";
-  $headers .= "Reply-To: '. $from. '\r\n";
-  $headers .= "Return-Path: '. $from. '\r\n";
+	$headers = "From: Suporte <'. $from. '> \r\n";
+  $headers .= "Reply-To: Suporte <'. $from. '> \r\n";
+  $headers .= "Return-Path: Suporte <'. $from. '> \r\n";
   $headers .= "Organization: Instituto Federal Catarinense - Campus Rio do Sul\r\n";
 	$headers .= "MIME-Version: 1.0\r\n";
 	$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";

@@ -12,7 +12,7 @@ O aluno, estando pré cadastrado, poderá inserir suas preferências alimentares
 
 ## Desenvolvedores
 
-* **Daiane Karl** 
+* **Daiane Carl** 
 * **Daniele Borba Voigt**
 * **Laira Caroline Vogel**
 * **Lucas Moraes Schwambach**

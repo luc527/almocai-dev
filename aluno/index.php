@@ -30,8 +30,9 @@ $main = file_get_contents("main.html");
 
 // Variáveis e componentes do main
 $nome = $usuario->getNome();
-$datahj = date("d/m");
 $data = date("Y-m-d");
+$dataCorrigida = Funcoes::CorrigeData($data);
+$datahj = date("d/m", strtotime($dataCorrigida));
 
 /**
  * Mostra o dia e os botões de marcar presença ou ausência
@@ -46,7 +47,7 @@ if (SemanaCardapioDao::SemanaExisteData($data)) {
 
   // Carrega o dia do banco de dados com a data corrigida (o BD só guarda 4 dias da semana, mas o usuário precisa poder acessar do final de semana também)
   $dia = DiaAlmocoDao::SelectPorData(
-    Funcoes::CorrigeData($data)
+    Funcoes::CorrigeData($dataCorrigida)
   );
 
   // Cartão com os botões para marcar presença ou ausência no dia  

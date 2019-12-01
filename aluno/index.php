@@ -46,9 +46,7 @@ if (SemanaCardapioDao::SemanaExisteData($data)) {
   $cardapio_ind = ""; // Erro de cardápio indisponível (se a semana existe, está disponível)
 
   // Carrega o dia do banco de dados com a data corrigida (o BD só guarda 4 dias da semana, mas o usuário precisa poder acessar do final de semana também)
-  $dia = DiaAlmocoDao::SelectPorData(
-    Funcoes::CorrigeData($dataCorrigida)
-  );
+  $dia = DiaAlmocoDao::SelectPorData($dataCorrigida);
 
   // Cartão com os botões para marcar presença ou ausência no dia  
   $cartao_presenca = file_get_contents("cartao_presenca.html");

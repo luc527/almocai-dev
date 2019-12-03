@@ -28,7 +28,7 @@ if ($acao == 'Login') {
 
       UsuarioDao::SalvarToken($usuario);
 
-      $dia = time() + (60 * 60 * 24 * 5); // 5 dias de validade
+      $dia = time() + (60 * 60 * 24 * 30); // 30 dias de validade
       setcookie("almifctkn", $usuario->token(), $dia, '/');
     }
     header("location:".$root_path);

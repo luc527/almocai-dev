@@ -87,7 +87,7 @@ foreach ($intols as $intol) {
 	$intolHTML = file_get_contents("cartao_intolerancia_item.html");
 	$intolHTML = str_replace("{{motivo_rejeicao}}", $motivo_rejeicao, $intolHTML);
 	$intolHTML = str_replace("{codigo}", $intol->getCodigo(), $intolHTML);
-	$intolHTML = str_replace("{descricao}", $intol->getIntolerancia()->getDescricao(), $intolHTML);
+	$intolHTML = rawurldecode(str_replace("{descricao}", $intol->getIntolerancia()->getDescricao(), $intolHTML));
 	$intolHTML = str_replace("{estado}", $intol->getEstado()->getDescricao(), $intolHTML);
 	$intolHTML = str_replace("{estado_cor}", $estado_cor, $intolHTML);
 	$intolHTML = str_replace("{doc_path}", $doc_path, $intolHTML);
@@ -122,11 +122,11 @@ $alt_senha = str_replace("{{senha_antiga_incorreta}}", $senha_antiga_incorreta, 
 // substituição dos valores/componentes nos templates
 $main = file_get_contents("main.html");
 
-$main = str_replace("{nome}", $usuario->getNome(), $main);
+$main = str_replace("{{cartao_intolerancia}}", $cartao_intol, $main);
+$main = rawurldecode(str_replace("{nome}", $usuario->getNome(), $main));
 $main = str_replace("{username}", $usuario->getUsername(), $main);
 $main = str_replace("{{alerta_email}}", $alerta_email, $main);
 $main = str_replace("{{cartao_frequencia}}", $cartao_freq, $main);
-$main = str_replace("{{cartao_intolerancia}}", $cartao_intol, $main);
 $main = str_replace("{{cartao_alimentacao}}", $cartao_alim, $main);
 $main = str_replace("{{cartao_alt_email}}", $alt_email, $main);
 $main = str_replace("{{cartao_alt_senha}}", $alt_senha, $main);

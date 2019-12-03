@@ -71,7 +71,7 @@ $main = file_get_contents("main.html");
 $main = str_replace("{{msg_email_enviado}}", $msg_email_enviado, $main);
 
 $pagina = file_get_contents("{$root_path}template.html");
-$pagina = str_replace("{title}", "Redefinir senha de senha", $pagina);
+$pagina = str_replace("{title}", "Redefinir senha", $pagina);
 $pagina = str_replace("{peso_fonte}", "", $pagina);
 $pagina = str_replace("{{nav}}", "", $pagina);
 $pagina = str_replace("{{footer}}", "", $pagina);

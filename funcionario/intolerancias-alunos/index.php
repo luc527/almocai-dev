@@ -52,9 +52,9 @@ foreach($intolsUser as $intolUser) {
 	}
 	
 	$intolUserHTML = str_replace("{codigo}", $intolUser->getCodigo(), $intolUserHTML);
-	$intolUserHTML = str_replace("{aluno_nome}", $aluno->getNome(), $intolUserHTML);
+	$intolUserHTML = rawurldecode(str_replace("{aluno_nome}", $aluno->getNome(), $intolUserHTML));
 	$intolUserHTML = str_replace("{username}", $aluno->getUsername(), $intolUserHTML);
-	$intolUserHTML = str_replace("{intolerancia}", $intol->getDescricao(), $intolUserHTML);
+	$intolUserHTML = rawurldecode(str_replace("{intolerancia}", $intol->getDescricao(), $intolUserHTML));
 	$intolUserHTML = str_replace("{estado_cor}", $estado_cor, $intolUserHTML);
 
 	$intolUserHTML = str_replace("{checked_pendente}", $checked_pendente, $intolUserHTML);

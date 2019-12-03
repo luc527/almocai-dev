@@ -89,7 +89,8 @@
   </script>
   <script>
     window.addEventListener("load", function()  {
-      document.getElementById("spinner-container").remove();
+      document.getElementById("spinner-container").style.opacity = "0";
+      document.getElementById("spinner-container").style.zIndex = "-999";
     });
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {

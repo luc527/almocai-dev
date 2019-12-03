@@ -9,7 +9,7 @@
 
 {{msg_email_enviado}}
 
-<div class="container">
+<div class="container" id="body">
 	<div class="row">
 		<div class="col s12 m10 offset-m1 l8 offset-l2 xl6 offset-xl3">
 			<div class="card-panel hoverable">
@@ -25,7 +25,7 @@
 		
 				<div class="row">
 					<div class="col s12 input-field center">
-						<button type="submit" class="btn almocai waves-effect waves-light bold acessar-interface-btn">
+						<button type="submit" onclick="solicitacao()" class="btn almocai waves-effect waves-light bold acessar-interface-btn">
 							<i class="material-icons right">send</i>
 							Redefinir senha
 						</button>
@@ -37,3 +37,11 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	function solicitacao() {
+		document.getElementById("spinner-container").style.opacity = "1";
+		document.getElementById("spinner-container").style.zIndex = "9999";
+
+	}
+</script>

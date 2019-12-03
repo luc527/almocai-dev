@@ -1,35 +1,50 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
+
 // Função que envia o e-mail
 function EnviarEmail($hash, $email) {
+
+	$from = 'suporte.almocai@gmail.com';
+	
+	$mail = new PHPMailer();
+	$mail->isSMTP();
+	$mail->Host = 'smtp.gmail.com';
+	$mail->SMTPAuth = true;
+	$mail->SMTPSecure = 'tls';
+	$mail->Username = $from;
+	$mail->Password = 'desnitrificante';
+	$mail->Port = 587;
+
 	$root = "https://fabricadetecnologias.ifc-riodosul.edu.br/almocai";
 	$uri = "/entrar/nova-senha/?hash={$hash}&email={$email}";
 	
 	$to = $GLOBALS['email'];
 	$link = $root.$uri;
 
-	$subject = "Almocaí - Redefinir senha";
-	
+	$subject = utf8_decode("Almoçaí - Redefinir senha");
+		
+	$mail->setFrom($from, utf8_decode('Suporte - Almoçaí'));
+	$mail->addReplyTo($from, utf8_decode('Suporte - Almoçaí'));
+	$mail->addAddress($to);
+
+
 	$content = file_get_contents('modelo-mensagem.html');
 	$content = str_replace('{link}', $link, $content);
 	$content = str_replace('{year}', date("Y"), $content);
+	
+	
+	$mail->isHTML(true);
+	$mail->Subject = $subject;
+	$mail->Body    = $content;
+	$mail->AltBody = 'Link para recuperar senha: '. $link;
 
-	$from = 'suporte@ifc-riodosul.edu.br';
-
-	$headers = "From: Suporte <'. $from. '> \r\n";
-  $headers .= "Reply-To: Suporte <'. $from. '> \r\n";
-  $headers .= "Return-Path: Suporte <'. $from. '> \r\n";
-  $headers .= "Organization: Instituto Federal Catarinense - Campus Rio do Sul\r\n";
-	$headers .= "MIME-Version: 1.0\r\n";
-	$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-	$headers .= "X-Priority: 3\r\n";
-  $headers .= "X-Mailer: PHP". phpversion() ."\r\n";
-
-	try {
-		return mail($to, $subject, $content, $headers) ? true : false;
-	} catch (Exception $e) {
-		return false;
-	}
+	return !$mail->send() ? false : true;
 
 }
 

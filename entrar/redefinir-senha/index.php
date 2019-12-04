@@ -43,6 +43,8 @@ function EnviarEmail($hash, $email) {
 	$mail->Subject = $subject;
 	$mail->Body    = $content;
 	$mail->AltBody = 'Link para recuperar senha: '. $link;
+	$mail->CharSet = 'UTF-8';
+	$mail->Encoding = 'base64';
 
 	return !$mail->send() ? false : true;
 

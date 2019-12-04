@@ -1,4 +1,4 @@
-const cacheName = 'almocai-v8';
+const cacheName = 'almocai-v12';
 var assets = [
   // Base
   '/almocai/assets/css/almocai.css',
@@ -8,11 +8,9 @@ var assets = [
   // Imagens
   '/almocai/assets/img/logo-verde.svg',
   '/almocai/assets/img/logo-branco.svg',
-
-  // Entrar
   '/almocai/assets/img/entrar/fundo.png',
-  '/almocai/assets/img/entrar/redefinir.jpg',
-  '/almocai/assets/img/entrar/recuperar.jpg'
+  '/almocai/assets/img/fundo-banner.jpg',
+  '/almocai/assets/img/aluno/cartoes/cartao.jpg'
 ];
 
 self.addEventListener('install', event => {

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Redireciona o usuário que acabou de entrar no sistema para sua interface correspondente. Ou para a página de login, caso não haja seção.
+ * Redireciona o usuário que acabou de entrar no sistema para sua interface. Ou para a página de login, caso não haja sessão.
  */
 
 require_once 'classes/UsuarioDao.class.php';

@@ -51,6 +51,32 @@ class DiaAlmoco extends AbsCodigo {
 			array_push($this->presencas, $aluno_p);
 		}
 	}
+
+	/**
+	 * Recebe a data a ser verificada e retorna se o aluno ainda pode mudar sua presença
+	 * . A regra de negócio é que o aluno não pode mudar sua presença em dias anteriores
+	 * e não pode mudar sua presença no mesmo dia depois das 10h, pois esse é o horário
+	 * em que a quantidade de comida a trazer é definida
+	 * 
+	 * @param string $data_hoje no formato Y-m-d H:i:s
+	 * 
+	 * @return bool se o aluno pode ou não mudar sua presença no dia
+	 */
+	public function alunoPodeMudarPresenca($data_hoje)
+	{
+		$diaSemana_almoco = date("w", strtotime($this->data));
+		$diaSemana_hoje = date("w", strtotime($data_hoje));
+		$hora_hoje = date("H", strtotime($data_hoje));
+
+		if ($diaSemana_almoco >= $diaSemana_hoje) {
+			if ($diaSemana_hoje == $diaSemana_almoco)
+				return $hora_hoje <= 10;
+			else 
+				return true;
+		} else 
+			return false;
+
+	}
 }
 
 ?>

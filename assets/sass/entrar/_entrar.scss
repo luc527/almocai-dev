@@ -4,13 +4,7 @@
   min-height: 100vh;
 
   @extend .almocai;
-  @extend .branco;
-
-  @media #{$medium-and-down} {
-    background: url('../img/entrar/entrar.svg') ;
-    background-size: cover;
-    background-position: center;
-  }
+  @extend .branco; 
 
   &__container {
     height: 100%;
@@ -20,7 +14,7 @@
   &__imagem {
     -webkit-clip-path: polygon(0 0, 100% 0, 75% 100%, 0% 100%);
     clip-path: polygon(0 0, 100% 0, 75% 100%, 0% 100%);
-    background: linear-gradient(135deg, rgba($primary-color-light, 0.5), rgba($primary-color-dark, 0.5)), url("../img/entrar/fundo.png");
+    background: linear-gradient(135deg, rgba($primary-color-light, 0.5), rgba($primary-color-dark, 0.5)), url("../img/entrar/fundo.jpg");
     background-position: left;
     background-size: cover;
     height: 100%;
@@ -50,6 +44,7 @@
   }
 
   &__modal {
+    background-image: -webkit-gradient(linear, left top, right bottom, from(#f42f4b), color-stop(#e42740), color-stop(#d41e36), color-stop(#c4152c), to(#b40922));
     background-image: linear-gradient(to right bottom, #f42f4b, #e42740, #d41e36, #c4152c, #b40922);
     color: $branco;
 
@@ -82,6 +77,41 @@
       }
     }
 
+  }
+
+}
+
+.esqueci-senha {
+  color: $primary-color;
+  -webkit-transition: color .3s ease-in-out;
+  transition: color .3s ease-in-out;
+  letter-spacing: .05rem;
+  border-bottom: .05rem solid $primary-color;
+  &:hover {
+    color: $primary-color-dark;
+    border-bottom: .05rem solid $primary-color-dark;
+  }
+  @media #{$large-and-up} {
+    margin-left: .2rem;
+  }
+}
+
+.entrar__sobre-container {
+
+  position: relative;
+
+  &--link {
+    font-size: 1rem;
+    color: $primary-color;
+    -webkit-transition: color .3s ease-in;
+    transition: color .3s ease-in;
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    line-height: normal;
+    &:hover, &:focus {
+      color: $primary-color-dark;
+    }
   }
 
 }

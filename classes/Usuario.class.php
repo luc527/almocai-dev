@@ -1,7 +1,6 @@
 <?php
 require_once("AbsCodigo.class.php");
 require_once("Alimentacao.class.php");
-require_once("Carne.class.php");
 require_once("Frequencia.class.php");
 
 class Usuario extends AbsCodigo
@@ -12,9 +11,9 @@ class Usuario extends AbsCodigo
     private $tipo;
     private $email;
     private $alimentacao; // vegetariano, vegano ou nenhum dos dois
-    private $carnes_come = array(); // quais carnes come
     private $frequencia; // se almoça sempre no if, nunca, as vezes etc.
-    private $intolerancia_usuario = array();
+    private $intolerancias = array();
+    private $token;
 
     public function setUsername($username)
     {
@@ -75,18 +74,6 @@ class Usuario extends AbsCodigo
         return $this->alimentacao;
     }
 
-    public function setCarne($c)
-    {
-        if ($c instanceof Carne) {
-            array_push($this->carnes_come, $c);
-        }
-    }
-
-    public function getCarnes()
-    {
-        return $this->carnes_come;
-    }
-
     public function setFrequencia($f)
     {
         if ($f instanceof Frequencia) {
@@ -99,8 +86,41 @@ class Usuario extends AbsCodigo
         return $this->frequencia;
     }
 
+    public function setIntolerancia($intol)
+    {
+        if ($intol instanceof IntoleranciaUsuario) {
+            $this->intolerancias[] = $intol;
+        }
+    }
+
+    public function getIntolerancias()
+    {
+        return $this->intolerancias;
+    }
+
+
     public function hash()
     {
         return sha1("{$this->getUsername()}{$this->getSenha()}Almoçaí__EngSoftProg2019-Texto_Extra_Para_Segurança");
+    }
+
+
+    public function gerarToken()
+    {
+        $tamanho = 192;
+        $caracteres = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%&*()';
+        
+        $token = '';
+        for ($i = 0; $i < $tamanho; $i++) {
+            $token .= $caracteres[mt_rand(0, (strlen($caracteres) - 1))];
+        }
+        
+        $this->token = $token;        
+    }
+
+
+    public function token()
+    {
+        return $this->token;
     }
 }

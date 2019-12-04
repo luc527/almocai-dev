@@ -6,7 +6,6 @@ valida_secao($root_path);
 
 require_once("{$root_path}classes/UsuarioDao.class.php");
 require_once("{$root_path}classes/Frequencia.class.php");
-require_once("{$root_path}classes/Carne.class.php");
 require_once("{$root_path}classes/Alimentacao.class.php");
 
 $usuario = new Usuario;
@@ -34,7 +33,7 @@ if ($acao == 'AlterarEmail') {
   $usuario = UsuarioDao::SelectPorCodigo($usuario->getCodigo());
   if ($usuario->getSenha() == $senhaAntiga) {
     $usuario->setSenha($senhaNova);
-    UsuarioDao::Update($usuario);
+    UsuarioDao::UpdateSenha($usuario);
     session_destroy();
     header("location:{$root_path}entrar/?sucesso=senha_alterada");
   } else {
@@ -47,17 +46,6 @@ if ($acao == 'AlterarEmail') {
   $usuario->setFrequencia($frequencia);
   UsuarioDao::UpdateFrequencia($usuario);
   header("location:{$root_path}aluno/perfil/?freq_selecionada={$frequencia->getCodigo()}");
-
-} else if ($acao == 'SalvarCarnes') {
-
-  $carnes_cod = $_POST['carnes'];
-  for ($i = 0; $i < count($carnes_cod); $i++) {
-    $carne[$i] = new Carne;
-    $carne[$i]->setCodigo($carnes_cod[$i]);
-    $usuario->setCarne($carne[$i]);
-  }
-  UsuarioDao::SalvarCarnes($usuario);
-  header("location:{$root_path}aluno/perfil/");
 
 } else if ($acao == 'SalvarAlimentacao') {
 

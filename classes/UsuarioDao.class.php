@@ -2,7 +2,6 @@
 require_once("Conexao.class.php");
 require_once("StatementBuilder.class.php");
 require_once("Usuario.class.php");
-require_once("CarneDao.class.php");
 
 class UsuarioDao
 {
@@ -67,13 +66,12 @@ class UsuarioDao
 					$sql = "SELECT * FROM Usuario WHERE username = '$pesquisa'";
 					break;
 
-				case 'codigo':
-				case 'tipo':
-					$sql = "SELECT * FROM Usuario WHERE $criterio = '$pesquisa'";
-					break;
-
 				case 'todos':
 					$sql = "SELECT * FROM Usuario";
+					break;
+
+				default:
+					$sql = "SELECT * FROM Usuario WHERE $criterio = '$pesquisa'";
 					break;
 			}
 
@@ -119,6 +117,28 @@ class UsuarioDao
 				"SELECT * FROM Usuario WHERE codigo = :codigo",
 				['codigo' => $codigo]
 			)[0]
+		);
+	}
+
+	public static function SelectPorToken($token)
+	{
+		$result = StatementBuilder::select(
+			"SELECT * FROM Usuario WHERE token = :token", ['token' => $token]
+		);
+
+		if (!$result)
+			return null;
+
+		return self::Popula($result[0]);
+	}
+
+	public static function VerificaEmail($email)
+	{
+		return count(
+			StatementBuilder::select(
+				"SELECT * FROM Usuario WHERE email = :email",
+				['email' => $email]
+			)
 		);
 	}
 
@@ -190,24 +210,39 @@ class UsuarioDao
 		return $usuario;
 	}
 
-	/**
-	 * Recebe um objeto Usuario e coloca as carnes do BD dele
-	 */
-	public static function SelectCarnes(Usuario $usuario)
+	public static function SelectIntolerancias(Usuario $usuario)
 	{
-		$carne_cods = StatementBuilder::select(
-			"SELECT carne_cod FROM carne_usuario WHERE usuario_cod = :usuario_cod",
+		$intols = StatementBuilder::select(
+			"SELECT codigo FROM Usuario_intolerancia WHERE usuario_cod = :usuario_cod",
 			['usuario_cod' => $usuario->getCodigo()]
 		);
-
-		foreach ($carne_cods as $cod) {
-			$carne = new Carne;
-			$carne->setCodigo($cod['carne_cod']);
-			$usuario->setCarne($carne);
+		foreach($intols as $intol) {
+			$intol_cod = $intol['codigo'];
+			$usuario->setIntolerancia(
+				IntoleranciaUsuarioDao::SelectPorCodigo($intol_cod)
+			);
 		}
 
 		return $usuario;
 	}
+
+
+	public static function SelectPorIntolerancia($intol_cod)
+	{
+		$usuario_cod = StatementBuilder::select(
+			"SELECT usuario_cod FROM Usuario_intolerancia WHERE codigo = :codigo",
+			['codigo' => $intol_cod]
+		)[0]['usuario_cod'];
+
+		return self::Popula(
+			StatementBuilder::select(
+				"SELECT * FROM Usuario WHERE codigo = :codigo",
+				['codigo' => $usuario_cod]
+			)[0]
+		);
+	}
+
+
 
 	/**
 	 * UPDATE
@@ -250,36 +285,6 @@ class UsuarioDao
 		);
 	}
 
-	public static function SalvarCarnes(Usuario $usuario)
-	{
-		// Deleta todos os registros da tabela Carne_usuario de um usuário para evitar erros no INSERT (registro duplicado)
-		self::CarnesReset($usuario->getCodigo());
-
-		// Consulta todas as carnes do BD, transforma objetos em código
-		$todas = CarneDao::SelectTodas();
-
-		// Transforma array de objetos carne em array de códigos de cada carne para verificação in_array() -- não funcionou com objetos
-		$carnes = $usuario->getCarnes();
-		for ($i = 0; $i < count($carnes); $i++) {
-			$carnes[$i] = $carnes[$i]->getCodigo();
-		}
-
-		// Verifica se cada uma das carnes está no array de carnes selecionadas pelo usuário
-		// Se está, faz um insert na tabela Carne_usuario (pode ocorrer um erro se o valor já estiver registrado, mas não tem problema?)
-		// Se não está, não insere nada
-		for ($i = 0; $i < count($todas); $i++) {
-			if (in_array($todas[$i]->getCodigo(), $carnes)) {
-				StatementBuilder::insert(
-					"INSERT INTO Carne_usuario (usuario_cod, carne_cod) VALUES (:usuario_cod, :carne)",
-					[
-						'usuario_cod' => $usuario->getCodigo(),
-						'carne' => $todas[$i]->getCodigo()
-					]
-				);
-			}
-		}
-	}
-
 	public static function UpdateEmail(Usuario $usuario)
 	{
 		$sql = "UPDATE Usuario SET email = :email WHERE codigo = :codigo";
@@ -311,11 +316,10 @@ class UsuarioDao
 	 */
 	public static function UpdateSenha(Usuario $usuario)
 	{
-		$sql = "UPDATE Usuario SET senha = :senha WHERE codigo = :codigo AND email = :email";
+		$sql = "UPDATE Usuario SET senha = :senha WHERE codigo = :codigo";
 		$params = [
 			'senha' => $usuario->getSenha(), // acao.php já coloca em sha1
-			'codigo' => $usuario->getCodigo(),
-			'email' => $usuario->getEmail()
+			'codigo' => (int)$usuario->getCodigo()
 		];
 
 		return StatementBuilder::update($sql, $params);
@@ -332,21 +336,6 @@ class UsuarioDao
 		$params = ['codigo' => $codigo];
 
 		return StatementBuilder::delete($sql, $params);
-	}
-
-	/**
-	 * Deleta todos os registros da tabela 'Carne_usuario' de um determinado usuário
-	 */
-	public static function CarnesReset($codigo)
-	{
-		$sql = "DELETE FROM Carne_usuario WHERE usuario_cod = :codigo";
-		try {
-			$stmt = Conexao::conexao()->prepare($sql);
-			$stmt->bindParam(":codigo", $codigo);
-		} catch (PDOException $e) {
-			echo "<b>Erro (UsuarioDao::CarnesReset): </b>" . $e->getMessage();
-		}
-		return $stmt->execute();
 	}
 
 
@@ -398,14 +387,44 @@ class UsuarioDao
 	// //////////////////// //
 
 	/**
+	 * Salva token do usuário no banco de dados para o manter logado
+	 */
+	public static function SalvarToken (Usuario $usuario)
+	{
+		$sql = "UPDATE Usuario SET token = :token WHERE codigo = :codigo";
+		$params = [
+			'token'  => $usuario->token(),
+			'codigo' => $usuario->getCodigo()
+		];
+
+		return StatementBuilder::update($sql, $params);		
+	}
+
+
+	/**
+	 * Apaga token de um usuário (feito quando ele faz logoff)
+	 */
+	public static function ApagarToken ($codigo)
+	{
+		$sql = "UPDATE Usuario SET token = :token WHERE codigo = :codigo";
+		$params = [
+			'token' => null,
+			'codigo' => $codigo
+		];
+
+		return StatementBuilder::update($sql, $params);
+	}
+
+
+	/**
 	 * Gera uma instância do usuário com todas as suas configurações
 	 */
 	public static function perfilCompleto(Usuario $usuario)
 	{
 		$usuario = self::SelectPorCodigo($usuario->getCodigo());
 		$usuario = self::SelectFrequencia($usuario);
-		$usuario = self::SelectCarnes($usuario);
 		$usuario = self::SelectAlimentacao($usuario);
+		$usuario = self::SelectIntolerancias($usuario);
 
 		return $usuario;
 	}

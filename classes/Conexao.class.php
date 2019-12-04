@@ -8,10 +8,16 @@ class Conexao {
 
 	private function __construct ()	{
 		$db_host = "localhost";
-		$db_nome = "almocai";
+		$db_nome = "almocaiLocal";
 		$db_usuario = "root";
 		$db_senha = "";
 		$db_driver = "mysql";
+
+		// $db_host = "localhost";
+		// $db_nome = "almocai";
+		// $db_usuario = "almocai";
+		// $db_senha = "Almocai.#123";
+		// $db_driver = "mysql";
 
 		try	{
 			self::$conexao = new PDO("$db_driver:host=$db_host; dbname=$db_nome", $db_usuario, $db_senha);

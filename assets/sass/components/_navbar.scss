@@ -13,23 +13,6 @@ nav {
     }
   }
 
-  color: $navbar-font-color;
-  background-color: $background-color-default;
-  width: 100%;
-  height: $navbar-height-mobile;
-  line-height: $navbar-line-height-mobile;
-
-  a { color: $navbar-font-color; }
-
-  i,
-  [class^="mdi-"], [class*="mdi-"],
-  i.material-icons {
-    display: block;
-    font-size: 24px;
-    height: $navbar-height-mobile;
-    line-height: $navbar-line-height-mobile;
-  }
-
   .nav-wrapper {
     position: relative;
     height: 100%;
@@ -59,21 +42,21 @@ nav {
   // Logo
   .brand-logo {
     position: absolute; 
-    padding-top: .15rem;
     color: $navbar-font-color;
     display: inline-block;
     font-size: $navbar-brand-font-size;
     padding: 0;
-    height: 4rem;
 
     &.center {
       left: 50%;
-      transform: translateX(-50%);
+      -webkit-transform: translateX(-50%);
+              transform: translateX(-50%);
     }
 
     @media #{$medium-and-down} {
       left: 50%;
-      transform: translateX(-50%);
+      -webkit-transform: translateX(-50%);
+              transform: translateX(-50%);
 
     
       & img {
@@ -83,7 +66,8 @@ nav {
 
       &.left, &.right {
         padding: 0;
-        transform: none;
+        -webkit-transform: none;
+                transform: none;
       }
 
       &.left { left: 0.5rem; }
@@ -120,19 +104,16 @@ nav {
     margin: 0;
 
     li {
-      transition: background-color .3s;
       float: left;
       position: relative;
     }
     a {
       font-size: $navbar-font-size;
-      color: $navbar-font-color;
       padding: 0 15px;
       text-decoration: none;
       text-align: center;
       display: block;
       position: relative;
-      transition: all 0.3s ease;
       cursor: pointer;
 
       &.btn, &.btn-large, &.btn-flat, &.btn-floating {
@@ -146,10 +127,6 @@ nav {
         }
       }
 
-      &:hover {
-        color: $primary-color-dark;
-      }
-
       &:hover::before {
         right: 0;
         left: 0;
@@ -159,10 +136,6 @@ nav {
     &.left {
       float: left;
     }
-  }
-  
-  .active {
-    color: $primary-color-dark;        
   }
 
 }
@@ -199,12 +172,12 @@ nav {
   height: $navbar-height-mobile;
   line-height: $navbar-line-height-mobile;
 
-  a { color: $branco; }
-
   i,
   [class^="mdi-"], [class*="mdi-"],
   i.material-icons {
     display: block;
+    -webkit-transition: all .3s ease !important;
+    transition: all .3s ease !important;
     font-size: 24px;
     height: $navbar-height-mobile;
     line-height: $navbar-line-height-mobile;
@@ -224,6 +197,8 @@ nav {
   .sidenav-trigger {
     i {
       color: $branco !important;
+      -webkit-transition: all .3s ease !important;
+      transition: all .3s ease !important;
       &:hover {
         color: rgba($branco, 0.7) !important;
       }
@@ -239,12 +214,17 @@ nav {
     height: 4rem; 
   }
 
-  // Navbar Links
   ul {
+
     a {
-      color: $branco;
+      color: $branco !important;
+      -webkit-transition: all .3s ease-in-out !important;
+      transition: all .3s ease-in-out !important;
+      &:hover > i {
+        color: rgba($branco, 0.6) !important;
+      }
       &:hover {
-        color: rgba($branco, 0.6);
+        color: rgba($branco, 0.6) !important;
       }
     }
   }

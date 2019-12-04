@@ -1,5 +1,6 @@
 // Estilo do cartão para a confirmação do aluno
 .painel {
+  background-image: -webkit-gradient(linear, right top, left bottom, from($secondary-color-dark), to($secondary-color-light));
   background-image: linear-gradient(to left bottom, $secondary-color-dark, $secondary-color-light);
 
   &__title {
@@ -44,6 +45,7 @@
 .cardapio {
 
   &__indisponivel {
+    background-image: -webkit-gradient(linear, left top, right bottom, from(#f42f4b), color-stop(#e42740), color-stop(#d41e36), color-stop(#c4152c), to(#b40922));
     background-image: linear-gradient(to right bottom, #f42f4b, #e42740, #d41e36, #c4152c, #b40922);
     & h2 {
       padding-top: 4rem;
@@ -131,7 +133,8 @@
     margin: 0;
     top: 0;
     left: 50%;
-    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
     list-style: none;
     width: 75%;
 
@@ -162,16 +165,20 @@
     border-top-left-radius: .3rem;
     border-top-right-radius: .3rem;
     &--1 {
-      background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.5), rgba($primary-color-dark, 0.5)), url(../img/aluno/cartoes/cartao-1.png);
+      background-image: -webkit-gradient(linear, left top, right bottom, from(rgba($primary-color-light, 0.5)), to(rgba($primary-color-dark, 0.5))), url(../img/aluno/cartoes/cartao.jpg);
+      background-image: linear-gradient(to right bottom, rgba($primary-color-light, 0.5), rgba($primary-color-dark, 0.5)), url(../img/aluno/cartoes/cartao.jpg);
     }
     &--2 {
-      background-image: linear-gradient(to right bottom, rgba($secondary-color-light, 0.5), rgba($secondary-color-dark, 0.5)), url(../img/aluno/cartoes/cartao-2.png);
+      background-image: -webkit-gradient(linear, left top, right bottom, from(rgba($secondary-color-light, 0.5)), to(rgba($secondary-color-dark, 0.5))), url(../img/aluno/cartoes/cartao.jpg);
+      background-image: linear-gradient(to right bottom, rgba($secondary-color-light, 0.5), rgba($secondary-color-dark, 0.5)), url(../img/aluno/cartoes/cartao.jpg);
     }
     &--3 {
-      background-image: linear-gradient(to right bottom, rgba($tertiary-color-light, 0.5), rgba($tertiary-color-dark, 0.5)), url(../img/aluno/cartoes/cartao-3.png);
+      background-image: -webkit-gradient(linear, left top, right bottom, from(rgba($tertiary-color-light, 0.5)), to(rgba($tertiary-color-dark, 0.5))), url(../img/aluno/cartoes/cartao.jpg);
+      background-image: linear-gradient(to right bottom, rgba($tertiary-color-light, 0.5), rgba($tertiary-color-dark, 0.5)), url(../img/aluno/cartoes/cartao.jpg);
     }
     &--4 {
-      background-image: linear-gradient(to right bottom, rgba($quaternary-color-light, 0.5), rgba($quaternary-color-dark, 0.5)), url(../img/aluno/cartoes/cartao-4.png);
+      background-image: -webkit-gradient(linear, left top, right bottom, from(rgba($quaternary-color-light, 0.5)), to(rgba($quaternary-color-dark, 0.5))), url(../img/aluno/cartoes/cartao.jpg);
+      background-image: linear-gradient(to right bottom, rgba($quaternary-color-light, 0.5), rgba($quaternary-color-dark, 0.5)), url(../img/aluno/cartoes/cartao.jpg);
     }
   }
 
@@ -193,15 +200,19 @@
     box-decoration-break: clone;
     @extend .nunito;
     &--1 {
+      background-image: -webkit-gradient(linear, left top, right bottom, from(rgba($primary-color-light, .6)), to(rgba($primary-color-dark, .6)));
       background-image: linear-gradient(to right bottom, rgba($primary-color-light, .6), rgba($primary-color-dark, .6));
     }
     &--2 {
+      background-image: -webkit-gradient(linear, left top, right bottom, from(rgba($secondary-color-light, .6)), to(rgba($secondary-color-dark, .6)));
       background-image: linear-gradient(to right bottom, rgba($secondary-color-light, .6), rgba($secondary-color-dark, .6));
     }
     &--3 {
+      background-image: -webkit-gradient(linear, left top, right bottom, from(rgba($tertiary-color-light, .6)), to(rgba($tertiary-color-dark, .6)));
       background-image: linear-gradient(to right bottom, rgba($tertiary-color-light, .6), rgba($tertiary-color-dark, .6));
     }
     &--4 {
+      background-image: -webkit-gradient(linear, left top, right bottom, from(rgba($quaternary-color-light, .6)), to(rgba($quaternary-color-dark, .6)));
       background-image: linear-gradient(to right bottom, rgba($quaternary-color-light, .6), rgba($quaternary-color-dark, .6));
     }
   }

@@ -1,4 +1,7 @@
 <?php
+
+session_start();
+
 // Caminho à raiz do projeto
 $root_path = "../";
 

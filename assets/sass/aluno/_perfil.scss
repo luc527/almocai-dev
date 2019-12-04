@@ -3,6 +3,26 @@
 }
 
 .perfil {
+
+  &__dismiss {
+    padding: 1rem;
+    color: $branco;
+    transition: color .3s ease-in;
+    &:hover {
+      color: rgba($branco, .6);
+    }
+  }
+
+  &__intolerancia {
+    padding: 1rem 1rem 0 1rem;
+
+    &--text {
+      font-size: 1.25rem;
+      line-height: 2rem;
+    }
+
+  }
+
   &__cartao-almoca {
 
     padding: 2rem;
@@ -138,17 +158,29 @@
   }
   .input-field input[type=text]:focus {
     border-bottom: 1px solid $quaternary-color !important;
-    box-shadow: 0 1px 0 0 $quaternary-color !important;
+    -webkit-box-shadow: 0 1px 0 0 $quaternary-color !important;
+            box-shadow: 0 1px 0 0 $quaternary-color !important;
   }
   .input-field input[type=text].valid {
     border-bottom: 1px solid $quaternary-color !important;
-    box-shadow: 0 1px 0 0 $quaternary-color !important;
+    -webkit-box-shadow: 0 1px 0 0 $quaternary-color !important;
+            box-shadow: 0 1px 0 0 $quaternary-color !important;
   }
   .input-field input[type=text].invalid {
     border-bottom: 1px solid $quaternary-color !important;
-    box-shadow: 0 1px 0 0 $quaternary-color !important;
+    -webkit-box-shadow: 0 1px 0 0 $quaternary-color !important;
+            box-shadow: 0 1px 0 0 $quaternary-color !important;
   }
   .input-field .prefix.active {
     color: $quaternary-color !important;
+  }
+}
+
+.olho {
+  color: $primary-color !important;
+  -webkit-transition: color .3s ease-in-out;
+  transition: color .3s ease-in-out;
+  &:hover {
+    color: $primary-color-dark !important;
   }
 }

@@ -17,7 +17,7 @@ if ($acao == 'CriarCardapio') {
   if (date("w", strtotime($data)) != 1) { // se a data não é segunda
     header("location:index.php?erro=inicio_deve_ser_segunda");
 
-  } else if (SemanaCardapioDao::SemanaExiste($data)) {
+  } else if (SemanaCardapioDao::SemanaExisteData($data)) {
     header("location:index.php?erro=semana_ja_existe");
 
   } else {

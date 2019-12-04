@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS `almocai`;
-USE `almocai`;
+CREATE DATABASE IF NOT EXISTS `almocaiLocal`;
+USE `almocaiLocal`;
 
 CREATE TABLE IF NOT EXISTS `SemanaCardapio` (
 	`codigo` INT PRIMARY KEY AUTO_INCREMENT,
@@ -58,9 +58,8 @@ CREATE TABLE IF NOT EXISTS `Alimentacao` (
   `descricao` VARCHAR(45)
 );
 
-INSERT INTO `Alimentacao` (`descricao`) 
-VALUES ('Come Carne'), ('Vegetariano'), ('Vegano');
-
+INSERT INTO `Alimentacao` (`codigo`, `descricao`) 
+VALUES (1, 'Come Carne'), (2, 'Vegetariano'), (3, 'Vegano');
 
 CREATE TABLE IF NOT EXISTS `Usuario` (
 	`codigo` INT PRIMARY KEY AUTO_INCREMENT,
@@ -69,6 +68,7 @@ CREATE TABLE IF NOT EXISTS `Usuario` (
 	`nome` VARCHAR(100),
 	`tipo` VARCHAR(50),
 	`email` VARCHAR(255),
+    `token` VARCHAR(255),
 	
 	`alimentacao` INT DEFAULT 1,
 	FOREIGN KEY (`alimentacao`) REFERENCES `Alimentacao`(`codigo`) 
@@ -79,26 +79,6 @@ CREATE TABLE IF NOT EXISTS `Usuario` (
 	FOREIGN KEY (`frequencia`) REFERENCES `Frequencia`(`codigo`)  
 		ON DELETE SET null
 		ON UPDATE SET null
-);
-
-CREATE TABLE IF NOT EXISTS `Carne` (
-	`codigo` INT PRIMARY KEY AUTO_INCREMENT,
-  `descricao` VARCHAR(45)
-);
-
-INSERT INTO `Carne` (`codigo`, `descricao`)
-VALUES (1, 'Frango'), 
-			 (2, 'Porco'), 
-			 (3, 'Boi');
-
-CREATE TABLE IF NOT EXISTS `Carne_usuario` (
-	`usuario_cod` INT,
-	`carne_cod` INT,
-    
-    PRIMARY KEY (`usuario_cod`, `carne_cod`),
-    
-    foreign key (`usuario_cod`) references `Usuario`(`codigo`) on delete cascade,
-    foreign key (`carne_cod`) references `Carne`(`codigo`) on delete cascade
 );
 
 INSERT INTO `Usuario` (`username`, `senha`, `nome`, `tipo`) values
@@ -125,15 +105,22 @@ CREATE TABLE IF NOT EXISTS `Intolerancia` (
 	`descricao` VARCHAR(150)
 );
 
+CREATE TABLE IF NOT EXISTS `Estado_intolerancia` (
+	`codigo` INT PRIMARY KEY AUTO_INCREMENT,
+    `descricao` VARCHAR(255)
+);
+INSERT INTO `Estado_intolerancia` VALUES (1, 'Pendente'), (2, 'Rejeitada'), (3, 'Validada');
+
 CREATE TABLE IF NOT EXISTS `Usuario_intolerancia` (
-	`usuario_cod` INT,
-	`intolerancia_codigo` INT,
-	`arquivo` VARCHAR(200),
-	PRIMARY KEY (`usuario_cod`, `intolerancia_codigo`),
-	FOREIGN KEY (`usuario_cod`) REFERENCES `Usuario`(`codigo`)
-		ON DELETE CASCADE,
-	FOREIGN KEY (`intolerancia_codigo`) REFERENCES `Intolerancia`(`codigo`)
-		ON DELETE CASCADE
+	`codigo` INT PRIMARY KEY AUTO_INCREMENT,
+    `usuario_cod` INT,
+	`intolerancia_cod` INT,
+    `estado_cod` INT DEFAULT 1,
+    `motivo_rejeicao` TEXT,
+	`arquivo` VARCHAR(255), 
+	FOREIGN KEY (`usuario_cod`) REFERENCES `Usuario`(`codigo`),
+	FOREIGN KEY (`intolerancia_cod`) REFERENCES `Intolerancia`(`codigo`),
+	FOREIGN KEY (`estado_cod`) REFERENCES `Estado_intolerancia`(`codigo`)
 );
 
 DELIMITER :)

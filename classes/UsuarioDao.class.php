@@ -325,6 +325,17 @@ class UsuarioDao
 		return StatementBuilder::update($sql, $params);
 	}
 
+	/**
+	 * Muda jaLogou do usuário de 0 para 1
+	 */
+	public static function MarcarPrimeiroLogin(Usuario $usuario)
+	{
+		return StatementBuilder::update(
+			"UPDATE Usuario SET jaLogou = :jaLogou WHERE codigo = :codigo",
+			['jaLogou' => 1, 'codigo' => $usuario->getCodigo()]
+		);
+	}
+
 
 	/**
 	 * DELETE
@@ -368,6 +379,7 @@ class UsuarioDao
 		 * ['username'] -> nome do usuário único para o login
 		 * ['nome'] -> nome do usuário
 		 * ['tipo'] -> tipo do usuário (adm)
+		 * ['jaLogou'] -> se o usuário já logou - valor usado p/ determinar se deve mostrar a tela de configurações iniciais ou não
 		 * ['codigo', 'nome' e 'tipo'] só serão preenchidas caso o login será feito
 		 * serão armazenadas em $_SESSION
 		 */
@@ -378,6 +390,7 @@ class UsuarioDao
 			$login_info['username'] = $row['username'];
 			$login_info['nome'] = $row['nome'];
 			$login_info['tipo'] = $row['tipo']; //tipo (adm)
+			$login_info['jaLogou'] = $row['jaLogou'];
 		} else {
 			$login_info['acao'] = 'infos_incorretas';
 		}

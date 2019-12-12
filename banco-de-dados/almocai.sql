@@ -61,6 +61,7 @@ CREATE TABLE IF NOT EXISTS `Alimentacao` (
 INSERT INTO `Alimentacao` (`codigo`, `descricao`) 
 VALUES (1, 'Come Carne'), (2, 'Vegetariano'), (3, 'Vegano');
 
+
 CREATE TABLE IF NOT EXISTS `Usuario` (
 	`codigo` INT PRIMARY KEY AUTO_INCREMENT,
 	`username` VARCHAR(100) UNIQUE,
@@ -84,6 +85,9 @@ CREATE TABLE IF NOT EXISTS `Usuario` (
 INSERT INTO `Usuario` (`username`, `senha`, `nome`, `tipo`) values
 ('admin','d033e22ae348aeb5660fc2140aec35850c4da997','admin','ADMINISTRADOR');
 -- senha (provisória): admin
+
+ALTER TABLE `Usuario`
+ADD jaLogou TINYINT NOT NULL DEFAULT 0;
 
 CREATE TABLE IF NOT EXISTS `Presenca` (
 	`usuario_cod` INT,

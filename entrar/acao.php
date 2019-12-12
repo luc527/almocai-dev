@@ -7,34 +7,40 @@ if (isset($_POST['acao'])) $acao = $_POST['acao'];
 else if (isset($_GET['acao'])) $acao = $_GET['acao'];
 else $acao = '';
 
-if ($acao == 'Login') {
-  $usuario = new Usuario;
-  $usuario->setUsername($_POST['username']);
-  $usuario->setSenha(sha1($_POST['senha']));
+if ($acao != 'Login')
+  header("location:{$root_path}");
+  // única ação realizada nessa página página
 
-  $login_info = UsuarioDao::Login($usuario);
 
-  if ($login_info['acao'] == 'fazer_login') {
-    session_start();
-    $_SESSION['codigo'] = $login_info['codigo'];
-    $_SESSION['username'] = $login_info['username'];
-    $_SESSION['nome'] = $login_info['nome'];
-    $_SESSION['tipo'] = $login_info['tipo'];
+$usuario = new Usuario;
+$usuario->setUsername($_POST['username']);
+$usuario->setSenha(sha1($_POST['senha']));
 
-    $manterConectado = isset($_POST['manterConectado']) ? true : false;
-    if ($manterConectado) {
-      $usuario->setCodigo($_SESSION['codigo']);
-      $usuario->gerarToken();
+$login_info = UsuarioDao::Login($usuario);
 
-      UsuarioDao::SalvarToken($usuario);
+if ($login_info['acao'] != 'fazer_login')
+  header("location:{$root_path}entrar/?erro={$login_info['acao']}");
 
-      $dia = time() + (60 * 60 * 24 * 30); // 30 dias de validade
-      setcookie("almifctkn", $usuario->token(), $dia, '/');
-    }
-    header("location:".$root_path);
 
-  } else {
-    header("location:".$root_path."entrar/?erro=".$login_info['acao']);
-  }
+session_start();
+$_SESSION['codigo'] = $login_info['codigo'];
+$_SESSION['username'] = $login_info['username'];
+$_SESSION['nome'] = $login_info['nome'];
+$_SESSION['tipo'] = $login_info['tipo'];
+$jaLogou = $login_info['jaLogou'];
+
+$manterConectado = isset($_POST['manterConectado']);
+if ($manterConectado) {
+  $usuario->setCodigo($login_info['codigo']);
+  
+  $usuario->gerarToken();
+  UsuarioDao::SalvarToken($usuario);
+
+  $mesValidadeCookie = time() + (60 * 60 * 24 * 30);
+  setcookie("almifctkn", $usuario->token(), $mesValidadeCookie, '/');
 }
-?>
+
+if (!$jaLogou && $login_info['tipo'] == 'ALUNO')
+  header("location:{$root_path}aluno/primeiro_login");
+else
+  header("location:{$root_path}");
